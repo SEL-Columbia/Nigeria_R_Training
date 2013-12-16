@@ -1,15 +1,116 @@
-Title
+Basic R
 ========================================================
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the **MD** toolbar button for help on Markdown).
-
-When you click the **Knit HTML** button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+getting started
+----
+### interface of Rstudio
+### set working directory 
 ```{r}
+# getting the current working directory 
+getwd()
+# setting "my working directory" as 
+# "~/work/r/nigeria_r_training/"
+setwd("~/work/r/nigeria_r_training/")
+```
+### libraries
+ * install packages
+ * to install packges in r, call install.packages() with quoted package name: 
+```{r}
+install.packages("plyr")
+```   
+  2. to load libraries in r call library() fucntion
+  
+```{r}
+library(plyr)
+```
+  
+### reading data: read.csv
+  * csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.  
+```{r}
+sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
+                        stringsAsFactors=FALSE, skip=0, nrows=-1)
+```
+### data types: 
+  1. numerical
+  2. integer
+  3. boolean
+  4. character
+  5. factors
 
+
+data.frames
+---
+### getting names in the data.frame
+```{r}
+names(sample_data)
+```
+### getting value/column from a data.frame
+ 1. using "$" operator
+ 2. calling column by it's name directly
+ 3. note: using head() to show only the first nth elements
+```{r}
+head(sample_data$lga, 10)
+
+head(sample_data[, "lga"], 10)
 ```
 
-You can also embed plots, for example:
+### getting row content by calling the row number
+ * note: index in R starts at 1 instead of 0
+```{r}
+sample_data[2, ]
+```
+
+### slicing and dicing in R
+
+* getting the 1st row
+```{r}
+sample_data[1,]
+```
+
+* getting the 1st column(only showing the first 10)
+```{r}
+head(sample_data[, 1], 10)
+```
+
+* getting the element in 4th row and 5th column
+```{r}
+sample_data[4, 5]
+```
+
+* getting the elements from 4th to 6th row and column1 to column 5(inclusive)
+```{r}
+sample_data[4:6, 1:5]
+```
+
+### exploring the data frame with some useful functions
+* getting the structure
+```{r}
+str(sample_data)
+```
+
+* getting the class of specific column
+```{r}
+class(sample_data$lga)
+
+class(sample_data[, 1])
+
+class(sample_data[, "lga"])
+```
+
+* getting the summary/descriptive statistics 
+* works both with column and data.frame
+```{r}
+summary(sample_data$zone)
+
+summary(sample_data)
+```
+
+* table of content of COLUMN
+```{r}
+table(sample_data$zone)
+```
+
+
 
 ```{r fig.width=7, fig.height=6}
 
