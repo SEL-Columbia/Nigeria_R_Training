@@ -93,13 +93,7 @@ sample_data[2, ]
 ```{r echo=FALSE, eval=TRUE}
 sample_data[2, ][1:10]
 ```
-### slicing and dicing in R
-
-* getting the 1st column(only showing the first 10)
-```{r}
-head(sample_data[, 1], 10)
-```
-
+### more slicing and dicing in R
 * getting the element in 4th row and 5th column
 ```{r}
 sample_data[4, 5]
@@ -112,8 +106,13 @@ sample_data[4:6, 1:5]
 
 ### exploring the data frame with some useful functions
 * getting the structure
-```{r}
+```{r echo=TRUE, eval=FALSE}
 str(sample_data)
+```
+
+* getting the dimension of data.frame
+```{r echo=TRUE, eval=TRUE}
+dim(sample_data)
 ```
 
 * getting the class of specific column
@@ -127,11 +126,15 @@ class(sample_data[, "lga"])
 
 * getting the summary/descriptive statistics 
 * works with both column and data.frame
-```{r}
+```{r echo=TRUE, eval=FALSE}
 summary(sample_data$zone)
-
 summary(sample_data)
 ```
+```{r echo=FALSE, eval=TRUE}
+summary(sample_data$zone)
+summary(sample_data)[1:7, 1:10]
+```
+
 
 * table of content of COLUMN
 ```{r}
@@ -143,9 +146,13 @@ creating data frames
 
 ### joining columns:
 * R supports SQL-like join functionality with merge()
-```{r}
-data1 <- unique(sample_data[, 2:5])
-data2 <- sample_data[,-(2:4)]
+```{r, echo=FALSE}
+data1 <- sample_data[,-(2:4)]
+data2 <- unique(sample_data[, 2:5])
+data3 <- sample_data[, 2:5]
+
+data4 <- sample_data[1:100, ]
+data5 <- sample_data[101:2000, ]
 ```
 
 * inner join
@@ -164,7 +171,66 @@ left_outer_join <- merge(data1, data2, by.x="lga_id",
                     by.y="lga_id",all.x=TRUE)
 ```
 
+* concatenate data.frames COLUMNwise with cbind()
+* note that the order of rows in original data is unchanged
+```{r, echo=TRUE, eval=FALSE}
+cbind(data1, data3)
+```
+```{r, echo=FALSE, eval=TRUE}
+cbind(data1, data3)[1:10,1:10]
+```
 
+
+* concatenate data.frames ROWise with cbind()
+* note that the order of columns in original data is unchanged
+* use with care: make sure your columns alligns before using
+```{r, echo=TRUE, eval=FALSE}
+rbind(data1, data3)
+```
+```{r, echo=FALSE, eval=TRUE}
+rbind(data1, data3)[1:10,1:10]
+```
+```{r, echo=TRUE, eval=FALSE}
+rbind(data4, data5)
+```
+```{r, echo=FALSE, eval=TRUE}
+rbind(data4, data5)[1:10,1:10]
+```
+
+### creating derivative data frames via subset:
+* getting a subset of original data with handy functions saves a lot of typing
+* campare the two outputs
+```{r, echo=TRUE, eval=FALSE}
+subset(sample_data, lga_id < 600, select=c("lga_id", "lga", "state" ))
+
+sample_data[sample_data$lga_id < 600, c("lga_id", "lga", "state")]
+```
+
+```{r, echo=FALSE, eval=TRUE}
+head(subset(sample_data, lga_id < 600, select=c("lga_id", "lga", "state" )), 10)
+head(sample_data[sample_data$lga_id < 600, c("lga_id", "lga", "state")], 10)
+```
+
+data cleaning:
+----
+
+### type conversion
+* type convertion can be force by __as.\*()__ function
+* common __\*__ types you'd encounter are: 
+  1. numeric
+  2. integer
+  3. character
+  4. logical
+* some times you'll encounter __factor__ variables, we recommand using __as.character()__ to conver it into character type before any manipulation applied
+
+* here's some examples
+```{r}
+my_numbers = c("1", "2", "3", "4", "5")
+my_numbers
+as.numeric(my_numbers)
+```
+
+<<<<<<< HEAD
 creating and deleting columns
 --------------
 
@@ -177,15 +243,62 @@ head(sample_data$lga_id_national, 5)
 
 * formulas (booleans + conditions: == “” etc. etc.)
 ```{r fig.width=7, fig.height=6}
+=======
+### string manipulations
+* we're going to cover regex suite comes with base R, string_r packages have similar implementations.
+* we're not going to cover regex/ regular expression in this tuorial.
+* getting position of matched pattern with grep()
+```{r}
+my_strings = c("Hello", "World", 'Foo')
+grep(pattern="l", x=my_strings, ignore.case=FALSE)
+#when value argument is set to true, grep() returns the actual strings matchs the patterns
+grep(pattern="l", x=my_strings, ignore.case=FALSE, value=T)
+```
+* find pattern in strings and replace with sub()
+* gsub() means global sub, which replace all the occurance of matching pattern, while sub() only works on the first appearance.
+```{r}
+my_strings
+sub(pattern="o", replacement="X", x=my_strings)
+gsub(pattern="o", replacement="X", x=my_strings)
+```
+* change to upper/lower case with toupper()/ tolower()
+```{r}
+my_strings
+toupper(my_strings)
+tolower(my_strings)
+```
+* concatenate strings with paste():
+```{r}
+paste("hello", "world", "foo", sep=",")
+```
+* if you're trying to concate every element in a vector/ list, use __collapse__ argument in paste()
+```{r}
+paste(my_strings, sep=',')
+paste(my_strings, collapse=',')
+```
 
+### writing out data
+* R can output multiple different output format, but we're going to cover csv and RDS format
+* writing csv file with write.csv()
+ * if you find output row.names everything annoying, set row.names argument to FALSE in write.csv()
+```{r}
+write.csv(sample_data, "./my_output.csv", row.names=FALSE)
+```
+* we recommend output your data as RDS file, if you're only going to reuse it in R.
+* use saveRDS() to save object in workspace to your harddrive
+  * no row.names argument needs to be used, since we're saving the R object into a binary file
+```{r}
+saveRDS(sample_data, "./my_output.RDS")
+```
+* use readRDS() function to load saved RDS file
+```{r echo=TRUE, eval=FALSE}
+readRDS("./my_output.RDS")
+```
+```{r echo=FALSE, eval=TRUE}
+readRDS("./my_output.RDS")[1:10, 1:10]
 ```
 
 
-* remove columns
-
-* renaming		
-
-
-
-
-
+=======
+Aggregations in R:
+----
