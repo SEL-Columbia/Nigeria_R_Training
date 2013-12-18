@@ -183,18 +183,27 @@ cbind(data1, data3)[1:10,1:10]
 
 * concatenate data.frames ROWise with cbind()
 * note that the order of columns in original data is unchanged
-* use with care: make sure your columns alligns before using
+```{r, echo=TRUE, eval=FALSE}
+rbind(data4, data5)
+```
+```{r, echo=FALSE, eval=TRUE}
+rbind(data4, data5)[1:10,1:10]
+```
+* use with care: make sure your columns alligns before using, and here is an example of miss-use
 ```{r, echo=TRUE, eval=FALSE}
 rbind(data1, data3)
 ```
 ```{r, echo=FALSE, eval=TRUE}
 rbind(data1, data3)[1:10,1:10]
 ```
-```{r, echo=TRUE, eval=FALSE}
-rbind(data4, data5)
+* rbind.fill() a powerful rbind() realization in __plyr__ package
+* with rbind you have to make every column in both data.frame exists and alligns(have the same index number), but with rbind.fill you don't have to worry about it
+* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part is assigns __*NA*__
+```{r echo=TRUE, eval=FALSE}
+rbind.fill(data1, data3)
 ```
-```{r, echo=FALSE, eval=TRUE}
-rbind(data4, data5)[1:10,1:10]
+```{r echo=FALSE, eval=TRUE}
+rbind.fill(data1, data3)[1:10, 1:10]
 ```
 
 ### creating derivative data frames via subset:
@@ -230,7 +239,6 @@ my_numbers
 as.numeric(my_numbers)
 ```
 
-<<<<<<< HEAD
 creating and deleting columns
 --------------
 
@@ -242,7 +250,6 @@ head(sample_data$lga_id_national, 5)
 ```
 
 * formulas (booleans + conditions: == “” etc. etc.)
-```{r fig.width=7, fig.height=6}
 =======
 ### string manipulations
 * we're going to cover regex suite comes with base R, string_r packages have similar implementations.
@@ -298,7 +305,46 @@ readRDS("./my_output.RDS")
 readRDS("./my_output.RDS")[1:10, 1:10]
 ```
 
-
-=======
 Aggregations in R:
 ----
+* there are many functions that can do aggregation for you, but we are only going to cover __ddply()__ in __plyr__ package
+
+* creating simple aggregated summary:
+* note: 
+  1. __(group) by__ variable must have at least one input
+  2. you __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform
+```{r}
+library(plyr)
+my_summary <- ddply(sample_data, .(state, lga), summarise, 
+                    counts = length(lga_id),
+                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
+                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+head(my_summary)
+```
+* look at the output and compare the difference, the only change here is replacing summarise with transform
+```{r}
+my_summary <- ddply(sample_data, .(state, lga), transform, 
+                    counts = length(lga_id),
+                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
+                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+dim(my_summary)
+```
+
+Advanced R
+========================================================
+
+creation of more complex columns(indicators) with __ifelse()__:
+-------------------------------------
+
+
+map functions: apply()
+-----------------------
+
+improvements:
+-----------------
+* source()
+* idata.frame()
+
+
+
+
