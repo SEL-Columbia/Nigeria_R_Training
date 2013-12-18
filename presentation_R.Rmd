@@ -46,7 +46,7 @@ sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA",
   5. factors
     * generic data type used as alternative to all of the above. we recommend __not__ using.  
   6. NA
-    * an additional data type in R for no value
+    * an additional data type in R for __value NOT AVAILABLE__, which can be found in any of the data type above
 
 data.frames
 --------------
