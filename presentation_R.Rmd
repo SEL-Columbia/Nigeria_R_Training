@@ -4,6 +4,7 @@ Basic R
 getting started
 ----
 ### interface of Rstudio
+
 ### set working directory 
 ```{r}
 # getting the current working directory 
@@ -39,12 +40,19 @@ sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA",
 
 
 data.frames
----
+--------------
 ### getting names in the data.frame
-```{r}
+```{r message=FALSE, results='hide'}
 names(sample_data)
 ```
+```{r message=FALSE, echo=FALSE}
+names(sample_data)[1:10]
+```
+
+
+
 ### getting value/column from a data.frame
+* a column in our data set is equavilent to a question in the survey
  1. using "$" operator
  2. calling column by it's name directly
  3. note: using head() to show only the first nth elements
@@ -55,17 +63,13 @@ head(sample_data[, "lga"], 10)
 ```
 
 ### getting row content by calling the row number
+ * a row in our data set is equavilent to one full survey i.e. one facility
  * note: index in R starts at 1 instead of 0
 ```{r}
 sample_data[2, ]
 ```
 
 ### slicing and dicing in R
-
-* getting the 1st row
-```{r}
-sample_data[1,]
-```
 
 * getting the 1st column(only showing the first 10)
 ```{r}
@@ -77,7 +81,7 @@ head(sample_data[, 1], 10)
 sample_data[4, 5]
 ```
 
-* getting the elements from 4th to 6th row and column1 to column 5(inclusive)
+* getting the elements from 4th to 6th row and column 1 to column 5(inclusive)
 ```{r}
 sample_data[4:6, 1:5]
 ```
@@ -98,7 +102,7 @@ class(sample_data[, "lga"])
 ```
 
 * getting the summary/descriptive statistics 
-* works both with column and data.frame
+* works with both column and data.frame
 ```{r}
 summary(sample_data$zone)
 
@@ -110,6 +114,31 @@ summary(sample_data)
 table(sample_data$zone)
 ```
 
+Creating data frames
+---------------------
+
+### joining columns:
+* R supports SQL-like join functionality with merge()
+```{r}
+data1 <- unique(sample_data[, 2:5])
+data2 <- sample_data[,-(2:4)]
+```
+
+* inner join
+```{r}
+inner_join <- merge(data1, data2, by="lga_id")
+```
+
+* outer join
+```{r}
+outer_join <- merge(data1, data2, by="lga_id", all=TRUE)
+```
+
+* left outer join
+```{r}
+left_outer_join <- merge(data1, data2, by.x="lga_id",
+                    by.y="lga_id",all.x=TRUE)
+```
 
 
 ```{r fig.width=7, fig.height=6}
