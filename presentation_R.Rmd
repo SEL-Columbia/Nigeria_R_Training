@@ -1,4 +1,4 @@
-Basic R
+basic R
 ========================================================
 
 getting started
@@ -9,22 +9,29 @@ getting started
 ```{r}
 # getting the current working directory 
 getwd()
-# setting "my working directory" as 
-# "~/work/r/nigeria_r_training/"
+```
+
+
+```{r echo=TRUE, eval=FALSE}
+### setting "my working directory" as "~/work/r/nigeria_r_training/"
 setwd("~/work/r/nigeria_r_training/")
 ```
+
 ### libraries
  * install packages
- * to install packges in r, call install.packages() with quoted package name: 
-```{r}
+ * to install packges in R, call __install.packages()__ with quoted package name: 
+```{r echo=TRUE, eval=FALSE}
 install.packages("plyr")
 ```   
-  2. to load libraries in r call library() fucntion
+  2. to load libraries in R call __library()__ fucntion
   
 ```{r}
 library(plyr)
 ```
-  
+  * libraries are additional packages to R that contain additional specialized functions 
+  * plyr library is used for aggregating data, which will be explored in detail later
+
+
 ### reading data: read.csv
   * csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.  
 ```{r}
@@ -37,18 +44,26 @@ sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA",
   3. boolean
   4. character
   5. factors
-
+    * generic data type used as alternative to all of the above. we recommend __not__ using.  
+  6. NA
+    * an additional data type in R for no value
 
 data.frames
 --------------
-### getting names in the data.frame
+
+* a data.frame is made up of: __[rows, columns]__
+```{r}
+dim(sample_data)
+#dimensions function shows 2000 rows and 104 columns for sample_data
+```
+
+### getting names/headers of the data.frame
 ```{r message=FALSE, echo=TRUE, eval=FALSE}
 names(sample_data)
 ```
 ```{r message=FALSE, echo=FALSE, eval=TRUE}
 names(sample_data)[1:10]
 ```
-
 
 
 ### getting value/column from a data.frame
@@ -123,7 +138,7 @@ summary(sample_data)
 table(sample_data$zone)
 ```
 
-Creating data frames
+creating data frames
 ---------------------
 
 ### joining columns:
@@ -150,7 +165,27 @@ left_outer_join <- merge(data1, data2, by.x="lga_id",
 ```
 
 
+creating and deleting columns
+--------------
+
+* add columns
+```{r}
+sample_data$lga_id_national <- paste("9ja:", sample_data$lga_id, sep = "")
+head(sample_data$lga_id_national, 5)
+
+```
+
+* formulas (booleans + conditions: == “” etc. etc.)
 ```{r fig.width=7, fig.height=6}
 
 ```
+
+
+* remove columns
+
+* renaming		
+
+
+
+
 
