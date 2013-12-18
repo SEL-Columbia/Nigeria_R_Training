@@ -42,10 +42,10 @@ sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA",
 data.frames
 --------------
 ### getting names in the data.frame
-```{r message=FALSE, results='hide'}
+```{r message=FALSE, echo=TRUE, eval=FALSE}
 names(sample_data)
 ```
-```{r message=FALSE, echo=FALSE}
+```{r message=FALSE, echo=FALSE, eval=TRUE}
 names(sample_data)[1:10]
 ```
 
@@ -56,19 +56,28 @@ names(sample_data)[1:10]
  1. using "$" operator
  2. calling column by it's name directly
  3. note: using head() to show only the first nth elements
-```{r}
+```{r echo=TRUE, eval=FALSE}
+sample_data$lga
+
+sample_data[, "lga"]
+```
+
+```{r echo=FALSE, eval=TRUE}
 head(sample_data$lga, 10)
 
 head(sample_data[, "lga"], 10)
 ```
 
+
 ### getting row content by calling the row number
  * a row in our data set is equavilent to one full survey i.e. one facility
  * note: index in R starts at 1 instead of 0
-```{r}
+```{r echo=TRUE, eval=FALSE}
 sample_data[2, ]
 ```
-
+```{r echo=FALSE, eval=TRUE}
+sample_data[2, ][1:10]
+```
 ### slicing and dicing in R
 
 * getting the 1st column(only showing the first 10)
