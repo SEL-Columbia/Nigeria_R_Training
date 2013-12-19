@@ -380,6 +380,7 @@ my_sum(1,2)
 ```
 
 * optimize ddply with idata.frame()
+ * idata.frame optimizes the computation speed but at the cost of a slight more complicated code
 
 
 
