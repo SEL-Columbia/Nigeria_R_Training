@@ -399,11 +399,42 @@ creation of more complex columns(indicators) with __ifelse()__:
 
 map functions: apply()
 -----------------------
+* instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R
+* Here's the simply example for using apply to loop through every column and see the class of the column
+```{r echo=TRUE, eval=FALSE}
+apply(sample_data, MARGIN=2, FUN=class)
+```
+```{r echo=FALSE, eval=TRUE}
+apply(sample_data, MARGIN=2, FUN=class)[1:10]
+```
+
+* you can also define your own function in apply()
+* the following code returns sum of __NAs__ in each row
+  * note: when you're define your own function in apply use semi-colon as the line marker
+```{r echo=TRUE, eval=FALSE}
+apply(sample_data, MARGIN=1, function(x) {
+  na_idx <- is.na(x);
+  length(which(na_idx))
+})
+```
+```{r echo=FALSE, eval=TRUE}
+apply(sample_data, MARGIN=1, function(x) {
+  na_idx <- is.na(x);
+  length(which(na_idx))
+  })[1:10]
+```
 
 improvements:
 -----------------
-* source()
-* idata.frame()
+* load your own functions into workspace with source()
+```{r}
+source("./my_source_functions.R")
+my_sum(1,2)
+```
+
+* optimize ddply with idata.frame()
+ * idata.frame optimizes the computation speed but at the cost of a slight more complicated code
+
 
 
 
