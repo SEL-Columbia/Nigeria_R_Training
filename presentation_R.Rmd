@@ -252,15 +252,65 @@ as.numeric(my_numbers)
 
 creating and deleting columns
 --------------
-
-* add columns
+* column creation: simple examples
 ```{r}
-sample_data$lga_id_national <- paste("9ja:", sample_data$lga_id, sep = "")
-head(sample_data$lga_id_national, 5)
+sample_data$simple <- "who wants some egusi?"
+#a summary of the newly created simple column
+head(sample_data$simple)
 
+sample_data$simple <- 1963
+#a summary of the newly defined simple column
+head(sample_data$simple)
+```
+  
+* column creation: using already existing columns
+```{r}
+#a look at the lga column 
+head(sample_data$lga_id)
+#creating a new column, by pasting "9ja:" to the values of the lga column
+sample_data$lga_id_national <- paste("9ja:", sample_data$lga_id, sep = "")
+#a look at the the new lga_id_national column
+head(sample_data$lga_id_national)
 ```
 
-* formulas (booleans + conditions: == “” etc. etc.)
+* column creation: boolean columns
+```{r}
+sample_data$public <- sample_data$management == "public"
+table(sample_data$public)
+
+sample_data$public_2_docs <- sample_data$management == "public" & sample_data$num_doctors_fulltime == 2
+table(sample_data$public_2_docs) 
+  
+```
+
+* column creation: sum of multiple numerical columns 
+```{r}
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
+                                            sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+  
+```{r}
+#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
+head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+```
+
+* removing columns
+```{r}
+sample_data$num_nurselabtechs_fulltime <- NULL
+#testing to make sure it no longer exists
+summary(sample_data$num_nurselabtechs_fulltime)
+```
+ 
+* renaming		
+```{r}
+#quote the current variable name, and set it equal the quoted desired name  
+sample_data <- rename(sample_data, c("gps" = "global_positioning_system"))
+```
+
+
+
+data cleaning
+--------------
 ### string manipulations
 * we're going to cover regex suite comes with base R, string_r packages have similar implementations.
 * we're not going to cover regex/ regular expression in this tuorial.
