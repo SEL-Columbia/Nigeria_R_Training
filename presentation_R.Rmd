@@ -5,6 +5,10 @@ getting started
 ----
 ### interface of Rstudio
 
+![alt text][R_studio]
+
+[R_studio]: https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png
+
 ### set working directory 
 ```{r}
 # getting the current working directory 
@@ -215,13 +219,13 @@ data cleaning:
 ----
 
 ### type conversion
-* type convertion can be force by __as.\*()__ function
+* type conversion can be forced by __as.\*()__ function
 * common __\*__ types you'd encounter are: 
   1. numeric
   2. integer
   3. character
   4. logical
-* some times you'll encounter __factor__ variables, we recommand using __as.character()__ to conver it into character type before any manipulation applied
+* sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
 
 * here's some examples
 ```{r}
@@ -230,7 +234,6 @@ my_numbers
 as.numeric(my_numbers)
 ```
 
-<<<<<<< HEAD
 creating and deleting columns
 --------------
 
@@ -242,7 +245,7 @@ head(sample_data$lga_id_national, 5)
 ```
 
 * formulas (booleans + conditions: == “” etc. etc.)
-```{r fig.width=7, fig.height=6}
+
 =======
 ### string manipulations
 * we're going to cover regex suite comes with base R, string_r packages have similar implementations.
