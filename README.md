@@ -935,6 +935,71 @@ Advanced R
 creation of more complex columns(indicators) with __ifelse()__:
 -------------------------------------
 
+install packages from outside of cran
+-------------------------------------
+* in order to install packages on github we need some extra work
+* this tutorial will use the example of formhub.R
+* first step: install and load __devtools__ package from cran
+
+```r
+install.packages("devtools")
+```
+
+```
+## Installing package into '/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'
+## (as 'lib' is unspecified)
+```
+
+```
+## Error: trying to use CRAN without setting a mirror
+```
+
+```r
+library(devtools)
+```
+
+* second step: use __install_github("repo_name", "user_name")__ function to install packages on github
+
+```r
+install_github("formhub.R", username = "SEL-Columbia")
+```
+
+```
+## Installing github repo formhub.R/master from SEL-Columbia
+## Downloading formhub.R.zip from https://github.com/SEL-Columbia/formhub.R/archive/master.zip
+## Installing package from /tmp/RtmpGrV4Jx/formhub.R.zip
+## arguments 'minimized' and 'invisible' are for Windows only
+## Installing formhub
+## '/usr/lib/R/bin/R' --vanilla CMD INSTALL  \
+##   '/tmp/RtmpGrV4Jx/devtools156744c94599/formhub.R-master'  \
+##   --library='/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'  \
+##   --install-tests
+```
+
+```r
+library(formhub)
+```
+
+```
+## Loading required package: RJSONIO
+## Loading required package: stringr
+## Loading required package: RCurl
+## Loading required package: bitops
+## Loading required package: lubridate
+## 
+## Attaching package: 'lubridate'
+## 
+## The following object is masked from 'package:plyr':
+## 
+##     here
+## 
+## Loading required package: doBy
+## Loading required package: survival
+## Loading required package: splines
+## Loading required package: MASS
+## Loading required package: sp
+```
+
 
 map functions: apply()
 -----------------------
