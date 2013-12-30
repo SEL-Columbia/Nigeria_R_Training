@@ -245,7 +245,7 @@ data cleaning:
 
 * here's some examples
 ```{r}
-my_numbers = c("1", "2", "3", "4", "5")
+my_numbers <- c("1", "2", "3", "4", "5")
 my_numbers
 as.numeric(my_numbers)
 ```
@@ -347,7 +347,7 @@ paste(my_strings, collapse=',')
 ### writing out data
 * R can output multiple different output format, but we're going to cover csv and RDS format
 * writing csv file with write.csv()
- * if you find output row.names everything annoying, set row.names argument to FALSE in write.csv()
+ * if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()
 ```{r}
 write.csv(sample_data, "./my_output.csv", row.names=FALSE)
 ```
@@ -373,6 +373,7 @@ Aggregations in R:
 * note: 
   1. __(group) by__ variable must have at least one input
   2. you __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform
+* [the link to the package dodument](http://cran.r-project.org/web/packages/plyr/plyr.pdf)
 ```{r}
 library(plyr)
 my_summary <- ddply(sample_data, .(state, lga), summarise, 
@@ -415,6 +416,7 @@ map functions: apply()
 -----------------------
 * instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R
 * Here's the simply example for using apply to loop through every column and see the class of the column
+  * note: __MARGIN = 2__ specifies doing column-wise process
 ```{r echo=TRUE, eval=FALSE}
 apply(sample_data, MARGIN=2, FUN=class)
 ```
@@ -424,7 +426,8 @@ apply(sample_data, MARGIN=2, FUN=class)[1:10]
 
 * you can also define your own function in apply()
 * the following code returns sum of __NAs__ in each row
-  * note: when you're define your own function in apply use semi-colon as the line marker
+  * note: when you're define your own function in apply use semi-colon as the line marker.
+  * note: __MARGIN = 1__ specifies doing row-wise process
 ```{r echo=TRUE, eval=FALSE}
 apply(sample_data, MARGIN=1, function(x) {
   na_idx <- is.na(x);
