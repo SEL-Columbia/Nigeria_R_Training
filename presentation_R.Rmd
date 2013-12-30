@@ -396,6 +396,20 @@ Advanced R
 creation of more complex columns(indicators) with __ifelse()__:
 -------------------------------------
 
+install packages from outside of cran
+-------------------------------------
+* in order to install packages on github we need some extra work
+* this tutorial will use the example of formhub.R
+* first step: install and load __devtools__ package from cran
+```{r}
+install.packages('devtools') 
+library(devtools)
+```
+* second step: use __install_github("repo_name", "user_name")__ function to install packages on github
+```{r}
+install_github("formhub.R", username="SEL-Columbia")
+library(formhub)
+```
 
 map functions: apply()
 -----------------------
