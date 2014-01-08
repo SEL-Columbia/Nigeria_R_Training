@@ -15,6 +15,12 @@ getting started
 
 [R_studio]: https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png
 
+### getting help!
+*after a question mark, enter the function name of your choice to get help on
+```{r}
+?getwd
+```
+
 ### set working directory 
 ```{r}
 # getting the current working directory 
@@ -52,8 +58,6 @@ library(eaf)
 ```{r}
 sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
                         stringsAsFactors=FALSE)
-
-sample_data <- subset(sample_data, select=c("lga", "lga_id", "state", "zone", "c_section_yn", "num_nurses_fulltime", "gps", "num_lab_techs_fulltime", "management", "num_doctors_fulltime"))
 ```
   *stringsAsFactors will be explained later, but for now we recommend always using it
   
@@ -174,23 +178,32 @@ creating data frames
 
 ### joining columns:
 * R supports SQL-like join functionality with merge()
+  *first we'll prepare the data for a merge
 ```{r, echo=FALSE}
-data1 <- subset(sample_data, select=-c(lga, state, zone))
-data2 <- subset(sample_data, select=c(lga, lga_id, state, zone))
+data1 <- subset(sample_data, select=-c(zone, gps))
+```
 
+```{r echo=TRUE, eval=TRUE}
+head(data1)
+```
 
-data4 <- sample_data[1:20, ]
-data5 <- sample_data[20:200, ]
+```{r, echo=FALSE}
+data2 <- unique(subset(sample_data, select=c(state, zone), subset=zone != "Southeast"))
+
+```
+
+```{r echo=TRUE, eval=TRUE}
+head(data2)
 ```
 
 * inner join
 ```{r}
-inner_join <- merge(data1, data2, by="lga_id")
+inner_join <- merge(data1, data2, by="state")
 ```
 
 * outer join
 ```{r}
-outer_join <- merge(data1, data2, by="lga_id", all=TRUE)
+outer_join <- merge(data1, data2, by="state", all=TRUE)
 ```
 
 * left outer join
@@ -211,22 +224,27 @@ cbind(data1, data2)[1:10,1:10]
 
 * concatenate data.frames ROWise with cbind()
 * note that the order of columns in original data is unchanged
+```{r}
+data4 <- sample_data[1:5, ]
+data5 <- sample_data[6:10, ]
+```
+
 ```{r, echo=TRUE, eval=FALSE}
 rbind(data4, data5)
 ```
 ```{r, echo=FALSE, eval=TRUE}
 rbind(data4, data5)[1:10,1:10]
 ```
-* use with care: make sure your columns alligns before using, and here is an example of miss-use
+* use with care: make sure your columns alligns before using, and here is an example of misuse
 ```{r, echo=TRUE, eval=FALSE}
 rbind(data1, data2)
 ```
 ```{r, echo=FALSE, eval=TRUE}
 rbind(data1, data2)[1:10,1:10]
 ```
-* rbind.fill() a powerful rbind() realization in __plyr__ package
-* with rbind you have to make every column in both data.frame exists and alligns(have the same index number), but with rbind.fill you don't have to worry about it
-* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part is assigns __*NA*__
+* rbind.fill() is a powerful rbind() realization in __plyr__ package
+* with rbind you have to make every column in both data.frames exist and allign(have the same index number), but with rbind.fill you need not be concerned. 
+* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part it assigns __*NA*__
 ```{r echo=TRUE, eval=FALSE}
 rbind.fill(data1, data2)
 ```
@@ -235,17 +253,10 @@ rbind.fill(data1, data2)[1:10, 1:10]
 ```
 
 ### creating derivative data frames via subset:
-* getting a subset of original data with handy functions saves a lot of typing
-* campare the two outputs
-```{r, echo=TRUE, eval=FALSE}
-subset(sample_data, lga_id < 600, select=c("lga_id", "lga", "state" ))
+* getting a subset of original data with a handy functions saves a lot of typing
 
-sample_data[sample_data$lga_id < 600, c("lga_id", "lga", "state")]
-```
-
-```{r, echo=FALSE, eval=TRUE}
-head(subset(sample_data, lga_id < 600, select=c("lga_id", "lga", "state" )), 10)
-head(sample_data[sample_data$lga_id < 600, c("lga_id", "lga", "state")], 10)
+```{r}
+subset(sample_data, lga_id < 500, select=c("lga_id", "lga", "state" ))
 ```
 
 data cleaning:
@@ -269,14 +280,35 @@ as.numeric(my_numbers)
 
 creating and deleting columns
 --------------
-* column creation: simple examples
+
+* creating a column from a vector 
+```{r}
+sample_data$simple <- 1:50
+#a head() of the newly created simple column:
+```
+
+```{r, echo=FALSE, eval=TRUE}
+head(sample_data$simple)
+```
+* column creation: __broadcasting__  
+  * R makes column creation very straightforward by repeating a value which is known as "broadcasting"
 ```{r}
 sample_data$simple <- "who wants some egusi?"
-#a summary of the newly created simple column
-head(sample_data$simple)
+#a head() of the newly defined simple column:
+```
 
+```{r, echo=FALSE, eval=TRUE}
+head(sample_data$simple)
+```
+
+* creating a column from a single value
+  * R allows the user to broadcast numerical values as well
+```{r}
 sample_data$simple <- 1963
-#a summary of the newly defined simple column
+#a head() of the newly defined simple column
+```
+
+```{r, echo=FALSE, eval=TRUE}
 head(sample_data$simple)
 ```
   
@@ -293,22 +325,17 @@ head(sample_data$lga_id_national)
 * column creation: boolean columns
 ```{r}
 sample_data$public <- sample_data$management == "public"
-table(sample_data$public)
+head(sample_data[, c("management", "public")])
 
 sample_data$public_2_docs <- sample_data$management == "public" & sample_data$num_doctors_fulltime == 2
-table(sample_data$public_2_docs) 
+head(sample_data[, c("public_2_docs", "management", "public")]) 
   
 ```
 
-* column creation: sum of multiple numerical columns 
+* renaming  	
 ```{r}
-sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
-                                            sample_data$num_lab_techs_fulltime, na.rm = T))
-```
-  
-```{r}
-#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
-head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+#quote the current variable name, and set it equal the quoted desired name  
+sample_data <- rename(sample_data, c("gps" = "global_positioning_system"))
 ```
 
 * removing columns
@@ -318,14 +345,6 @@ sample_data$num_nurselabtechs_fulltime <- NULL
 summary(sample_data$num_nurselabtechs_fulltime)
 ```
  
-* renaming		
-```{r}
-#quote the current variable name, and set it equal the quoted desired name  
-sample_data <- rename(sample_data, c("gps" = "global_positioning_system"))
-```
-
-
-
 data cleaning
 --------------
 ### string manipulations
@@ -399,20 +418,34 @@ my_summary <- ddply(sample_data, .(state, lga), summarise,
                     avg_c_section = mean(c_section_yn == T,na.rm=T))
 head(my_summary)
 ```
-* look at the output and compare the difference, the only change here is replacing summarise with transform
+* look at the output and compare the difference, the only change here is replacing summarize with transform
 ```{r}
 my_summary <- ddply(sample_data, .(state, lga), transform, 
                     counts = length(lga_id),
                     total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
                     avg_c_section = mean(c_section_yn == T,na.rm=T))
-dim(my_summary)
+head(my_summary)
 ```
 
 Advanced R
 ========================================================
 
+creation of more complex columns(indicators) with __rowSums()__:
+-------------------------------------
+* column creation: sum of multiple numerical columns 
+```{r}
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
+                                            sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+  
+```{r}
+#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
+head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+```
+
 creation of more complex columns(indicators) with __ifelse()__:
 -------------------------------------
+
 
 install packages from outside of cran
 -------------------------------------

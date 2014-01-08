@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Before started</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Before started</h1>
+
+<p>we recommend watch the following video before reading this document</p>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=iffR3fWv4xw&amp;list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP">Video tutorial for R from Google Developer</a></li>
+</ul>
+
+<h1>basic R</h1>
+
+<h2>getting started</h2>
+
+<h3>interface of Rstudio</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png" alt="alt text"/></p>
+
+<h3>set working directory</h3>
+
+<pre><code class="r"># getting the current working directory
+getwd()
+</code></pre>
+
+<pre><code>## [1] &quot;/Users/salahchafik/Code/Nigeria_R_Training&quot;
+</code></pre>
+
+<pre><code class="r">### setting &#39;my working directory&#39; as &#39;~/work/r/nigeria_r_training/&#39;
+setwd(&quot;~/work/r/nigeria_r_training/&quot;)
+</code></pre>
+
+<h3>libraries</h3>
+
+<ul>
+<li>install packages</li>
+<li>to install packges in R, call <strong>install.packages()</strong> with quoted package name: </li>
+</ul>
+
+<pre><code class="r">install.packages(&quot;plyr&quot;)
+</code></pre>
+
+<ul>
+<li>to load libraries in R call <strong>library()</strong> fucntion</li>
+</ul>
+
+<pre><code class="r">library(plyr)
+</code></pre>
+
+<ul>
+<li>libraries are additional packages to R that contain additional specialized functions </li>
+<li><p>plyr library is used for aggregating data, which will be explored in detail later</p>
+
+<ul>
+<li>be sure that the package you are trying to load is installed on your computer</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">library(eaf)
+</code></pre>
+
+<pre><code>## Error: there is no package called &#39;eaf&#39;
+</code></pre>
+
+<h3>reading data: read.csv</h3>
+
+<ul>
+<li>csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.<br/></li>
+</ul>
+
+<pre><code class="r">sample_data &lt;- read.csv(&quot;./sample_health_facilities.csv&quot;, na.strings = &quot;NA&quot;, 
+    stringsAsFactors = FALSE)
+</code></pre>
+
+<p>*stringsAsFactors will be explained later, but for now we recommend always using it</p>
+
+<h3>data types:</h3>
+
+<ol>
+<li>numerical</li>
+<li>integer</li>
+<li>boolean</li>
+<li>character</li>
+<li><p>factors</p>
+
+<ul>
+<li>generic data type used as alternative to all of the above. we recommend <strong>not</strong> using. </li>
+<li>specifically, there are typically challenges with factor =&gt; integer/numeric conversions</li>
+<li>for additional information on working with factors in your data: <a href="http://www.statmethods.net/input/datatypes.html">More information on Factors</a></li>
+</ul></li>
+<li><p>NA</p>
+
+<ul>
+<li>an additional data type in R for value <strong>NOT AVAILABLE</strong>, which can be found in any of the data type above</li>
+</ul></li>
+</ol>
+
+<h2>data.frames</h2>
+
+<ul>
+<li>a data.frame is made up of: <strong>[rows, columns]</strong></li>
+</ul>
+
+<pre><code class="r">dim(sample_data)
+</code></pre>
+
+<pre><code>## [1] 50 10
+</code></pre>
+
+<pre><code class="r"># dimensions function shows 2000 rows and 104 columns for sample_data
+</code></pre>
+
+<h3>getting names/headers of the data.frame</h3>
+
+<pre><code class="r">names(sample_data)
+</code></pre>
+
+<pre><code>##  [1] &quot;lga&quot;                    &quot;lga_id&quot;                
+##  [3] &quot;state&quot;                  &quot;zone&quot;                  
+##  [5] &quot;c_section_yn&quot;           &quot;num_nurses_fulltime&quot;   
+##  [7] &quot;gps&quot;                    &quot;num_lab_techs_fulltime&quot;
+##  [9] &quot;management&quot;             &quot;num_doctors_fulltime&quot;
+</code></pre>
+
+<h3>getting value/column from a data.frame</h3>
+
+<ul>
+<li>a column in our data set is equavilent to a question in the survey
+
+<ol>
+<li>using &ldquo;$&rdquo; operator</li>
+<li>calling column by it&#39;s name directly</li>
+<li>note: using head() to show only the first nth elements</li>
+</ol></li>
+</ul>
+
+<pre><code class="r">sample_data$lga
+
+sample_data[, &quot;lga&quot;]
+</code></pre>
+
+<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
+##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
+</code></pre>
+
+<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
+##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
+</code></pre>
+
+<ul>
+<li>We generally prefer the first strategy, but sometimes we&#39;ll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. </li>
+</ul>
+
+<h3>getting row content by calling the row number</h3>
+
+<ul>
+<li>a row in our data set is equavilent to one full survey i.e. one facility</li>
+<li>note: index in R starts at 1 instead of 0</li>
+</ul>
+
+<pre><code class="r">sample_data[2, ]
+</code></pre>
+
+<pre><code>##       lga lga_id   state      zone c_section_yn num_nurses_fulltime
+## 2 Anaocha     49 Anambra Southeast        FALSE                   2
+##                                           gps num_lab_techs_fulltime
+## 2 6.07903635 7.00366347 276.1000061035156 5.0                     NA
+##   management num_doctors_fulltime
+## 2     public                   NA
+</code></pre>
+
+<h3>more slicing and dicing in R</h3>
+
+<ul>
+<li>getting the element in 4th row and 5th column</li>
+</ul>
+
+<pre><code class="r">sample_data[4, 5]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<ul>
+<li>getting the elements from 4th to 6th row and column 1 to column 5(inclusive)</li>
+</ul>
+
+<pre><code class="r">sample_data[4:6, 1:5]
+</code></pre>
+
+<pre><code>##        lga lga_id   state          zone c_section_yn
+## 4     Orlu    611     Imo     Southeast        FALSE
+## 5     Guma    258   Benue North-Central        FALSE
+## 6 Ayamelum     76 Anambra     Southeast        FALSE
+</code></pre>
+
+<h3>exploring the data frame with some useful functions</h3>
+
+<ul>
+<li>getting the structure</li>
+</ul>
+
+<pre><code class="r">str(sample_data)
+</code></pre>
+
+<ul>
+<li>getting the dimension of data.frame</li>
+</ul>
+
+<pre><code class="r">dim(sample_data)
+</code></pre>
+
+<pre><code>## [1] 50 10
+</code></pre>
+
+<ul>
+<li><p>getting the class of specific column</p>
+
+<ul>
+<li>note: class is the type of things in R. In python, this is equivalent to calling type(obj). In javascript, you would use typeof</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">class(sample_data$lga)
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">
+class(sample_data[, 1])
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">
+class(sample_data[, &quot;lga&quot;])
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<ul>
+<li><p>getting the summary/descriptive statistics </p>
+
+<ul>
+<li><strong>table()</strong> should be used for character and string variables</li>
+<li><strong>summary()</strong> should be used for numerical or boolean variables</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">table(sample_data$zone)
+</code></pre>
+
+<pre><code>## 
+## North-Central     Northeast     Northwest   South-South     Southeast 
+##             7             5            12             9             8 
+##     Southwest 
+##             9
+</code></pre>
+
+<pre><code class="r">summary(sample_data$num_nurses_fulltime)
+</code></pre>
+
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.00    0.00    0.00    1.02    1.00    8.00       3
+</code></pre>
+
+<h2>creating data frames</h2>
+
+<h3>joining columns:</h3>
+
+<ul>
+<li>R supports SQL-like join functionality with merge()
+*first we&#39;ll prepare the data for a merge</li>
+</ul>
+
+<pre><code class="r">head(data1)
+</code></pre>
+
+<pre><code>##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime
+## 1                      1     public                    0
+## 2                     NA     public                   NA
+## 3                      1     public                    0
+## 4                      0     public                    0
+## 5                      0     public                    0
+## 6                      1     public                    1
+</code></pre>
+
+<pre><code class="r">head(data2)
+</code></pre>
+
+<pre><code>##         state          zone
+## 1     Plateau North-Central
+## 3     Katsina     Northwest
+## 5       Benue North-Central
+## 7      Bauchi     Northeast
+## 8       Lagos     Southwest
+## 9 Cross River   South-South
+</code></pre>
+
+<ul>
+<li>inner join</li>
+</ul>
+
+<pre><code class="r">inner_join &lt;- merge(data1, data2, by = &quot;state&quot;)
+</code></pre>
+
+<ul>
+<li>outer join</li>
+</ul>
+
+<pre><code class="r">outer_join &lt;- merge(data1, data2, by = &quot;state&quot;, all = TRUE)
+</code></pre>
+
+<ul>
+<li>left outer join</li>
+</ul>
+
+<pre><code class="r">left_outer_join &lt;- merge(data1, data2, by.x = &quot;lga_id&quot;, by.y = &quot;lga_id&quot;, all.x = TRUE)
+</code></pre>
+
+<pre><code>## Error: &#39;by&#39; must specify a uniquely valid column
+</code></pre>
+
+<ul>
+<li>concatenate data.frames COLUMNwise with cbind()</li>
+<li>note that the order of rows in original data is unchanged</li>
+</ul>
+
+<pre><code class="r">cbind(data1, data2)
+</code></pre>
+
+<pre><code>## Error: arguments imply differing number of rows: 50, 21
+</code></pre>
+
+<ul>
+<li>concatenate data.frames ROWise with cbind()</li>
+<li>note that the order of columns in original data is unchanged</li>
+</ul>
+
+<pre><code class="r">data4 &lt;- sample_data[1:5, ]
+data5 &lt;- sample_data[6:10, ]
+</code></pre>
+
+<pre><code class="r">rbind(data4, data5)
+</code></pre>
+
+<pre><code>##            lga lga_id       state          zone c_section_yn
+## 1  Barkin-Ladi     91     Plateau North-Central        FALSE
+## 2      Anaocha     49     Anambra     Southeast        FALSE
+## 3      Batsari     96     Katsina     Northwest        FALSE
+## 4         Orlu    611         Imo     Southeast        FALSE
+## 5         Guma    258       Benue North-Central        FALSE
+## 6     Ayamelum     76     Anambra     Southeast        FALSE
+## 7       Gamawa    232      Bauchi     Northeast        FALSE
+## 8       Kosofe    441       Lagos     Southwest         TRUE
+## 9      Bekwara    101 Cross River   South-South        FALSE
+## 10      Gurara    261       Niger North-Central        FALSE
+##    num_nurses_fulltime                                            gps
+## 1                    0    9.57723376 8.98908176 1285.699951171875 5.0
+## 2                    2    6.07903635 7.00366347 276.1000061035156 5.0
+## 3                    1   12.91273864 7.31050997 472.3999938964844 5.0
+## 4                    0  5.768364071846008 7.061988115310669 241.0 4.0
+## 5                    0   7.71806025 8.74342196 147.89999389648438 5.0
+## 6                    0   6.481826305389404 6.938955187797546 78.0 6.0
+## 7                    0  12.27000784 10.52387339 382.6000061035156 5.0
+## 8                    1    6.60113991 3.41806628 35.29999923706055 5.0
+## 9                    3 6.6513848304748535 8.869051337242126 151.0 4.0
+## 10                   0    9.38993463 7.07370386 531.2000122070313 5.0
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## 1                       1     public                    0
+## 2                      NA     public                   NA
+## 3                       1     public                    0
+## 4                       0     public                    0
+## 5                       0     public                    0
+## 6                       1     public                    1
+## 7                       0     public                    0
+## 8                       0       &lt;NA&gt;                    1
+## 9                       2     public                    0
+## 10                      0     public                    0
+</code></pre>
+
+<ul>
+<li>use with care: make sure your columns alligns before using, and here is an example of misuse</li>
+</ul>
+
+<pre><code class="r">rbind(data1, data2)
+</code></pre>
+
+<pre><code>## Error: numbers of columns of arguments do not match
+</code></pre>
+
+<ul>
+<li>rbind.fill() is a powerful rbind() realization in <strong>plyr</strong> package</li>
+<li>with rbind you have to make every column in both data.frames exist and allign(have the same index number), but with rbind.fill you need not be concerned. </li>
+<li>rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there&#39;s no corresponding part it assigns <strong><em>NA</em></strong></li>
+</ul>
+
+<pre><code class="r">rbind.fill(data1, data2)
+</code></pre>
+
+<pre><code>## Error: undefined columns selected
+</code></pre>
+
+<h3>creating derivative data frames via subset:</h3>
+
+<ul>
+<li>getting a subset of original data with a handy functions saves a lot of typing</li>
+</ul>
+
+<pre><code class="r">subset(sample_data, lga_id &lt; 500, select = c(&quot;lga_id&quot;, &quot;lga&quot;, &quot;state&quot;))
+</code></pre>
+
+<pre><code>##    lga_id             lga       state
+## 1      91     Barkin-Ladi     Plateau
+## 2      49         Anaocha     Anambra
+## 3      96         Batsari     Katsina
+## 5     258            Guma       Benue
+## 6      76        Ayamelum     Anambra
+## 7     232          Gamawa      Bauchi
+## 8     441          Kosofe       Lagos
+## 9     101         Bekwara Cross River
+## 10    261          Gurara       Niger
+## 11    359        Ise/Orun       Ekiti
+## 15    218      Ezinihitte         Imo
+## 17    312          Ihiala     Anambra
+## 18    152           Daura     Katsina
+## 21    488         Maradun     Zamfara
+## 22    396    kaduna South      Kaduna
+## 24    452          Kusada     Katsina
+## 25     43          Aliero       Kebbi
+## 27    191        Ekwusigo     Anambra
+## 29    161           Donga      Taraba
+## 31    324       Ika South       Delta
+## 32    183     Ehime-Mbano         Imo
+## 33    142          Damban      Bauchi
+## 36    466             Lau      Taraba
+## 37    473          Madobi        Kano
+## 38    349          Ingawa     Katsina
+## 39    223         Faskari     Katsina
+## 42    487            Mani     Katsina
+## 44    316     Ijebu North        Ogun
+## 46     67 Atakunmosa West        Osun
+## 47     79          Babura      Jigawa
+## 49    304        Ifelodun        Osun
+</code></pre>
+
+<h2>data cleaning:</h2>
+
+<h3>type conversion</h3>
+
+<ul>
+<li>type conversion can be forced by <strong>as.*()</strong> function</li>
+<li>common <strong>*</strong> types you&#39;d encounter are: 
+
+<ol>
+<li>numeric</li>
+<li>integer</li>
+<li>character</li>
+<li>logical</li>
+</ol></li>
+<li><p>sometimes you&#39;ll encounter <strong>factor</strong> variables, we recommend using <strong>as.character()</strong> function to convert it into character type before proceeding </p></li>
+<li><p>here&#39;s some examples</p></li>
+</ul>
+
+<pre><code class="r">my_numbers &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;)
+my_numbers
+</code></pre>
+
+<pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;
+</code></pre>
+
+<pre><code class="r">as.numeric(my_numbers)
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5
+</code></pre>
+
+<h2>creating and deleting columns</h2>
+
+<ul>
+<li>column creation: simple examples
+
+<ul>
+<li>R makes column creation very straightforward by repeating a value which is known as &ldquo;broadcasting&rdquo;</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">sample_data$simple &lt;- &quot;who wants some egusi?&quot;
+# a summary of the newly created simple column:
+</code></pre>
+
+<pre><code>## [1] &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot;
+## [4] &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot;
+</code></pre>
+
+<ul>
+<li>creating a column from a vector </li>
+</ul>
+
+<pre><code class="r">sample_data$simple &lt;- 1:50
+# a summary of the newly defined simple column:
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5 6
+</code></pre>
+
+<pre><code class="r">sample_data$simple &lt;- 1963
+# a summary of the newly defined simple column
+</code></pre>
+
+<pre><code>## [1] 1963 1963 1963 1963 1963 1963
+</code></pre>
+
+<pre><code>
+* column creation: using already existing columns
+
+```r
+# a look at the lga column
+head(sample_data$lga_id)
+</code></pre>
+
+<pre><code>## [1]  91  49  96 611 258  76
+</code></pre>
+
+<pre><code class="r"># creating a new column, by pasting &#39;9ja:&#39; to the values of the lga column
+sample_data$lga_id_national &lt;- paste(&quot;9ja:&quot;, sample_data$lga_id, sep = &quot;&quot;)
+# a look at the the new lga_id_national column
+head(sample_data$lga_id_national)
+</code></pre>
+
+<pre><code>## [1] &quot;9ja:91&quot;  &quot;9ja:49&quot;  &quot;9ja:96&quot;  &quot;9ja:611&quot; &quot;9ja:258&quot; &quot;9ja:76&quot;
+</code></pre>
+
+<ul>
+<li>column creation: boolean columns</li>
+</ul>
+
+<pre><code class="r">sample_data$public &lt;- sample_data$management == &quot;public&quot;
+table(sample_data$public)
+</code></pre>
+
+<pre><code>## 
+## TRUE 
+##   33
+</code></pre>
+
+<pre><code class="r">
+sample_data$public_2_docs &lt;- sample_data$management == &quot;public&quot; &amp; sample_data$num_doctors_fulltime == 
+    2
+table(sample_data$public_2_docs)
+</code></pre>
+
+<pre><code>## 
+## FALSE 
+##    44
+</code></pre>
+
+<ul>
+<li>column creation: sum of multiple numerical columns </li>
+</ul>
+
+<pre><code class="r">sample_data$num_nurselabtechs_fulltime &lt;- rowSums(cbind(sample_data$num_nurses_fulltime, 
+    sample_data$num_lab_techs_fulltime, na.rm = T))
+</code></pre>
+
+<pre><code class="r"># now we can view all three variables: the new num_nurselabtechs_fulltime
+# variable, and the two used to create it
+head(subset(sample_data, select = c(&quot;num_nurses_fulltime&quot;, &quot;num_lab_techs_fulltime&quot;, 
+    &quot;num_nurselabtechs_fulltime&quot;)), 5)
+</code></pre>
+
+<pre><code>##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
+## 1                   0                      1                          2
+## 2                   2                     NA                         NA
+## 3                   1                      1                          3
+## 4                   0                      0                          1
+## 5                   0                      0                          1
+</code></pre>
+
+<ul>
+<li>removing columns</li>
+</ul>
+
+<pre><code class="r">sample_data$num_nurselabtechs_fulltime &lt;- NULL
+# testing to make sure it no longer exists
+summary(sample_data$num_nurselabtechs_fulltime)
+</code></pre>
+
+<pre><code>## Length  Class   Mode 
+##      0   NULL   NULL
+</code></pre>
+
+<ul>
+<li>renaming<br/></li>
+</ul>
+
+<pre><code class="r"># quote the current variable name, and set it equal the quoted desired name
+sample_data &lt;- rename(sample_data, c(gps = &quot;global_positioning_system&quot;))
+</code></pre>
+
+<h2>data cleaning</h2>
+
+<h3>string manipulations</h3>
+
+<ul>
+<li>we&#39;re going to cover regex suite comes with base R, string_r packages have similar implementations.</li>
+<li>we&#39;re not going to cover regex/ regular expression in this tuorial.</li>
+<li>getting position of matched pattern with grep()</li>
+</ul>
+
+<pre><code class="r">my_strings = c(&quot;Hello&quot;, &quot;World&quot;, &quot;Foo&quot;)
+grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE)
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<pre><code class="r"># when value argument is set to true, grep() returns the actual strings
+# matchs the patterns
+grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE, value = T)
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot;
+</code></pre>
+
+<ul>
+<li>find pattern in strings and replace with sub()</li>
+<li>gsub() means global sub, which replace all the occurance of matching pattern, while sub() only works on the first appearance.</li>
+</ul>
+
+<pre><code class="r">my_strings
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">sub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXo&quot;
+</code></pre>
+
+<pre><code class="r">gsub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXX&quot;
+</code></pre>
+
+<ul>
+<li>change to upper/lower case with toupper()/ tolower()</li>
+</ul>
+
+<pre><code class="r">my_strings
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">toupper(my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HELLO&quot; &quot;WORLD&quot; &quot;FOO&quot;
+</code></pre>
+
+<pre><code class="r">tolower(my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;hello&quot; &quot;world&quot; &quot;foo&quot;
+</code></pre>
+
+<ul>
+<li>concatenate strings with paste():</li>
+</ul>
+
+<pre><code class="r">paste(&quot;hello&quot;, &quot;world&quot;, &quot;foo&quot;, sep = &quot;,&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;hello,world,foo&quot;
+</code></pre>
+
+<ul>
+<li>if you&#39;re trying to concate every element in a vector/ list, use <strong>collapse</strong> argument in paste()</li>
+</ul>
+
+<pre><code class="r">paste(my_strings, sep = &quot;,&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">paste(my_strings, collapse = &quot;,&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Hello,World,Foo&quot;
+</code></pre>
+
+<h3>writing out data</h3>
+
+<ul>
+<li>R can output multiple different output format, but we&#39;re going to cover csv and RDS format</li>
+<li>writing csv file with write.csv()
+
+<ul>
+<li>if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">write.csv(sample_data, &quot;./my_output.csv&quot;, row.names = FALSE)
+</code></pre>
+
+<ul>
+<li>we recommend output your data as RDS file, if you&#39;re only going to reuse it in R.</li>
+<li>use saveRDS() to save object in workspace to your harddrive
+
+<ul>
+<li>no row.names argument needs to be used, since we&#39;re saving the R object into a binary file</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">saveRDS(sample_data, &quot;./my_output.RDS&quot;)
+</code></pre>
+
+<ul>
+<li>use readRDS() function to load saved RDS file</li>
+</ul>
+
+<pre><code class="r">readRDS(&quot;./my_output.RDS&quot;)
+</code></pre>
+
+<pre><code>##            lga lga_id       state          zone c_section_yn
+## 1  Barkin-Ladi     91     Plateau North-Central        FALSE
+## 2      Anaocha     49     Anambra     Southeast        FALSE
+## 3      Batsari     96     Katsina     Northwest        FALSE
+## 4         Orlu    611         Imo     Southeast        FALSE
+## 5         Guma    258       Benue North-Central        FALSE
+## 6     Ayamelum     76     Anambra     Southeast        FALSE
+## 7       Gamawa    232      Bauchi     Northeast        FALSE
+## 8       Kosofe    441       Lagos     Southwest         TRUE
+## 9      Bekwara    101 Cross River   South-South        FALSE
+## 10      Gurara    261       Niger North-Central        FALSE
+##    num_nurses_fulltime                      global_positioning_system
+## 1                    0    9.57723376 8.98908176 1285.699951171875 5.0
+## 2                    2    6.07903635 7.00366347 276.1000061035156 5.0
+## 3                    1   12.91273864 7.31050997 472.3999938964844 5.0
+## 4                    0  5.768364071846008 7.061988115310669 241.0 4.0
+## 5                    0   7.71806025 8.74342196 147.89999389648438 5.0
+## 6                    0   6.481826305389404 6.938955187797546 78.0 6.0
+## 7                    0  12.27000784 10.52387339 382.6000061035156 5.0
+## 8                    1    6.60113991 3.41806628 35.29999923706055 5.0
+## 9                    3 6.6513848304748535 8.869051337242126 151.0 4.0
+## 10                   0    9.38993463 7.07370386 531.2000122070313 5.0
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## 1                       1     public                    0
+## 2                      NA     public                   NA
+## 3                       1     public                    0
+## 4                       0     public                    0
+## 5                       0     public                    0
+## 6                       1     public                    1
+## 7                       0     public                    0
+## 8                       0       &lt;NA&gt;                    1
+## 9                       2     public                    0
+## 10                      0     public                    0
+</code></pre>
+
+<h2>Aggregations in R:</h2>
+
+<ul>
+<li><p>there are many functions that can do aggregation for you, but we are only going to cover <strong>ddply()</strong> in <strong>plyr</strong> package</p></li>
+<li><p>creating simple aggregated summary:</p></li>
+<li><p>note: </p>
+
+<ol>
+<li><strong>(group) by</strong> variable must have at least one input</li>
+<li>you <strong>must</strong> specify what type of aggregation you want to perform, choose one from: summarize, transform</li>
+</ol></li>
+<li><p><a href="http://cran.r-project.org/web/packages/plyr/plyr.pdf">the link to the package dodument</a></p></li>
+</ul>
+
+<pre><code class="r">library(plyr)
+my_summary &lt;- ddply(sample_data, .(state, lga), summarise, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
+head(my_summary)
+</code></pre>
+
+<pre><code>##     state           lga counts total_num_nurse avg_c_section
+## 1    Abia Umuahia North      1               0             1
+## 2 Adamawa      Shelleng      1               2             0
+## 3 Anambra       Anaocha      1               2             0
+## 4 Anambra      Ayamelum      1               0             0
+## 5 Anambra      Ekwusigo      1               0             1
+## 6 Anambra        Ihiala      1               2             1
+</code></pre>
+
+<ul>
+<li>look at the output and compare the difference, the only change here is replacing summarize with transform</li>
+</ul>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, .(state, lga), transform, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
+head(my_summary)
+</code></pre>
+
+<pre><code>##             lga lga_id   state      zone c_section_yn num_nurses_fulltime
+## 1 Umuahia North    728    Abia Southeast         TRUE                  NA
+## 2      Shelleng    676 Adamawa Northeast        FALSE                   2
+## 3       Anaocha     49 Anambra Southeast        FALSE                   2
+## 4      Ayamelum     76 Anambra Southeast        FALSE                   0
+## 5      Ekwusigo    191 Anambra Southeast         TRUE                   0
+## 6        Ihiala    312 Anambra Southeast         TRUE                   2
+##                        global_positioning_system num_lab_techs_fulltime
+## 1     5.5224549 7.49361609 175.1999969482422 5.0                     41
+## 2 9.884562492370605 12.023136019706726 219.0 4.0                     NA
+## 3    6.07903635 7.00366347 276.1000061035156 5.0                     NA
+## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
+## 5                5.95802932 6.84972263 148.0 5.0                      0
+## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
+##   management num_doctors_fulltime simple lga_id_national public
+## 1     public                  308   1963         9ja:728   TRUE
+## 2     public                    1   1963         9ja:676   TRUE
+## 3     public                   NA   1963          9ja:49   TRUE
+## 4     public                    1   1963          9ja:76   TRUE
+## 5       &lt;NA&gt;                    1   1963         9ja:191     NA
+## 6       &lt;NA&gt;                    1   1963         9ja:312     NA
+##   public_2_docs counts total_num_nurse avg_c_section
+## 1         FALSE      1               0             1
+## 2         FALSE      1               2             0
+## 3            NA      1               2             0
+## 4         FALSE      1               0             0
+## 5         FALSE      1               0             1
+## 6         FALSE      1               2             1
+</code></pre>
+
+<h1>Advanced R</h1>
+
+<h2>creation of more complex columns(indicators) with <strong>ifelse()</strong>:</h2>
+
+<h2>install packages from outside of cran</h2>
+
+<ul>
+<li>in order to install packages on github we need some extra work</li>
+<li>this tutorial will use the example of formhub.R</li>
+<li>first step: install and load <strong>devtools</strong> package from cran</li>
+</ul>
+
+<pre><code class="r">install.packages(&quot;devtools&quot;)
+</code></pre>
+
+<pre><code>## Error: trying to use CRAN without setting a mirror
+</code></pre>
+
+<pre><code class="r">library(devtools)
+</code></pre>
+
+<ul>
+<li>second step: use <strong>install_github(&ldquo;repo_name&rdquo;, &ldquo;user_name&rdquo;)</strong> function to install packages on github</li>
+</ul>
+
+<pre><code class="r">install_github(&quot;formhub.R&quot;, username = &quot;SEL-Columbia&quot;)
+</code></pre>
+
+<pre><code>## Installing github repo(s) formhub.R/master from SEL-Columbia
+## Downloading formhub.R.zip from https://github.com/SEL-Columbia/formhub.R/archive/master.zip
+## Installing package from /var/folders/zz/lshv3_rj5kq_9bc4m9pp33tc0000gn/T//RtmpqA4mP0/formhub.R.zip
+## Installing formhub
+## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --vanilla CMD INSTALL  \
+##   &#39;/private/var/folders/zz/lshv3_rj5kq_9bc4m9pp33tc0000gn/T/RtmpqA4mP0/formhub.R-master&#39;  \
+##   --library=&#39;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&#39;  \
+##   --with-keep.source --install-tests
+</code></pre>
+
+<pre><code class="r">library(formhub)
+</code></pre>
+
+<pre><code>## Loading required package: RJSONIO
+## Loading required package: stringr
+## Loading required package: RCurl
+## Loading required package: bitops
+## Loading required package: lubridate
+## 
+## Attaching package: &#39;lubridate&#39;
+## 
+## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     here
+## 
+## Loading required package: doBy
+## Loading required package: multcomp
+## Loading required package: mvtnorm
+## Loading required package: survival
+## Loading required package: splines
+## Loading required package: MASS
+## Loading required package: sp
+</code></pre>
+
+<h2>map functions: apply()</h2>
+
+<ul>
+<li>instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R</li>
+<li>Here&#39;s the simply example for using apply to loop through every column and see the class of the column
+
+<ul>
+<li>note: <strong>MARGIN = 2</strong> specifies doing column-wise process</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">apply(sample_data, MARGIN = 2, FUN = class)
+</code></pre>
+
+<pre><code>##                       lga                    lga_id 
+##               &quot;character&quot;               &quot;character&quot; 
+##                     state                      zone 
+##               &quot;character&quot;               &quot;character&quot; 
+##              c_section_yn       num_nurses_fulltime 
+##               &quot;character&quot;               &quot;character&quot; 
+## global_positioning_system    num_lab_techs_fulltime 
+##               &quot;character&quot;               &quot;character&quot; 
+##                management      num_doctors_fulltime 
+##               &quot;character&quot;               &quot;character&quot;
+</code></pre>
+
+<ul>
+<li>you can also define your own function in apply()</li>
+<li>the following code returns sum of <strong>NAs</strong> in each row
+
+<ul>
+<li>note: when you&#39;re define your own function in apply use semi-colon as the line marker.</li>
+<li>note: <strong>MARGIN = 1</strong> specifies doing row-wise process</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">apply(sample_data, MARGIN = 1, function(x) {
+    na_idx &lt;- is.na(x)
+    length(which(na_idx))
+})
+</code></pre>
+
+<pre><code>##  [1] 0 3 0 0 0 0 0 2 0 0
+</code></pre>
+
+<h2>improvements:</h2>
+
+<ul>
+<li>load your own functions into workspace with source()</li>
+</ul>
+
+<pre><code class="r">source(&quot;./my_source_functions.R&quot;)
+my_sum(1, 2)
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<ul>
+<li>optimize ddply with idata.frame()
+
+<ul>
+<li>idata.frame optimizes the computation speed but at the cost of a slight more complicated code</li>
+</ul></li>
+</ul>
+
+</body>
+
+</html>
+
