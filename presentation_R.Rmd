@@ -33,7 +33,7 @@ setwd("~/work/r/nigeria_r_training/")
 ```{r echo=TRUE, eval=FALSE}
 install.packages("plyr")
 ```   
-  2. to load libraries in R call __library()__ fucntion
+ * to load libraries in R call __library()__ fucntion
   
 ```{r}
 library(plyr)
@@ -41,7 +41,7 @@ library(plyr)
   * libraries are additional packages to R that contain additional specialized functions 
   * plyr library is used for aggregating data, which will be explored in detail later
 
-*be sure that the package you are trying to load is installed on your computer
+* be sure that the package you are trying to load is installed on your computer
 ```{r}
 library(eaf)
 ```
@@ -52,6 +52,8 @@ library(eaf)
 ```{r}
 sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
                         stringsAsFactors=FALSE)
+
+sample_data <- subset(sample_data, select=c("lga", "lga_id", "state", "zone", "c_section_yn", "num_nurses_fulltime", "gps", "num_lab_techs_fulltime", "management", "num_doctors_fulltime"))
 ```
   *stringsAsFactors will be explained later, but for now we recommend always using it
   
@@ -173,12 +175,12 @@ creating data frames
 ### joining columns:
 * R supports SQL-like join functionality with merge()
 ```{r, echo=FALSE}
-data1 <- sample_data[,-(2:4)]
-data2 <- unique(sample_data[, 2:5])
-data3 <- sample_data[, 2:5]
+data1 <- subset(sample_data, select=-c(lga, state, zone))
+data2 <- subset(sample_data, select=c(lga, lga_id, state, zone))
 
-data4 <- sample_data[1:100, ]
-data5 <- sample_data[101:2000, ]
+
+data4 <- sample_data[1:20, ]
+data5 <- sample_data[20:200, ]
 ```
 
 * inner join
@@ -200,10 +202,10 @@ left_outer_join <- merge(data1, data2, by.x="lga_id",
 * concatenate data.frames COLUMNwise with cbind()
 * note that the order of rows in original data is unchanged
 ```{r, echo=TRUE, eval=FALSE}
-cbind(data1, data3)
+cbind(data1, data2)
 ```
 ```{r, echo=FALSE, eval=TRUE}
-cbind(data1, data3)[1:10,1:10]
+cbind(data1, data2)[1:10,1:10]
 ```
 
 
@@ -217,19 +219,19 @@ rbind(data4, data5)[1:10,1:10]
 ```
 * use with care: make sure your columns alligns before using, and here is an example of miss-use
 ```{r, echo=TRUE, eval=FALSE}
-rbind(data1, data3)
+rbind(data1, data2)
 ```
 ```{r, echo=FALSE, eval=TRUE}
-rbind(data1, data3)[1:10,1:10]
+rbind(data1, data2)[1:10,1:10]
 ```
 * rbind.fill() a powerful rbind() realization in __plyr__ package
 * with rbind you have to make every column in both data.frame exists and alligns(have the same index number), but with rbind.fill you don't have to worry about it
 * rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part is assigns __*NA*__
 ```{r echo=TRUE, eval=FALSE}
-rbind.fill(data1, data3)
+rbind.fill(data1, data2)
 ```
 ```{r echo=FALSE, eval=TRUE}
-rbind.fill(data1, data3)[1:10, 1:10]
+rbind.fill(data1, data2)[1:10, 1:10]
 ```
 
 ### creating derivative data frames via subset:
