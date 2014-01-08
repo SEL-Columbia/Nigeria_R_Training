@@ -1,9 +1,8 @@
 Before started
 =======
 
-we recommend watch the following video before reading this documenmt
+we recommend watch the following video before reading this document
 * [Video tutorial for R from Google Developer](http://www.youtube.com/watch?v=iffR3fWv4xw&list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP)
-
 
 basic R
 ========================================================
@@ -15,6 +14,14 @@ getting started
 ![alt text][R_studio]
 
 [R_studio]: https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png
+
+### getting help!
+*after a question mark, enter the function name of your choice to get help on
+
+```r
+`?`(getwd)
+```
+
 
 ### set working directory 
 
@@ -44,7 +51,7 @@ setwd("~/work/r/nigeria_r_training/")
 install.packages("plyr")
 ```
 
-  2. to load libraries in R call __library()__ fucntion
+ * to load libraries in R call __library()__ fucntion
   
 
 ```r
@@ -54,24 +61,40 @@ library(plyr)
   * libraries are additional packages to R that contain additional specialized functions 
   * plyr library is used for aggregating data, which will be explored in detail later
 
+* be sure that the package you are trying to load is installed on your computer
+
+```r
+library(eaf)
+```
+
+```
+## Error: there is no package called 'eaf'
+```
+
+
 
 ### reading data: read.csv
   * csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.  
 
 ```r
 sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
-    stringsAsFactors = FALSE, skip = 0, nrows = -1)
+    stringsAsFactors = FALSE)
 ```
 
+  *stringsAsFactors will be explained later, but for now we recommend always using it
+  
 ### data types: 
   1. numerical
   2. integer
   3. boolean
   4. character
   5. factors
-    * generic data type used as alternative to all of the above. we recommend __not__ using.  
+    * generic data type used as alternative to all of the above. we recommend __not__ using. 
+    * specifically, there are typically challenges with factor => integer/numeric conversions
+    * for additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
+
   6. NA
-    * an additional data type in R for __value NOT AVAILABLE__, which can be found in any of the data type above
+    * an additional data type in R for value __NOT AVAILABLE__, which can be found in any of the data type above
 
 data.frames
 --------------
@@ -83,7 +106,7 @@ dim(sample_data)
 ```
 
 ```
-## [1] 2000  104
+## [1] 50 10
 ```
 
 ```r
@@ -99,16 +122,11 @@ names(sample_data)
 
 
 ```
-##  [1] "uuid"                                
-##  [2] "lga"                                 
-##  [3] "state"                               
-##  [4] "zone"                                
-##  [5] "lga_id"                              
-##  [6] "child_health_yellow_fever_immun_calc"
-##  [7] "unique_lga"                          
-##  [8] "facility_name"                       
-##  [9] "condoms_yn"                          
-## [10] "src"
+##  [1] "lga"                    "lga_id"                
+##  [3] "state"                  "zone"                  
+##  [5] "c_section_yn"           "num_nurses_fulltime"   
+##  [7] "gps"                    "num_lab_techs_fulltime"
+##  [9] "management"             "num_doctors_fulltime"
 ```
 
 
@@ -128,18 +146,16 @@ sample_data[, "lga"]
 
 
 ```
-##  [1] "Oyun"          "Argungu"       "Osogbo"        "Shomolu"      
-##  [5] "Rano"          "Ijebu North"   "Ikono"         "Etung"        
-##  [9] "Imeko Afon"    "Southern Ijaw"
+##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
+##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
 ```
 
 ```
-##  [1] "Oyun"          "Argungu"       "Osogbo"        "Shomolu"      
-##  [5] "Rano"          "Ijebu North"   "Ikono"         "Etung"        
-##  [9] "Imeko Afon"    "Southern Ijaw"
+##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
+##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
 ```
 
-
+* We generally prefer the first strategy, but sometimes we'll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. 
 
 ### getting row content by calling the row number
  * a row in our data set is equavilent to one full survey i.e. one facility
@@ -151,12 +167,12 @@ sample_data[2, ]
 
 
 ```
-##                                   uuid     lga state      zone lga_id
-## 2 e379e03b-eecf-4342-b197-ee5817c4cf42 Argungu Kebbi Northwest     61
-##   child_health_yellow_fever_immun_calc    unique_lga facility_name
-## 2                                FALSE kebbi_argungu    dispensary
-##   condoms_yn src
-## 2      FALSE 661
+##       lga lga_id   state      zone c_section_yn num_nurses_fulltime
+## 2 Anaocha     49 Anambra Southeast        FALSE                   2
+##                                           gps num_lab_techs_fulltime
+## 2 6.07903635 7.00366347 276.1000061035156 5.0                     NA
+##   management num_doctors_fulltime
+## 2     public                   NA
 ```
 
 ### more slicing and dicing in R
@@ -167,7 +183,7 @@ sample_data[4, 5]
 ```
 
 ```
-## [1] 682
+## [1] FALSE
 ```
 
 
@@ -178,10 +194,10 @@ sample_data[4:6, 1:5]
 ```
 
 ```
-##                                   uuid         lga state      zone lga_id
-## 4 b65f44b5-40e2-4c80-9ba3-850bcf18f587     Shomolu Lagos Southwest    682
-## 5 e1530640-abfb-4457-aeca-999981770d82        Rano  Kano Northwest    650
-## 6 8a7793d6-fd22-4143-b795-5d126c7824e9 Ijebu North  Ogun Southwest    316
+##        lga lga_id   state          zone c_section_yn
+## 4     Orlu    611     Imo     Southeast        FALSE
+## 5     Guma    258   Benue North-Central        FALSE
+## 6 Ayamelum     76 Anambra     Southeast        FALSE
 ```
 
 
@@ -200,11 +216,14 @@ dim(sample_data)
 ```
 
 ```
-## [1] 2000  104
+## [1] 50 10
 ```
 
 
 * getting the class of specific column
+
+  * note: class is the type of things in R. In python, this is equivalent to calling type(obj). In javascript, you would use typeof
+
 
 ```r
 class(sample_data$lga)
@@ -234,68 +253,35 @@ class(sample_data[, "lga"])
 
 
 * getting the summary/descriptive statistics 
-* works with both column and data.frame
 
-```r
-summary(sample_data$zone)
-summary(sample_data)
-```
-
-
-```
-##    Length     Class      Mode 
-##      2000 character character
-```
-
-```
-##      uuid                 lga                 state            
-##  "Length:2000       " "Length:2000       " "Length:2000       "
-##  "Class :character  " "Class :character  " "Class :character  "
-##  "Mode  :character  " "Mode  :character  " "Mode  :character  "
-##  NA                   NA                   NA                  
-##  NA                   NA                   NA                  
-##  NA                   NA                   NA                  
-##  NA                   NA                   NA                  
-##      zone                 lga_id      child_health_yellow_fever_immun_calc
-##  "Length:2000       " "Min.   :  2  " "Mode :logical  "                   
-##  "Class :character  " "1st Qu.:199  " "FALSE:501      "                   
-##  "Mode  :character  " "Median :396  " "TRUE :1082     "                   
-##  NA                   "Mean   :390  " "NA's :417      "                   
-##  NA                   "3rd Qu.:577  " NA                                  
-##  NA                   "Max.   :774  " NA                                  
-##  NA                   NA              NA                                  
-##   unique_lga          facility_name        condoms_yn       
-##  "Length:2000       " "Length:2000       " "Mode :logical  "
-##  "Class :character  " "Class :character  " "FALSE:830      "
-##  "Mode  :character  " "Mode  :character  " "TRUE :549      "
-##  NA                   NA                   "NA's :621      "
-##  NA                   NA                   NA               
-##  NA                   NA                   NA               
-##  NA                   NA                   NA               
-##      src             
-##  "Length:2000       "
-##  "Class :character  "
-##  "Mode  :character  "
-##  NA                  
-##  NA                  
-##  NA                  
-##  NA
-```
-
-
-
-* table of content of COLUMN
+  * __table()__ should be used for character and string variables
+  * __summary()__ should be used for numerical or boolean variables
 
 ```r
 table(sample_data$zone)
 ```
 
+  
+
 ```
 ## 
 ## North-Central     Northeast     Northwest     Southeast   South-South 
-##           500           253           398           220           245 
+##             7             5            12             8             9 
 ##     Southwest 
-##           384
+##             9
+```
+
+
+
+```r
+summary(sample_data$num_nurses_fulltime)
+```
+
+  
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    0.00    0.00    1.02    1.00    8.00       3
 ```
 
 
@@ -304,20 +290,63 @@ creating data frames
 
 ### joining columns:
 * R supports SQL-like join functionality with merge()
+  *first we'll prepare the data for a merge
 
+
+
+
+```r
+head(data1)
+```
+
+```
+##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime
+## 1                      1     public                    0
+## 2                     NA     public                   NA
+## 3                      1     public                    0
+## 4                      0     public                    0
+## 5                      0     public                    0
+## 6                      1     public                    1
+```
+
+
+
+
+
+
+```r
+head(data2)
+```
+
+```
+##         state          zone
+## 1     Plateau North-Central
+## 3     Katsina     Northwest
+## 5       Benue North-Central
+## 7      Bauchi     Northeast
+## 8       Lagos     Southwest
+## 9 Cross River   South-South
+```
 
 
 * inner join
 
 ```r
-inner_join <- merge(data1, data2, by = "lga_id")
+inner_join <- merge(data1, data2, by = "state")
 ```
 
 
 * outer join
 
 ```r
-outer_join <- merge(data1, data2, by = "lga_id", all = TRUE)
+outer_join <- merge(data1, data2, by = "state", all = TRUE)
 ```
 
 
@@ -327,60 +356,21 @@ outer_join <- merge(data1, data2, by = "lga_id", all = TRUE)
 left_outer_join <- merge(data1, data2, by.x = "lga_id", by.y = "lga_id", all.x = TRUE)
 ```
 
+```
+## Error: 'by' must specify a uniquely valid column
+```
+
 
 * concatenate data.frames COLUMNwise with cbind()
 * note that the order of rows in original data is unchanged
 
 ```r
-cbind(data1, data3)
+cbind(data1, data2)
 ```
 
 
 ```
-##                                    uuid lga_id
-## 1  365527d0-79f5-4a8e-9137-de52db578660    640
-## 2  e379e03b-eecf-4342-b197-ee5817c4cf42     61
-## 3  50d376a7-6599-48ec-97f3-4b131ea601cf    625
-## 4  b65f44b5-40e2-4c80-9ba3-850bcf18f587    682
-## 5  e1530640-abfb-4457-aeca-999981770d82    650
-## 6  8a7793d6-fd22-4143-b795-5d126c7824e9    316
-## 7  2e167e67-56e7-49ba-b7ab-0c33ac3c3f06    331
-## 8  12936a94-f3a4-43ff-8af4-e266686375d6    215
-## 9  41a8f161-164d-46d8-b344-c3e67c38122d    348
-## 10     3c3de9dcf32e9595596170469cda8de5    688
-##    child_health_yellow_fever_immun_calc            unique_lga
-## 1                                 FALSE            kwara_oyun
-## 2                                 FALSE         kebbi_argungu
-## 3                                    NA           osun_osogbo
-## 4                                    NA         lagos_shomolu
-## 5                                  TRUE             kano_rano
-## 6                                  TRUE      ogun_ijebu_north
-## 7                                  TRUE       akwa_ibom_ikono
-## 8                                  TRUE     cross_river_etung
-## 9                                 FALSE       ogun_imeko_afon
-## 10                                 TRUE bayelsa_southern_ijaw
-##                               facility_name condoms_yn src
-## 1  Falokun Owode basic health center ikotun       TRUE 661
-## 2                                dispensary      FALSE 661
-## 3                    HONESTY MEDICAL CENTRE         NA 661
-## 4                                 De-debajo         NA 661
-## 5                     Kazaurawa health post      FALSE 661
-## 6                        Mamu health centre       TRUE 661
-## 7                  Ikot Idaha Health centre       TRUE 661
-## 8                COMM. HEALTH CARE (CENTRE)       TRUE 661
-## 9                          Maternity centre      FALSE 661
-## 10              Comprehensive health centre         NA 113
-##    inpatient_care_yn tb_treatment_yn medication_folic_acid
-## 1              FALSE           FALSE                  TRUE
-## 2              FALSE           FALSE                    NA
-## 3               TRUE           FALSE                  TRUE
-## 4               TRUE            TRUE                  TRUE
-## 5              FALSE           FALSE                    NA
-## 6               TRUE           FALSE                  TRUE
-## 7               TRUE           FALSE                  TRUE
-## 8               TRUE           FALSE                  TRUE
-## 9              FALSE           FALSE                  TRUE
-## 10              TRUE           FALSE                  TRUE
+## Error: arguments imply differing number of rows: 50, 21
 ```
 
 
@@ -389,61 +379,57 @@ cbind(data1, data3)
 * note that the order of columns in original data is unchanged
 
 ```r
+data4 <- sample_data[1:5, ]
+data5 <- sample_data[6:10, ]
+```
+
+
+
+```r
 rbind(data4, data5)
 ```
 
 
 ```
-##                                    uuid           lga       state
-## 1  365527d0-79f5-4a8e-9137-de52db578660          Oyun       Kwara
-## 2  e379e03b-eecf-4342-b197-ee5817c4cf42       Argungu       Kebbi
-## 3  50d376a7-6599-48ec-97f3-4b131ea601cf        Osogbo        Osun
-## 4  b65f44b5-40e2-4c80-9ba3-850bcf18f587       Shomolu       Lagos
-## 5  e1530640-abfb-4457-aeca-999981770d82          Rano        Kano
-## 6  8a7793d6-fd22-4143-b795-5d126c7824e9   Ijebu North        Ogun
-## 7  2e167e67-56e7-49ba-b7ab-0c33ac3c3f06         Ikono   Akwa Ibom
-## 8  12936a94-f3a4-43ff-8af4-e266686375d6         Etung Cross River
-## 9  41a8f161-164d-46d8-b344-c3e67c38122d    Imeko Afon        Ogun
-## 10     3c3de9dcf32e9595596170469cda8de5 Southern Ijaw     Bayelsa
-##             zone lga_id child_health_yellow_fever_immun_calc
-## 1  North-Central    640                                FALSE
-## 2      Northwest     61                                FALSE
-## 3      Southwest    625                                   NA
-## 4      Southwest    682                                   NA
-## 5      Northwest    650                                 TRUE
-## 6      Southwest    316                                 TRUE
-## 7    South-South    331                                 TRUE
-## 8    South-South    215                                 TRUE
-## 9      Southwest    348                                FALSE
-## 10   South-South    688                                 TRUE
-##               unique_lga                            facility_name
-## 1             kwara_oyun Falokun Owode basic health center ikotun
-## 2          kebbi_argungu                               dispensary
-## 3            osun_osogbo                   HONESTY MEDICAL CENTRE
-## 4          lagos_shomolu                                De-debajo
-## 5              kano_rano                    Kazaurawa health post
-## 6       ogun_ijebu_north                       Mamu health centre
-## 7        akwa_ibom_ikono                 Ikot Idaha Health centre
-## 8      cross_river_etung               COMM. HEALTH CARE (CENTRE)
-## 9        ogun_imeko_afon                         Maternity centre
-## 10 bayelsa_southern_ijaw              Comprehensive health centre
-##    condoms_yn src
-## 1        TRUE 661
-## 2       FALSE 661
-## 3          NA 661
-## 4          NA 661
-## 5       FALSE 661
-## 6        TRUE 661
-## 7        TRUE 661
-## 8        TRUE 661
-## 9       FALSE 661
-## 10         NA 113
+##            lga lga_id       state          zone c_section_yn
+## 1  Barkin-Ladi     91     Plateau North-Central        FALSE
+## 2      Anaocha     49     Anambra     Southeast        FALSE
+## 3      Batsari     96     Katsina     Northwest        FALSE
+## 4         Orlu    611         Imo     Southeast        FALSE
+## 5         Guma    258       Benue North-Central        FALSE
+## 6     Ayamelum     76     Anambra     Southeast        FALSE
+## 7       Gamawa    232      Bauchi     Northeast        FALSE
+## 8       Kosofe    441       Lagos     Southwest         TRUE
+## 9      Bekwara    101 Cross River   South-South        FALSE
+## 10      Gurara    261       Niger North-Central        FALSE
+##    num_nurses_fulltime                                            gps
+## 1                    0    9.57723376 8.98908176 1285.699951171875 5.0
+## 2                    2    6.07903635 7.00366347 276.1000061035156 5.0
+## 3                    1   12.91273864 7.31050997 472.3999938964844 5.0
+## 4                    0  5.768364071846008 7.061988115310669 241.0 4.0
+## 5                    0   7.71806025 8.74342196 147.89999389648438 5.0
+## 6                    0   6.481826305389404 6.938955187797546 78.0 6.0
+## 7                    0  12.27000784 10.52387339 382.6000061035156 5.0
+## 8                    1    6.60113991 3.41806628 35.29999923706055 5.0
+## 9                    3 6.6513848304748535 8.869051337242126 151.0 4.0
+## 10                   0    9.38993463 7.07370386 531.2000122070313 5.0
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## 1                       1     public                    0
+## 2                      NA     public                   NA
+## 3                       1     public                    0
+## 4                       0     public                    0
+## 5                       0     public                    0
+## 6                       1     public                    1
+## 7                       0     public                    0
+## 8                       0       <NA>                    1
+## 9                       2     public                    0
+## 10                      0     public                    0
 ```
 
-* use with care: make sure your columns alligns before using, and here is an example of miss-use
+* use with care: make sure your columns alligns before using, and here is an example of misuse
 
 ```r
-rbind(data1, data3)
+rbind(data1, data2)
 ```
 
 
@@ -451,101 +437,61 @@ rbind(data1, data3)
 ## Error: numbers of columns of arguments do not match
 ```
 
-* rbind.fill() a powerful rbind() realization in __plyr__ package
-* with rbind you have to make every column in both data.frame exists and alligns(have the same index number), but with rbind.fill you don't have to worry about it
-* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part is assigns __*NA*__
+* rbind.fill() is a powerful rbind() realization in __plyr__ package
+* with rbind you have to make every column in both data.frames exist and allign(have the same index number), but with rbind.fill you need not be concerned. 
+* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part it assigns __*NA*__
 
 ```r
-rbind.fill(data1, data3)
+rbind.fill(data1, data2)
 ```
 
 
 ```
-##                                    uuid lga_id
-## 1  365527d0-79f5-4a8e-9137-de52db578660    640
-## 2  e379e03b-eecf-4342-b197-ee5817c4cf42     61
-## 3  50d376a7-6599-48ec-97f3-4b131ea601cf    625
-## 4  b65f44b5-40e2-4c80-9ba3-850bcf18f587    682
-## 5  e1530640-abfb-4457-aeca-999981770d82    650
-## 6  8a7793d6-fd22-4143-b795-5d126c7824e9    316
-## 7  2e167e67-56e7-49ba-b7ab-0c33ac3c3f06    331
-## 8  12936a94-f3a4-43ff-8af4-e266686375d6    215
-## 9  41a8f161-164d-46d8-b344-c3e67c38122d    348
-## 10     3c3de9dcf32e9595596170469cda8de5    688
-##    child_health_yellow_fever_immun_calc            unique_lga
-## 1                                 FALSE            kwara_oyun
-## 2                                 FALSE         kebbi_argungu
-## 3                                    NA           osun_osogbo
-## 4                                    NA         lagos_shomolu
-## 5                                  TRUE             kano_rano
-## 6                                  TRUE      ogun_ijebu_north
-## 7                                  TRUE       akwa_ibom_ikono
-## 8                                  TRUE     cross_river_etung
-## 9                                 FALSE       ogun_imeko_afon
-## 10                                 TRUE bayelsa_southern_ijaw
-##                               facility_name condoms_yn src
-## 1  Falokun Owode basic health center ikotun       TRUE 661
-## 2                                dispensary      FALSE 661
-## 3                    HONESTY MEDICAL CENTRE         NA 661
-## 4                                 De-debajo         NA 661
-## 5                     Kazaurawa health post      FALSE 661
-## 6                        Mamu health centre       TRUE 661
-## 7                  Ikot Idaha Health centre       TRUE 661
-## 8                COMM. HEALTH CARE (CENTRE)       TRUE 661
-## 9                          Maternity centre      FALSE 661
-## 10              Comprehensive health centre         NA 113
-##    inpatient_care_yn tb_treatment_yn medication_folic_acid
-## 1              FALSE           FALSE                  TRUE
-## 2              FALSE           FALSE                    NA
-## 3               TRUE           FALSE                  TRUE
-## 4               TRUE            TRUE                  TRUE
-## 5              FALSE           FALSE                    NA
-## 6               TRUE           FALSE                  TRUE
-## 7               TRUE           FALSE                  TRUE
-## 8               TRUE           FALSE                  TRUE
-## 9              FALSE           FALSE                  TRUE
-## 10              TRUE           FALSE                  TRUE
+## Error: undefined columns selected
 ```
 
 
 ### creating derivative data frames via subset:
-* getting a subset of original data with handy functions saves a lot of typing
-* campare the two outputs
+* getting a subset of original data with a handy functions saves a lot of typing
+
 
 ```r
-subset(sample_data, lga_id < 600, select = c("lga_id", "lga", "state"))
-
-sample_data[sample_data$lga_id < 600, c("lga_id", "lga", "state")]
-```
-
-
-
-```
-##    lga_id               lga       state
-## 2      61           Argungu       Kebbi
-## 6     316       Ijebu North        Ogun
-## 7     331             Ikono   Akwa Ibom
-## 8     215             Etung Cross River
-## 9     348        Imeko Afon        Ogun
-## 11    589              Okpe       Delta
-## 12    450              Kura        Kano
-## 15    389          Jos East     Plateau
-## 16    453             Kwali         FCT
-## 17    364 Isiala Ngwa South        Abia
+subset(sample_data, lga_id < 500, select = c("lga_id", "lga", "state"))
 ```
 
 ```
-##    lga_id               lga       state
-## 2      61           Argungu       Kebbi
-## 6     316       Ijebu North        Ogun
-## 7     331             Ikono   Akwa Ibom
-## 8     215             Etung Cross River
-## 9     348        Imeko Afon        Ogun
-## 11    589              Okpe       Delta
-## 12    450              Kura        Kano
-## 15    389          Jos East     Plateau
-## 16    453             Kwali         FCT
-## 17    364 Isiala Ngwa South        Abia
+##    lga_id             lga       state
+## 1      91     Barkin-Ladi     Plateau
+## 2      49         Anaocha     Anambra
+## 3      96         Batsari     Katsina
+## 5     258            Guma       Benue
+## 6      76        Ayamelum     Anambra
+## 7     232          Gamawa      Bauchi
+## 8     441          Kosofe       Lagos
+## 9     101         Bekwara Cross River
+## 10    261          Gurara       Niger
+## 11    359        Ise/Orun       Ekiti
+## 15    218      Ezinihitte         Imo
+## 17    312          Ihiala     Anambra
+## 18    152           Daura     Katsina
+## 21    488         Maradun     Zamfara
+## 22    396    kaduna South      Kaduna
+## 24    452          Kusada     Katsina
+## 25     43          Aliero       Kebbi
+## 27    191        Ekwusigo     Anambra
+## 29    161           Donga      Taraba
+## 31    324       Ika South       Delta
+## 32    183     Ehime-Mbano         Imo
+## 33    142          Damban      Bauchi
+## 36    466             Lau      Taraba
+## 37    473          Madobi        Kano
+## 38    349          Ingawa     Katsina
+## 39    223         Faskari     Katsina
+## 42    487            Mani     Katsina
+## 44    316     Ijebu North        Ogun
+## 46     67 Atakunmosa West        Osun
+## 47     79          Babura      Jigawa
+## 49    304        Ifelodun        Osun
 ```
 
 
@@ -564,7 +510,7 @@ data cleaning:
 * here's some examples
 
 ```r
-my_numbers = c("1", "2", "3", "4", "5")
+my_numbers <- c("1", "2", "3", "4", "5")
 my_numbers
 ```
 
@@ -583,25 +529,45 @@ as.numeric(my_numbers)
 
 creating and deleting columns
 --------------
-* column creation: simple examples
+
+* creating a column from a vector 
+
+```r
+sample_data$simple <- 1:50
+# a head() of the newly created simple column:
+```
+
+
+
+```
+## [1] 1 2 3 4 5 6
+```
+
+* column creation: __broadcasting__  
+  * R makes column creation very straightforward by repeating a value which is known as "broadcasting"
 
 ```r
 sample_data$simple <- "who wants some egusi?"
-# a summary of the newly created simple column
-head(sample_data$simple)
+# a head() of the newly defined simple column:
 ```
+
+
 
 ```
 ## [1] "who wants some egusi?" "who wants some egusi?" "who wants some egusi?"
 ## [4] "who wants some egusi?" "who wants some egusi?" "who wants some egusi?"
 ```
 
-```r
 
+* creating a column from a single value
+  * R allows the user to broadcast numerical values as well
+
+```r
 sample_data$simple <- 1963
-# a summary of the newly defined simple column
-head(sample_data$simple)
+# a head() of the newly defined simple column
 ```
+
+
 
 ```
 ## [1] 1963 1963 1963 1963 1963 1963
@@ -616,7 +582,7 @@ head(sample_data$lga_id)
 ```
 
 ```
-## [1] 640  61 625 682 650 316
+## [1]  91  49  96 611 258  76
 ```
 
 ```r
@@ -627,7 +593,7 @@ head(sample_data$lga_id_national)
 ```
 
 ```
-## [1] "9ja:640" "9ja:61"  "9ja:625" "9ja:682" "9ja:650" "9ja:316"
+## [1] "9ja:91"  "9ja:49"  "9ja:96"  "9ja:611" "9ja:258" "9ja:76"
 ```
 
 
@@ -635,52 +601,42 @@ head(sample_data$lga_id_national)
 
 ```r
 sample_data$public <- sample_data$management == "public"
-table(sample_data$public)
+head(sample_data[, c("management", "public")])
 ```
 
 ```
-## 
-## FALSE  TRUE 
-##    49  1493
+##   management public
+## 1     public   TRUE
+## 2     public   TRUE
+## 3     public   TRUE
+## 4     public   TRUE
+## 5     public   TRUE
+## 6     public   TRUE
 ```
 
 ```r
 
 sample_data$public_2_docs <- sample_data$management == "public" & sample_data$num_doctors_fulltime == 
     2
-table(sample_data$public_2_docs)
+head(sample_data[, c("public_2_docs", "management", "public")])
 ```
 
 ```
-## 
-## FALSE  TRUE 
-##  1803     9
+##   public_2_docs management public
+## 1         FALSE     public   TRUE
+## 2            NA     public   TRUE
+## 3         FALSE     public   TRUE
+## 4         FALSE     public   TRUE
+## 5         FALSE     public   TRUE
+## 6         FALSE     public   TRUE
 ```
 
 
-* column creation: sum of multiple numerical columns 
+* renaming  	
 
 ```r
-sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime, 
-    sample_data$num_lab_techs_fulltime, na.rm = T))
-```
-
-  
-
-```r
-# now we can view all three variables: the new num_nurselabtechs_fulltime
-# variable, and the two used to create it
-head(subset(sample_data, select = c("num_nurses_fulltime", "num_lab_techs_fulltime", 
-    "num_nurselabtechs_fulltime")), 5)
-```
-
-```
-##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
-## 1                   0                      0                          1
-## 2                  NA                     NA                         NA
-## 3                   0                      0                          1
-## 4                   4                      0                          5
-## 5                   0                      0                          1
+# quote the current variable name, and set it equal the quoted desired name
+sample_data <- rename(sample_data, c(gps = "global_positioning_system"))
 ```
 
 
@@ -698,16 +654,6 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ```
 
  
-* renaming		
-
-```r
-# quote the current variable name, and set it equal the quoted desired name
-sample_data <- rename(sample_data, c(gps = "global_positioning_system"))
-```
-
-
-
-
 data cleaning
 --------------
 ### string manipulations
@@ -819,7 +765,7 @@ paste(my_strings, collapse = ",")
 ### writing out data
 * R can output multiple different output format, but we're going to cover csv and RDS format
 * writing csv file with write.csv()
- * if you find output row.names everything annoying, set row.names argument to FALSE in write.csv()
+ * if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()
 
 ```r
 write.csv(sample_data, "./my_output.csv", row.names = FALSE)
@@ -841,50 +787,39 @@ readRDS("./my_output.RDS")
 
 
 ```
-##                                    uuid           lga       state
-## 1  365527d0-79f5-4a8e-9137-de52db578660          Oyun       Kwara
-## 2  e379e03b-eecf-4342-b197-ee5817c4cf42       Argungu       Kebbi
-## 3  50d376a7-6599-48ec-97f3-4b131ea601cf        Osogbo        Osun
-## 4  b65f44b5-40e2-4c80-9ba3-850bcf18f587       Shomolu       Lagos
-## 5  e1530640-abfb-4457-aeca-999981770d82          Rano        Kano
-## 6  8a7793d6-fd22-4143-b795-5d126c7824e9   Ijebu North        Ogun
-## 7  2e167e67-56e7-49ba-b7ab-0c33ac3c3f06         Ikono   Akwa Ibom
-## 8  12936a94-f3a4-43ff-8af4-e266686375d6         Etung Cross River
-## 9  41a8f161-164d-46d8-b344-c3e67c38122d    Imeko Afon        Ogun
-## 10     3c3de9dcf32e9595596170469cda8de5 Southern Ijaw     Bayelsa
-##             zone lga_id child_health_yellow_fever_immun_calc
-## 1  North-Central    640                                FALSE
-## 2      Northwest     61                                FALSE
-## 3      Southwest    625                                   NA
-## 4      Southwest    682                                   NA
-## 5      Northwest    650                                 TRUE
-## 6      Southwest    316                                 TRUE
-## 7    South-South    331                                 TRUE
-## 8    South-South    215                                 TRUE
-## 9      Southwest    348                                FALSE
-## 10   South-South    688                                 TRUE
-##               unique_lga                            facility_name
-## 1             kwara_oyun Falokun Owode basic health center ikotun
-## 2          kebbi_argungu                               dispensary
-## 3            osun_osogbo                   HONESTY MEDICAL CENTRE
-## 4          lagos_shomolu                                De-debajo
-## 5              kano_rano                    Kazaurawa health post
-## 6       ogun_ijebu_north                       Mamu health centre
-## 7        akwa_ibom_ikono                 Ikot Idaha Health centre
-## 8      cross_river_etung               COMM. HEALTH CARE (CENTRE)
-## 9        ogun_imeko_afon                         Maternity centre
-## 10 bayelsa_southern_ijaw              Comprehensive health centre
-##    condoms_yn src
-## 1        TRUE 661
-## 2       FALSE 661
-## 3          NA 661
-## 4          NA 661
-## 5       FALSE 661
-## 6        TRUE 661
-## 7        TRUE 661
-## 8        TRUE 661
-## 9       FALSE 661
-## 10         NA 113
+##            lga lga_id       state          zone c_section_yn
+## 1  Barkin-Ladi     91     Plateau North-Central        FALSE
+## 2      Anaocha     49     Anambra     Southeast        FALSE
+## 3      Batsari     96     Katsina     Northwest        FALSE
+## 4         Orlu    611         Imo     Southeast        FALSE
+## 5         Guma    258       Benue North-Central        FALSE
+## 6     Ayamelum     76     Anambra     Southeast        FALSE
+## 7       Gamawa    232      Bauchi     Northeast        FALSE
+## 8       Kosofe    441       Lagos     Southwest         TRUE
+## 9      Bekwara    101 Cross River   South-South        FALSE
+## 10      Gurara    261       Niger North-Central        FALSE
+##    num_nurses_fulltime                      global_positioning_system
+## 1                    0    9.57723376 8.98908176 1285.699951171875 5.0
+## 2                    2    6.07903635 7.00366347 276.1000061035156 5.0
+## 3                    1   12.91273864 7.31050997 472.3999938964844 5.0
+## 4                    0  5.768364071846008 7.061988115310669 241.0 4.0
+## 5                    0   7.71806025 8.74342196 147.89999389648438 5.0
+## 6                    0   6.481826305389404 6.938955187797546 78.0 6.0
+## 7                    0  12.27000784 10.52387339 382.6000061035156 5.0
+## 8                    1    6.60113991 3.41806628 35.29999923706055 5.0
+## 9                    3 6.6513848304748535 8.869051337242126 151.0 4.0
+## 10                   0    9.38993463 7.07370386 531.2000122070313 5.0
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## 1                       1     public                    0
+## 2                      NA     public                   NA
+## 3                       1     public                    0
+## 4                       0     public                    0
+## 5                       0     public                    0
+## 6                       1     public                    1
+## 7                       0     public                    0
+## 8                       0       <NA>                    1
+## 9                       2     public                    0
+## 10                      0     public                    0
 ```
 
 
@@ -896,6 +831,7 @@ Aggregations in R:
 * note: 
   1. __(group) by__ variable must have at least one input
   2. you __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform
+* [the link to the package dodument](http://cran.r-project.org/web/packages/plyr/plyr.pdf)
 
 ```r
 library(plyr)
@@ -906,34 +842,90 @@ head(my_summary)
 ```
 
 ```
-##   state               lga counts total_num_nurse avg_c_section
-## 1  Abia         Aba South      1               6             1
-## 2  Abia         Arochukwu      2               0             0
-## 3  Abia             Bende      4               0             0
-## 4  Abia           Ikwuano      2               1             0
-## 5  Abia Isiala Ngwa North      5               1             0
-## 6  Abia Isiala Ngwa South      7               0             0
+##     state           lga counts total_num_nurse avg_c_section
+## 1    Abia Umuahia North      1               0             1
+## 2 Adamawa      Shelleng      1               2             0
+## 3 Anambra       Anaocha      1               2             0
+## 4 Anambra      Ayamelum      1               0             0
+## 5 Anambra      Ekwusigo      1               0             1
+## 6 Anambra        Ihiala      1               2             1
 ```
 
-* look at the output and compare the difference, the only change here is replacing summarise with transform
+* look at the output and compare the difference, the only change here is replacing summarize with transform
 
 ```r
 my_summary <- ddply(sample_data, .(state, lga), transform, counts = length(lga_id), 
     total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
         T, na.rm = T))
-dim(my_summary)
+head(my_summary)
 ```
 
 ```
-## [1] 2000  111
+##             lga lga_id   state      zone c_section_yn num_nurses_fulltime
+## 1 Umuahia North    728    Abia Southeast         TRUE                  NA
+## 2      Shelleng    676 Adamawa Northeast        FALSE                   2
+## 3       Anaocha     49 Anambra Southeast        FALSE                   2
+## 4      Ayamelum     76 Anambra Southeast        FALSE                   0
+## 5      Ekwusigo    191 Anambra Southeast         TRUE                   0
+## 6        Ihiala    312 Anambra Southeast         TRUE                   2
+##                        global_positioning_system num_lab_techs_fulltime
+## 1     5.5224549 7.49361609 175.1999969482422 5.0                     41
+## 2 9.884562492370605 12.023136019706726 219.0 4.0                     NA
+## 3    6.07903635 7.00366347 276.1000061035156 5.0                     NA
+## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
+## 5                5.95802932 6.84972263 148.0 5.0                      0
+## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
+##   management num_doctors_fulltime simple lga_id_national public
+## 1     public                  308   1963         9ja:728   TRUE
+## 2     public                    1   1963         9ja:676   TRUE
+## 3     public                   NA   1963          9ja:49   TRUE
+## 4     public                    1   1963          9ja:76   TRUE
+## 5       <NA>                    1   1963         9ja:191     NA
+## 6       <NA>                    1   1963         9ja:312     NA
+##   public_2_docs counts total_num_nurse avg_c_section
+## 1         FALSE      1               0             1
+## 2         FALSE      1               2             0
+## 3            NA      1               2             0
+## 4         FALSE      1               0             0
+## 5         FALSE      1               0             1
+## 6         FALSE      1               2             1
 ```
 
 
 Advanced R
 ========================================================
 
+creation of more complex columns(indicators) with __rowSums()__:
+-------------------------------------
+* column creation: sum of multiple numerical columns 
+
+```r
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime, 
+    sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+
+  
+
+```r
+# now we can view all three variables: the new num_nurselabtechs_fulltime
+# variable, and the two used to create it
+head(subset(sample_data, select = c("num_nurses_fulltime", "num_lab_techs_fulltime", 
+    "num_nurselabtechs_fulltime")), 5)
+```
+
+```
+##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
+## 1                   0                      1                          2
+## 2                   2                     NA                         NA
+## 3                   1                      1                          3
+## 4                   0                      0                          1
+## 5                   0                      0                          1
+```
+
+
 creation of more complex columns(indicators) with __ifelse()__:
 -------------------------------------
+
 
 install packages from outside of cran
 -------------------------------------
@@ -967,11 +959,11 @@ install_github("formhub.R", username = "SEL-Columbia")
 ```
 ## Installing github repo formhub.R/master from SEL-Columbia
 ## Downloading formhub.R.zip from https://github.com/SEL-Columbia/formhub.R/archive/master.zip
-## Installing package from /tmp/RtmpGrV4Jx/formhub.R.zip
+## Installing package from /tmp/RtmppsvqSP/formhub.R.zip
 ## arguments 'minimized' and 'invisible' are for Windows only
 ## Installing formhub
 ## '/usr/lib/R/bin/R' --vanilla CMD INSTALL  \
-##   '/tmp/RtmpGrV4Jx/devtools156744c94599/formhub.R-master'  \
+##   '/tmp/RtmppsvqSP/devtools30c41df32450/formhub.R-master'  \
 ##   --library='/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'  \
 ##   --install-tests
 ```
@@ -1005,6 +997,7 @@ map functions: apply()
 -----------------------
 * instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R
 * Here's the simply example for using apply to loop through every column and see the class of the column
+  * note: __MARGIN = 2__ specifies doing column-wise process
 
 ```r
 apply(sample_data, MARGIN = 2, FUN = class)
@@ -1012,22 +1005,23 @@ apply(sample_data, MARGIN = 2, FUN = class)
 
 
 ```
-##                                 uuid                                  lga 
-##                          "character"                          "character" 
-##                                state                                 zone 
-##                          "character"                          "character" 
-##                               lga_id child_health_yellow_fever_immun_calc 
-##                          "character"                          "character" 
-##                           unique_lga                        facility_name 
-##                          "character"                          "character" 
-##                           condoms_yn                                  src 
-##                          "character"                          "character"
+##                       lga                    lga_id 
+##               "character"               "character" 
+##                     state                      zone 
+##               "character"               "character" 
+##              c_section_yn       num_nurses_fulltime 
+##               "character"               "character" 
+## global_positioning_system    num_lab_techs_fulltime 
+##               "character"               "character" 
+##                management      num_doctors_fulltime 
+##               "character"               "character"
 ```
 
 
 * you can also define your own function in apply()
 * the following code returns sum of __NAs__ in each row
-  * note: when you're define your own function in apply use semi-colon as the line marker
+  * note: when you're define your own function in apply use semi-colon as the line marker.
+  * note: __MARGIN = 1__ specifies doing row-wise process
 
 ```r
 apply(sample_data, MARGIN = 1, function(x) {
@@ -1038,7 +1032,7 @@ apply(sample_data, MARGIN = 1, function(x) {
 
 
 ```
-##  [1] 13 22 55 64 20 10  8 11 14 24
+##  [1] 0 4 0 0 0 0 0 2 0 0
 ```
 
 

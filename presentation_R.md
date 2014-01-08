@@ -15,6 +15,14 @@ getting started
 
 [R_studio]: https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png
 
+### getting help!
+*after a question mark, enter the function name of your choice to get help on
+
+```r
+`?`(getwd)
+```
+
+
 ### set working directory 
 
 ```r
@@ -23,7 +31,7 @@ getwd()
 ```
 
 ```
-## [1] "/Users/salahchafik/Code/Nigeria_R_Training"
+## [1] "/home/zaiming/work/r/nigeria_r_training"
 ```
 
 
@@ -257,8 +265,8 @@ table(sample_data$zone)
 
 ```
 ## 
-## North-Central     Northeast     Northwest   South-South     Southeast 
-##             7             5            12             9             8 
+## North-Central     Northeast     Northwest     Southeast   South-South 
+##             7             5            12             8             9 
 ##     Southwest 
 ##             9
 ```
@@ -521,12 +529,26 @@ as.numeric(my_numbers)
 
 creating and deleting columns
 --------------
-* column creation: simple examples
+
+* creating a column from a vector 
+
+```r
+sample_data$simple <- 1:50
+# a head() of the newly created simple column:
+```
+
+
+
+```
+## [1] 1 2 3 4 5 6
+```
+
+* column creation: __broadcasting__  
   * R makes column creation very straightforward by repeating a value which is known as "broadcasting"
 
 ```r
 sample_data$simple <- "who wants some egusi?"
-# a summary of the newly created simple column:
+# a head() of the newly defined simple column:
 ```
 
 
@@ -537,24 +559,12 @@ sample_data$simple <- "who wants some egusi?"
 ```
 
 
-* creating a column from a vector 
-
-```r
-sample_data$simple <- 1:50
-# a summary of the newly defined simple column:
-```
-
-
-
-```
-## [1] 1 2 3 4 5 6
-```
-
-
+* creating a column from a single value
+  * R allows the user to broadcast numerical values as well
 
 ```r
 sample_data$simple <- 1963
-# a summary of the newly defined simple column
+# a head() of the newly defined simple column
 ```
 
 
@@ -563,10 +573,6 @@ sample_data$simple <- 1963
 ## [1] 1963 1963 1963 1963 1963 1963
 ```
 
-
-
-
-```
   
 * column creation: using already existing columns
 
@@ -595,52 +601,42 @@ head(sample_data$lga_id_national)
 
 ```r
 sample_data$public <- sample_data$management == "public"
-table(sample_data$public)
+head(sample_data[, c("management", "public")])
 ```
 
 ```
-## 
-## TRUE 
-##   33
+##   management public
+## 1     public   TRUE
+## 2     public   TRUE
+## 3     public   TRUE
+## 4     public   TRUE
+## 5     public   TRUE
+## 6     public   TRUE
 ```
 
 ```r
 
 sample_data$public_2_docs <- sample_data$management == "public" & sample_data$num_doctors_fulltime == 
     2
-table(sample_data$public_2_docs)
+head(sample_data[, c("public_2_docs", "management", "public")])
 ```
 
 ```
-## 
-## FALSE 
-##    44
+##   public_2_docs management public
+## 1         FALSE     public   TRUE
+## 2            NA     public   TRUE
+## 3         FALSE     public   TRUE
+## 4         FALSE     public   TRUE
+## 5         FALSE     public   TRUE
+## 6         FALSE     public   TRUE
 ```
 
 
-* column creation: sum of multiple numerical columns 
+* renaming  	
 
 ```r
-sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime, 
-    sample_data$num_lab_techs_fulltime, na.rm = T))
-```
-
-  
-
-```r
-# now we can view all three variables: the new num_nurselabtechs_fulltime
-# variable, and the two used to create it
-head(subset(sample_data, select = c("num_nurses_fulltime", "num_lab_techs_fulltime", 
-    "num_nurselabtechs_fulltime")), 5)
-```
-
-```
-##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
-## 1                   0                      1                          2
-## 2                   2                     NA                         NA
-## 3                   1                      1                          3
-## 4                   0                      0                          1
-## 5                   0                      0                          1
+# quote the current variable name, and set it equal the quoted desired name
+sample_data <- rename(sample_data, c(gps = "global_positioning_system"))
 ```
 
 
@@ -658,16 +654,6 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ```
 
  
-* renaming		
-
-```r
-# quote the current variable name, and set it equal the quoted desired name
-sample_data <- rename(sample_data, c(gps = "global_positioning_system"))
-```
-
-
-
-
 data cleaning
 --------------
 ### string manipulations
@@ -909,8 +895,37 @@ head(my_summary)
 Advanced R
 ========================================================
 
+creation of more complex columns(indicators) with __rowSums()__:
+-------------------------------------
+* column creation: sum of multiple numerical columns 
+
+```r
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime, 
+    sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+
+  
+
+```r
+# now we can view all three variables: the new num_nurselabtechs_fulltime
+# variable, and the two used to create it
+head(subset(sample_data, select = c("num_nurses_fulltime", "num_lab_techs_fulltime", 
+    "num_nurselabtechs_fulltime")), 5)
+```
+
+```
+##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
+## 1                   0                      1                          2
+## 2                   2                     NA                         NA
+## 3                   1                      1                          3
+## 4                   0                      0                          1
+## 5                   0                      0                          1
+```
+
+
 creation of more complex columns(indicators) with __ifelse()__:
 -------------------------------------
+
 
 install packages from outside of cran
 -------------------------------------
@@ -920,6 +935,11 @@ install packages from outside of cran
 
 ```r
 install.packages("devtools")
+```
+
+```
+## Installing package into '/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'
+## (as 'lib' is unspecified)
 ```
 
 ```
@@ -937,14 +957,15 @@ install_github("formhub.R", username = "SEL-Columbia")
 ```
 
 ```
-## Installing github repo(s) formhub.R/master from SEL-Columbia
+## Installing github repo formhub.R/master from SEL-Columbia
 ## Downloading formhub.R.zip from https://github.com/SEL-Columbia/formhub.R/archive/master.zip
-## Installing package from /var/folders/zz/lshv3_rj5kq_9bc4m9pp33tc0000gn/T//RtmpqA4mP0/formhub.R.zip
+## Installing package from /tmp/RtmppsvqSP/formhub.R.zip
+## arguments 'minimized' and 'invisible' are for Windows only
 ## Installing formhub
-## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
-##   '/private/var/folders/zz/lshv3_rj5kq_9bc4m9pp33tc0000gn/T/RtmpqA4mP0/formhub.R-master'  \
-##   --library='/Library/Frameworks/R.framework/Versions/3.0/Resources/library'  \
-##   --with-keep.source --install-tests
+## '/usr/lib/R/bin/R' --vanilla CMD INSTALL  \
+##   '/tmp/RtmppsvqSP/devtools30c41df32450/formhub.R-master'  \
+##   --library='/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'  \
+##   --install-tests
 ```
 
 ```r
@@ -965,8 +986,6 @@ library(formhub)
 ##     here
 ## 
 ## Loading required package: doBy
-## Loading required package: multcomp
-## Loading required package: mvtnorm
 ## Loading required package: survival
 ## Loading required package: splines
 ## Loading required package: MASS
@@ -1013,7 +1032,7 @@ apply(sample_data, MARGIN = 1, function(x) {
 
 
 ```
-##  [1] 0 3 0 0 0 0 0 2 0 0
+##  [1] 0 4 0 0 0 0 0 2 0 0
 ```
 
 
