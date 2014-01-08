@@ -102,7 +102,7 @@ head(sample_data$lga, 10)
 
 head(sample_data[, "lga"], 10)
 ```
-
+* We generally prefer the first strategy, but sometimes we'll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. 
 
 ### getting row content by calling the row number
  * a row in our data set is equavilent to one full survey i.e. one facility
@@ -136,6 +136,9 @@ dim(sample_data)
 ```
 
 * getting the class of specific column
+
+  * note: class is the type of things in R. In python, this is equivalent to calling type(obj). In javascript, you would use typeof
+
 ```{r}
 class(sample_data$lga)
 
@@ -145,20 +148,23 @@ class(sample_data[, "lga"])
 ```
 
 * getting the summary/descriptive statistics 
-* works with both column and data.frame
+
+  * __table()__ should be used for character and string variables
+  * __summary()__ should be used for numerical or boolean variables
 ```{r echo=TRUE, eval=FALSE}
-summary(sample_data$zone)
-summary(sample_data)
-```
-```{r echo=FALSE, eval=TRUE}
-summary(sample_data$zone)
-summary(sample_data)[1:7, 1:10]
-```
-
-
-* table of content of COLUMN
-```{r}
 table(sample_data$zone)
+```
+  
+```{r echo=FALSE, eval=TRUE}
+table(sample_data$zone)
+```
+
+```{r echo=TRUE, eval=FALSE}
+summary(sample_data$num_nurses_fulltime)
+```
+  
+```{r echo=FALSE, eval=TRUE}
+summary(sample_data$num_nurses_fulltime)
 ```
 
 creating data frames
