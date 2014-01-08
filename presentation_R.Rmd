@@ -1,9 +1,8 @@
 Before started
 =======
 
-we recommend watch the following video before reading this documenmt
+we recommend watch the following video before reading this document
 * [Video tutorial for R from Google Developer](http://www.youtube.com/watch?v=iffR3fWv4xw&list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP)
-
 
 basic R
 ========================================================
@@ -42,22 +41,32 @@ library(plyr)
   * libraries are additional packages to R that contain additional specialized functions 
   * plyr library is used for aggregating data, which will be explored in detail later
 
+*be sure that the package you are trying to load is installed on your computer
+```{r}
+library(eaf)
+```
+
 
 ### reading data: read.csv
   * csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.  
 ```{r}
 sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
-                        stringsAsFactors=FALSE, skip=0, nrows=-1)
+                        stringsAsFactors=FALSE)
 ```
+  *stringsAsFactors will be explained later, but for now we recommend always using it
+  
 ### data types: 
   1. numerical
   2. integer
   3. boolean
   4. character
   5. factors
-    * generic data type used as alternative to all of the above. we recommend __not__ using.  
+    * generic data type used as alternative to all of the above. we recommend __not__ using. 
+    * specifically, there are typically challenges with factor => integer/numeric conversions
+    * for additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
+
   6. NA
-    * an additional data type in R for __value NOT AVAILABLE__, which can be found in any of the data type above
+    * an additional data type in R for value __NOT AVAILABLE__, which can be found in any of the data type above
 
 data.frames
 --------------
