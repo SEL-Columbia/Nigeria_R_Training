@@ -1,3 +1,5 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
 Before getting started
 =======
 
@@ -36,28 +38,22 @@ getwd()
 ```
 
 
-
-```r
-### setting 'my working directory' as '~/work/r/nigeria_r_training/'
+```
+### setting "my working directory" as "~/work/r/nigeria_r_training/"
 setwd("~/work/r/nigeria_r_training/")
 ```
-
 
 ### Getting help!
 
 Before we get any further, lets see how to get help. You can go to the "Help" tab in R-studio (right-hand-side bottom), or if you know the function to get help on, just use a question mark followed by the function name.
-
-```r
-`?`(getwd)
 ```
-
+?getwd
+```
 
 Use two question marks to search for functions if you don't know the name:
-
-```r
-`?`(`?`(workingdirectory))
 ```
-
+??workingdirectory
+```
 
 ### Reading data: read.csv
 
@@ -73,16 +69,16 @@ This command calls read.csv on a filename, with an extra named argument, `string
 
 ### The sample dataset
 
-The dataset is a subset of our health dataset. We're providing you with a small piece of it, so that we can begin to understand things with small datasets, and eventually move on to the bigger datasets that we handle in the NMIS system.
+The dataset is a subset of our health dataset. We're providing you with a small piece of it, so that we can begin to understand things with small datasets, and eventually move on to the bigger datasets that we handle in the NMIS system. 
 
-Have a look at the dataset on [https://github.com/SEL-Columbia/Nigeria_R_Training/blob/master/sample_health_facilities.csv](github), or open it in your favorite spreadsheet program (Excel, OpenOffice).
+Have a look at the [dataset here](https://github.com/SEL-Columbia/Nigeria_R_Training/blob/master/sample_health_facilities.csv), or open it in your favorite spreadsheet program (Excel, OpenOffice). We can also click on the name `sample_data` in the Environment panel on the top-left in R-studio, and we'll see the data rendered the way many other programs do.
+
+Each row is a health clinic, either has a c-section or not, has a number of full-time nurses, has a number of lab techs, a management type, and so on. In our actual datasets, there are hundreds of columns like this.
 
 
 data.frame
 --------------
-CSVs represent tabular data, which R is excellent at handling. Turns out that the data we have for NMIS is also tabular data, so we will be working with data.frames in R most of the time.
-
-`sample_data`, the object we created by reading in a CSV, is a data.frame. Look at the top-left side of Rstudio. You can open up the dataset by clicking on it.
+CSVs represent tabular data, which R is excellent at handling. Turns out that the data we have for NMIS is also tabular data, so we will be working with `data.frame`s in R most of the time.
 
 A data.frame is made up of rows and columns. Lets get the "dimensions" of the data.frame:
 
@@ -96,7 +92,7 @@ dim(sample_data)
 ```
 
 
-This shows that that `sample_data` has `{r} nrow(sample_data)` rows and `{r ncol(sample_data) }` columns. The functions `nrow` and `ncol` can give you these values individually:
+This shows that that `sample_data` has 50 rows and 10 columns. The functions `nrow` and `ncol` can give you these values individually:
 
 
 ```r
@@ -125,8 +121,18 @@ After loading the data.frame, we often want to know what columns are in it (colu
 names(sample_data)
 ```
 
+```
+##  [1] "lga"                    "lga_id"                
+##  [3] "state"                  "zone"                  
+##  [5] "c_section_yn"           "num_nurses_fulltime"   
+##  [7] "gps"                    "num_lab_techs_fulltime"
+##  [9] "management"             "num_doctors_fulltime"
+```
 
-But that just shows us the "headers" of our dataset, not the values. What happens if you just type sample_data into the console? Often, seeing the whole dataset is too much. But it is easy to "take a peek" at your dataset by using `head` (which UNIX users may have heard of already):
+
+But that just shows us the "headers" of our dataset, not the values. What happens if you just type sample_data into the console? 
+
+Often, seeing the whole dataset is too much. But it is easy to "take a peek" at your dataset by using `head` (which UNIX users may have heard of already):
 
 
 ```r
@@ -166,66 +172,161 @@ Questions:
  * Could you change the number of rows that head outputs? How would you find out?
  * Can you create a new data.frame, called `small_sample`, which is just the first 10 rows of `sample_data`?
 
-### getting value/column from a data.frame
-* a column in our data set is equavilent to a question in the survey
- 1. using "$" operator
- 2. calling column by it's name directly
- 3. note: using head() to show only the first nth elements
+### Columns in a data.frame
+A column in our data frame is equivalent to either a column in the survey, or a column that we created as a calculation. 
+ 1. using "$" operator and the column's name (eg. dataframe$col_name)
+ 2. using the [,] method, or bracket method (eg. dataframe[,'column_name'])
+
+Examples below. Note! We are using small_data, which is just the first ten rows of sample_data
 
 ```r
-sample_data$lga
+small_data <- head(sample_data, 10)
+small_data$lga
 
-sample_data[, "lga"]
+small_data[, "lga"]
 ```
 
 
+We generally prefer the first strategy, but sometimes we'll need to use the second strategy, particularly when working with mulitple columns. Before we go there, though, lets talk about data types in R. Type
 
-```
-##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
-##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
-```
-
-```
-##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
-##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
+```r
+str(sample_data)
 ```
 
-* We generally prefer the first strategy, but sometimes we'll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. 
+```
+## 'data.frame':	50 obs. of  10 variables:
+##  $ lga                   : chr  "Barkin-Ladi" "Anaocha" "Batsari" "Orlu" ...
+##  $ lga_id                : int  91 49 96 611 258 76 232 441 101 261 ...
+##  $ state                 : chr  "Plateau" "Anambra" "Katsina" "Imo" ...
+##  $ zone                  : chr  "North-Central" "Southeast" "Northwest" "Southeast" ...
+##  $ c_section_yn          : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ num_nurses_fulltime   : int  0 2 1 0 0 0 0 1 3 0 ...
+##  $ gps                   : chr  "9.57723376 8.98908176 1285.699951171875 5.0" "6.07903635 7.00366347 276.1000061035156 5.0" "12.91273864 7.31050997 472.3999938964844 5.0" "5.768364071846008 7.061988115310669 241.0 4.0" ...
+##  $ num_lab_techs_fulltime: int  1 NA 1 0 0 1 0 0 2 0 ...
+##  $ management            : chr  "public" "public" "public" "public" ...
+##  $ num_doctors_fulltime  : int  0 NA 0 0 0 1 0 1 0 0 ...
+```
 
-### Data types: 
+Can anyone guess what this output means?
+
+### Data types in R
+
+Each value is R has a data type, like most languages. Lets see some obvious values first:
+
+```r
+class(1)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(TRUE)
+```
+
+```
+## [1] "logical"
+```
+
+```r
+class("Suya")
+```
+
+```
+## [1] "character"
+```
+
+
+In R, each column has a single type. Example:
+
+```r
+class(sample_data$lga)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(sample_data$num_nurses_fulltime)
+```
+
+```
+## [1] "integer"
+```
+
+
+The core types in R are:
   1. numerical
   2. integer
   3. boolean
   4. character
   5. factors
-    * generic data type used as alternative to all of the above. we recommend __not__ using. 
-    * specifically, there are typically challenges with factor => integer/numeric conversions
-    * for additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
+    * Generic data type used as alternative to all of the above. We recommend __not__ using excecpt in advanced uses. 
+    * Specifically, there are typically challenges with factor => integer/numeric conversions. We'll talk about this later.
+    * For additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
 
-  6. NA
-    * an additional data type in R for value __NOT AVAILABLE__, which can be found in any of the data type above
+A note: `NA` or __Not Available__ is a internal value in R, and can be of any type. For example, look at the `num_doctors_fulltime` column:
 
-
-### getting row content by calling the row number
- * a row in our data set is equavilent to one full survey i.e. one facility
- * note: index in R starts at 1 instead of 0
 
 ```r
-sample_data[2, ]
+small_data$num_doctors_fulltime
+```
+
+```
+## Error: object 'small_data' not found
+```
+
+```r
+class(small_data$num_doctors_fulltime)
+```
+
+```
+## Error: object 'small_data' not found
 ```
 
 
-```
-##       lga lga_id   state      zone c_section_yn num_nurses_fulltime
-## 2 Anaocha     49 Anambra Southeast        FALSE                   2
-##                                           gps num_lab_techs_fulltime
-## 2 6.07903635 7.00366347 276.1000061035156 5.0                     NA
-##   management num_doctors_fulltime
-## 2     public                   NA
+This is incredibly helpful for dealing with survey data. In survey data, NA means 'missing value'. This can happen for many reasons. For example, an enumerator can simply have skipped the question. Or the question may have been skipped because of skip logic (more on that later).
+
+### Rows of a data frame
+
+We have looked at data frame columns so far. Lets look at a row in our dataset. A row in our data set is equavilent to one full survey i.e. one facility (though in this case it is a subset of all the data at the facilty).
+
+NOTE: Indexing starts at 1 in R, not 0. There is no 0th item. 
+
+
+```r
+small_data[1, ]  # the first row
 ```
 
-### more slicing and dicing in R
-* getting the element in 4th row and 5th column
+```
+## Error: object 'small_data' not found
+```
+
+```r
+small_data[5, ]  # the fifth row
+```
+
+```
+## Error: object 'small_data' not found
+```
+
+```r
+small_data[100, ]  # the 100th row, which doesn't exist
+```
+
+```
+## Error: object 'small_data' not found
+```
+
+
+Question: what do you think `class(small_data[1,])` is?
+
+### More slicing and dicing
+If you remember, we used the [,] operator before. For a `data.frame`, the [,] operator selects one or more rows or columns. The syntax is `data.frame[row, col]`, though row and col can be many things.
+
+The simplest example; lets get the 4th row and 5th column:
 
 ```r
 sample_data[4, 5]
@@ -236,7 +337,15 @@ sample_data[4, 5]
 ```
 
 
-* getting the elements from 4th to 6th row and column 1 to column 5(inclusive)
+In R (like in python), the `:` operator is an operator for making a list of numbers.
+
+```r
+1:5
+```
+
+```
+## [1] 1 2 3 4 5
+```
 
 ```r
 sample_data[4:6, 1:5]
@@ -250,67 +359,27 @@ sample_data[4:6, 1:5]
 ```
 
 
-### exploring the data frame with some useful functions
-* getting the structure
-
-```r
-str(sample_data)
-```
-
-
-* getting the dimension of data.frame
-
-```r
-dim(sample_data)
-```
+Note that the selectors for our [,] operator don't need to be integers. What do the following do?
 
 ```
-## [1] 50 10
+sample_data[4:6, 'lga']
+sample_data[4:6, c('lga', 'zone')]
 ```
 
+We haven't seen `c` before. What does `c` do?
 
-* getting the class of specific column
+### Summary statistics
 
-  * note: class is the type of things in R. In python, this is equivalent to calling type(obj). In javascript, you would use typeof
+R is also called the "the R project for stastical computing. The power of R is in data analysis and statistics, which is why we are working with it. Lets start exploring some of R's very basic statistic functionalities.
 
-
-```r
-class(sample_data$lga)
-```
-
-```
-## [1] "character"
-```
-
-```r
-
-class(sample_data[, 1])
-```
-
-```
-## [1] "character"
-```
-
-```r
-
-class(sample_data[, "lga"])
-```
-
-```
-## [1] "character"
-```
-
-
-* getting the summary/descriptive statistics 
-
-  * __table()__ should be used for character and string variables
+The first set of functions will just give you a simple `summary` of the values in a certain column. There are two useful functions for this:
+  * __table()__ should be used for character (string) variables
   * __summary()__ should be used for numerical or boolean variables
+  
 
 ```r
 table(sample_data$zone)
 ```
-
-  
 
 ```
 ## 
@@ -320,39 +389,108 @@ table(sample_data$zone)
 ##             9
 ```
 
+  
 
 
 ```r
 summary(sample_data$num_nurses_fulltime)
 ```
 
-  
-
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00    0.00    0.00    1.02    1.00    8.00       3
 ```
 
+```r
+summary(sample_data$c_section_yn)
+```
 
-### libraries
- * install packages
- * to install packges in R, call __install.packages()__ with quoted package name: 
+```
+##    Mode   FALSE    TRUE    NA's 
+## logical      39      10       1
+```
+
+
+Note that `table` can also be used for numeric and categorical variables. 
+
+
+```r
+table(sample_data$num_nurses_fulltime)
+```
+
+```
+## 
+##  0  1  2  3  5  6  7  8 
+## 30  6  5  2  1  1  1  1
+```
+
+```r
+table(sample_data$c_section_yn)
+```
+
+```
+## 
+## FALSE  TRUE 
+##    39    10
+```
+
+
+Questions:
+ * What is different between table and summary for numerical variables?
+ * What is different between table and summary for boolean ('logical') variables?
+
+#### Sums, Mean, Standard Deviation
+
+Calculating the mean is easy, but it does require some care:
+
+```r
+sum(sample_data$num_nurses_fulltime)
+```
+
+```
+## [1] NA
+```
+
+```r
+sum(sample_data$num_nurses_fulltime, na.rm = TRUE)
+```
+
+```
+## [1] 48
+```
+
+There are many numerical functions that return `NA` unless `na.rm` is passed as true, if there are any NAs in  your data (and in NMIS data, there always are):
+
+
+```r
+mean(sample_data$num_nurses_fulltime, na.rm = T)
+```
+
+```
+## [1] 1.021
+```
+
+
+What do you think the function for calculating standard deviation is? How would you find out?
+
+Libraries
+---------
+R is a programming languages, so it allows you to write "modules" or "libraries" that can be distributed to others. These are called packages in R. To install packges in R, use `install.packages` with quoted package name: 
 
 ```r
 install.packages("plyr")
 ```
 
- * to load libraries in R call __library()__ fucntion
-  
+
+To load the library (similar to `import` in other languages), you use the `library` function:
+
 
 ```r
 library(plyr)
 ```
 
-  * libraries are additional packages to R that contain additional specialized functions 
-  * plyr library is used for aggregating data, which will be explored in detail later
-
-* be sure that the package you are trying to load is installed on your computer
+  
+R packages (or libraries) contain additional specialized functions for different purposes. `plyr` is one of our favorites, and contains very useful functions for aggregating data that we will explore soon. Be sure that the package you are trying to load is installed on your computer.
 
 ```r
 library(eaf)
@@ -363,18 +501,16 @@ library(eaf)
 ```
 
 
+What should you see if you see this error?
 
-creating data frames
+Joing data frames, creating new from old
 ---------------------
 
-### joining columns:
-* R supports SQL-like join functionality with merge()
-  *first we'll prepare the data for a merge
-
-
-
+### Joining columns:
+R supports SQL-like join functionality with `merge`. First lets prepare some data to merge:
 
 ```r
+data1 <- subset(sample_data, select = -c(zone, gps))
 head(data1)
 ```
 
@@ -395,12 +531,9 @@ head(data1)
 ## 6                      1     public                    1
 ```
 
-
-
-
-
-
 ```r
+data2 <- unique(subset(sample_data, select = c(state, zone), subset = zone != 
+    "Southeast"))
 head(data2)
 ```
 
@@ -415,21 +548,21 @@ head(data2)
 ```
 
 
-* inner join
+Inner join:
 
 ```r
 inner_join <- merge(data1, data2, by = "state")
 ```
 
 
-* outer join
+Outer join:
 
 ```r
 outer_join <- merge(data1, data2, by = "state", all = TRUE)
 ```
 
 
-* left outer join
+Left outer join:
 
 ```r
 left_outer_join <- merge(data1, data2, by.x = "lga_id", by.y = "lga_id", all.x = TRUE)
@@ -440,34 +573,54 @@ left_outer_join <- merge(data1, data2, by.x = "lga_id", by.y = "lga_id", all.x =
 ```
 
 
-* concatenate data.frames COLUMNwise with cbind()
-* note that the order of rows in original data is unchanged
+We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:
+
 
 ```r
 cbind(data1, data2)
 ```
 
-
 ```
 ## Error: arguments imply differing number of rows: 50, 21
 ```
 
+```r
+cbind(head(data1), head(data2))
+```
 
+```
+##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime       state
+## 1                      1     public                    0     Plateau
+## 2                     NA     public                   NA     Katsina
+## 3                      1     public                    0       Benue
+## 4                      0     public                    0      Bauchi
+## 5                      0     public                    0       Lagos
+## 6                      1     public                    1 Cross River
+##            zone
+## 1 North-Central
+## 2     Northwest
+## 3 North-Central
+## 4     Northeast
+## 5     Southwest
+## 6   South-South
+```
 
-* concatenate data.frames ROWise with cbind()
-* note that the order of columns in original data is unchanged
+Can you break down what the last statement did, one by one?
+
+Row-wise concatenation happens with `rbind`. Again, you need the same rows in both data sets:
 
 ```r
 data4 <- sample_data[1:5, ]
 data5 <- sample_data[6:10, ]
-```
-
-
-
-```r
 rbind(data4, data5)
 ```
-
 
 ```
 ##            lga lga_id       state          zone c_section_yn
@@ -505,33 +658,28 @@ rbind(data4, data5)
 ## 10                      0     public                    0
 ```
 
-* use with care: make sure your columns alligns before using, and here is an example of misuse
+
+Use this function with care. If your columns don't align, you'll have a problem:
 
 ```r
 rbind(data1, data2)
 ```
 
-
 ```
 ## Error: numbers of columns of arguments do not match
 ```
 
-* rbind.fill() is a powerful rbind() realization in __plyr__ package
-* with rbind you have to make every column in both data.frames exist and allign(have the same index number), but with rbind.fill you need not be concerned. 
-* rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there's no corresponding part it assigns __*NA*__
+
+There is a powerful replacement of `rbind` in the __plyr__ package, called `rbind.fill`. With `rbind` you have to make every column in both data.frames exist and allign (ie, have the same index number), but with `rbind.fill` you need not be concerned. `rbind.fill` finds the corresponding column in data.frame2 and concatenates the data, and if there's no corresponding part it assigns __*NA*__. Do be careful though, you might accidentally concatenate the wrong data frames, and instead of complaining, `rbind.fill` will just fill your dataset with NAs.
+
 
 ```r
-rbind.fill(data1, data2)
+head(rbind.fill(data1, data2))
 ```
 
 
-```
-## Error: undefined columns selected
-```
-
-
-### creating derivative data frames via subset:
-* getting a subset of original data with a handy functions saves a lot of typing
+### Subset
+Getting a subset of original data with a handy functions saves a lot of typing
 
 
 ```r
@@ -574,27 +722,25 @@ subset(sample_data, lga_id < 500, select = c("lga_id", "lga", "state"))
 ```
 
 
-data cleaning:
+Data cleaning:
 ----
 
-### type conversion
-* type conversion can be forced by __as.\*()__ function
-* common __\*__ types you'd encounter are: 
+### Type conversion
+Type conversion can be forced by `as.*` functions. Common __\*__ types you'd encounter are: 
   1. numeric
   2. integer
   3. character
   4. logical
-* sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
+Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
 
-* here's some examples
 
 ```r
-my_numbers <- c("1", "2", "3", "4", "5")
+my_numbers <- c("1", "2", "3", "4", "TRUE")
 my_numbers
 ```
 
 ```
-## [1] "1" "2" "3" "4" "5"
+## [1] "1"    "2"    "3"    "4"    "TRUE"
 ```
 
 ```r
@@ -602,14 +748,26 @@ as.numeric(my_numbers)
 ```
 
 ```
-## [1] 1 2 3 4 5
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1]  1  2  3  4 NA
+```
+
+```r
+as.logical(my_numbers)
+```
+
+```
+## [1]   NA   NA   NA   NA TRUE
 ```
 
 
-creating and deleting columns
+Creating and deleting columns
 --------------
 
-* creating a column from a vector 
+Creating a column from a vector 
 
 ```r
 sample_data$simple <- 1:50
@@ -733,6 +891,36 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ```
 
  
+### Libraries
+ * install packages
+ * to install packges in R, call __install.packages()__ with quoted package name: 
+
+```r
+install.packages("plyr")
+```
+
+ * to load libraries in R call __library()__ fucntion
+  
+
+```r
+library(plyr)
+```
+
+  * libraries are additional packages to R that contain additional specialized functions 
+  * plyr library is used for aggregating data, which will be explored in detail later
+
+* be sure that the package you are trying to load is installed on your computer
+
+```r
+library(eaf)
+```
+
+```
+## Error: there is no package called 'eaf'
+```
+
+
+
 data cleaning
 --------------
 ### string manipulations
@@ -1012,63 +1200,16 @@ install packages from outside of cran
 * this tutorial will use the example of formhub.R
 * first step: install and load __devtools__ package from cran
 
-```r
-install.packages("devtools")
 ```
-
-```
-## Installing package into '/Users/prabhaspokharel/Library/R/3.0/library' (as
-## 'lib' is unspecified)
-```
-
-```
-## Error: trying to use CRAN without setting a mirror
-```
-
-```r
+install.packages('devtools') 
 library(devtools)
 ```
-
 * second step: use __install_github("repo_name", "user_name")__ function to install packages on github
 
-```r
-install_github("formhub.R", username = "SEL-Columbia")
 ```
-
-```
-## Installing github repo(s) formhub.R/master from SEL-Columbia Downloading
-## formhub.R.zip from
-## https://github.com/SEL-Columbia/formhub.R/archive/master.zip Installing
-## package from
-## /var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T//Rtmpw2EbgA/formhub.R.zip
-## Installing formhub '/Library/Frameworks/R.framework/Resources/bin/R'
-## --vanilla CMD INSTALL \
-## '/private/var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T/Rtmpw2EbgA/formhub.R-master'
-## \ --library='/Users/prabhaspokharel/Library/R/3.0/library' \
-## --with-keep.source --install-tests
-```
-
-```r
+install_github("formhub.R", username="SEL-Columbia")
 library(formhub)
 ```
-
-```
-## Loading required package: RJSONIO Loading required package: stringr
-## Loading required package: RCurl Loading required package: bitops Loading
-## required package: lubridate
-## 
-## Attaching package: 'lubridate'
-## 
-## The following object is masked from 'package:plyr':
-## 
-## here
-## 
-## Loading required package: doBy Loading required package: multcomp Loading
-## required package: mvtnorm Loading required package: survival Loading
-## required package: splines Loading required package: MASS Loading required
-## package: sp
-```
-
 
 map functions: apply()
 -----------------------

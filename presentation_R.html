@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta http-equiv="x-ua-compatible" content="IE=9" >
 
 <title>Before getting started</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 <style type="text/css">
 body, td {
@@ -132,53 +173,15 @@ hr {
       page-break-after: avoid; 
    }
 }
-
 </style>
-
-<!-- Styles for R syntax highlighter -->
-<style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: rgb(88, 72, 246)
-   }
-
-   pre .number {
-     color: rgb(0, 0, 205);
-   }
-
-   pre .comment {
-     color: rgb(76, 136, 107);
-   }
-
-   pre .keyword {
-     color: rgb(0, 0, 255);
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: rgb(3, 106, 7);
-   }
-</style>
-
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
-
 
 
 
 </head>
 
 <body>
+<p><link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link></p>
+
 <h1>Before getting started</h1>
 
 <p>We recommend watch the following video before reading this document</p>
@@ -215,7 +218,7 @@ getwd()
 <pre><code>## [1] &quot;/Users/prabhaspokharel/Code/Nigeria_R_Training&quot;
 </code></pre>
 
-<pre><code class="r">### setting &#39;my working directory&#39; as &#39;~/work/r/nigeria_r_training/&#39;
+<pre><code>### setting &quot;my working directory&quot; as &quot;~/work/r/nigeria_r_training/&quot;
 setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 </code></pre>
 
@@ -223,12 +226,12 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 
 <p>Before we get any further, lets see how to get help. You can go to the &ldquo;Help&rdquo; tab in R-studio (right-hand-side bottom), or if you know the function to get help on, just use a question mark followed by the function name.</p>
 
-<pre><code class="r">`?`(getwd)
+<pre><code>?getwd
 </code></pre>
 
 <p>Use two question marks to search for functions if you don&#39;t know the name:</p>
 
-<pre><code class="r">`?`(`?`(workingdirectory))
+<pre><code>??workingdirectory
 </code></pre>
 
 <h3>Reading data: read.csv</h3>
@@ -242,15 +245,15 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 
 <h3>The sample dataset</h3>
 
-<p>The dataset is a subset of our health dataset. We&#39;re providing you with a small piece of it, so that we can begin to understand things with small datasets, and eventually move on to the bigger datasets that we handle in the NMIS system.</p>
+<p>The dataset is a subset of our health dataset. We&#39;re providing you with a small piece of it, so that we can begin to understand things with small datasets, and eventually move on to the bigger datasets that we handle in the NMIS system. </p>
 
-<p>Have a look at the dataset on <a href="github">https://github.com/SEL-Columbia/Nigeria_R_Training/blob/master/sample_health_facilities.csv</a>, or open it in your favorite spreadsheet program (Excel, OpenOffice).</p>
+<p>Have a look at the <a href="https://github.com/SEL-Columbia/Nigeria_R_Training/blob/master/sample_health_facilities.csv">dataset here</a>, or open it in your favorite spreadsheet program (Excel, OpenOffice). We can also click on the name <code>sample_data</code> in the Environment panel on the top-left in R-studio, and we&#39;ll see the data rendered the way many other programs do.</p>
+
+<p>Each row is a health clinic, either has a c-section or not, has a number of full-time nurses, has a number of lab techs, a management type, and so on. In our actual datasets, there are hundreds of columns like this.</p>
 
 <h2>data.frame</h2>
 
-<p>CSVs represent tabular data, which R is excellent at handling. Turns out that the data we have for NMIS is also tabular data, so we will be working with data.frames in R most of the time.</p>
-
-<p><code>sample_data</code>, the object we created by reading in a CSV, is a data.frame. Look at the top-left side of Rstudio. You can open up the dataset by clicking on it.</p>
+<p>CSVs represent tabular data, which R is excellent at handling. Turns out that the data we have for NMIS is also tabular data, so we will be working with <code>data.frame</code>s in R most of the time.</p>
 
 <p>A data.frame is made up of rows and columns. Lets get the &ldquo;dimensions&rdquo; of the data.frame:</p>
 
@@ -260,7 +263,7 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 <pre><code>## [1] 50 10
 </code></pre>
 
-<p>This shows that that <code>sample_data</code> has <code>{r} nrow(sample_data)</code> rows and <code>{r ncol(sample_data) }</code> columns. The functions <code>nrow</code> and <code>ncol</code> can give you these values individually:</p>
+<p>This shows that that <code>sample_data</code> has 50 rows and 10 columns. The functions <code>nrow</code> and <code>ncol</code> can give you these values individually:</p>
 
 <pre><code class="r">nrow(sample_data)
 </code></pre>
@@ -281,7 +284,16 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 <pre><code class="r">names(sample_data)
 </code></pre>
 
-<p>But that just shows us the &ldquo;headers&rdquo; of our dataset, not the values. What happens if you just type sample_data into the console? Often, seeing the whole dataset is too much. But it is easy to &ldquo;take a peek&rdquo; at your dataset by using <code>head</code> (which UNIX users may have heard of already):</p>
+<pre><code>##  [1] &quot;lga&quot;                    &quot;lga_id&quot;                
+##  [3] &quot;state&quot;                  &quot;zone&quot;                  
+##  [5] &quot;c_section_yn&quot;           &quot;num_nurses_fulltime&quot;   
+##  [7] &quot;gps&quot;                    &quot;num_lab_techs_fulltime&quot;
+##  [9] &quot;management&quot;             &quot;num_doctors_fulltime&quot;
+</code></pre>
+
+<p>But that just shows us the &ldquo;headers&rdquo; of our dataset, not the values. What happens if you just type sample_data into the console? </p>
+
+<p>Often, seeing the whole dataset is too much. But it is easy to &ldquo;take a peek&rdquo; at your dataset by using <code>head</code> (which UNIX users may have heard of already):</p>
 
 <pre><code class="r">head(sample_data)
 </code></pre>
@@ -319,79 +331,142 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 <li>Can you create a new data.frame, called <code>small_sample</code>, which is just the first 10 rows of <code>sample_data</code>?</li>
 </ul>
 
-<h3>getting value/column from a data.frame</h3>
+<h3>Columns in a data.frame</h3>
 
-<ul>
-<li>a column in our data set is equavilent to a question in the survey
+<p>A column in our data frame is equivalent to either a column in the survey, or a column that we created as a calculation. </p>
 
 <ol>
-<li>using &ldquo;$&rdquo; operator</li>
-<li>calling column by it&#39;s name directly</li>
-<li>note: using head() to show only the first nth elements</li>
-</ol></li>
-</ul>
+<li>using &ldquo;$&rdquo; operator and the column&#39;s name (eg. dataframe$col_name)</li>
+<li>using the [,] method, or bracket method (eg. dataframe[,&#39;column_name&#39;])</li>
+</ol>
 
-<pre><code class="r">sample_data$lga
+<p>Examples below. Note! We are using small_data, which is just the first ten rows of sample_data</p>
 
-sample_data[, &quot;lga&quot;]
+<pre><code class="r">small_data &lt;- head(sample_data, 10)
+small_data$lga
+
+small_data[, &quot;lga&quot;]
 </code></pre>
 
-<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
-##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
+<p>We generally prefer the first strategy, but sometimes we&#39;ll need to use the second strategy, particularly when working with mulitple columns. Before we go there, though, lets talk about data types in R. Type</p>
+
+<pre><code class="r">str(sample_data)
 </code></pre>
 
-<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
-##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  10 variables:
+##  $ lga                   : chr  &quot;Barkin-Ladi&quot; &quot;Anaocha&quot; &quot;Batsari&quot; &quot;Orlu&quot; ...
+##  $ lga_id                : int  91 49 96 611 258 76 232 441 101 261 ...
+##  $ state                 : chr  &quot;Plateau&quot; &quot;Anambra&quot; &quot;Katsina&quot; &quot;Imo&quot; ...
+##  $ zone                  : chr  &quot;North-Central&quot; &quot;Southeast&quot; &quot;Northwest&quot; &quot;Southeast&quot; ...
+##  $ c_section_yn          : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ num_nurses_fulltime   : int  0 2 1 0 0 0 0 1 3 0 ...
+##  $ gps                   : chr  &quot;9.57723376 8.98908176 1285.699951171875 5.0&quot; &quot;6.07903635 7.00366347 276.1000061035156 5.0&quot; &quot;12.91273864 7.31050997 472.3999938964844 5.0&quot; &quot;5.768364071846008 7.061988115310669 241.0 4.0&quot; ...
+##  $ num_lab_techs_fulltime: int  1 NA 1 0 0 1 0 0 2 0 ...
+##  $ management            : chr  &quot;public&quot; &quot;public&quot; &quot;public&quot; &quot;public&quot; ...
+##  $ num_doctors_fulltime  : int  0 NA 0 0 0 1 0 1 0 0 ...
 </code></pre>
 
-<ul>
-<li>We generally prefer the first strategy, but sometimes we&#39;ll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. </li>
-</ul>
+<p>Can anyone guess what this output means?</p>
 
-<h3>Data types:</h3>
+<h3>Data types in R</h3>
+
+<p>Each value is R has a data type, like most languages. Lets see some obvious values first:</p>
+
+<pre><code class="r">class(1)
+</code></pre>
+
+<pre><code>## [1] &quot;numeric&quot;
+</code></pre>
+
+<pre><code class="r">class(TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;logical&quot;
+</code></pre>
+
+<pre><code class="r">class(&quot;Suya&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<p>In R, each column has a single type. Example:</p>
+
+<pre><code class="r">class(sample_data$lga)
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">class(sample_data$num_nurses_fulltime)
+</code></pre>
+
+<pre><code>## [1] &quot;integer&quot;
+</code></pre>
+
+<p>The core types in R are:</p>
 
 <ol>
 <li>numerical</li>
 <li>integer</li>
 <li>boolean</li>
 <li>character</li>
-<li><p>factors</p>
+<li>factors
 
 <ul>
-<li>generic data type used as alternative to all of the above. we recommend <strong>not</strong> using. </li>
-<li>specifically, there are typically challenges with factor =&gt; integer/numeric conversions</li>
-<li>for additional information on working with factors in your data: <a href="http://www.statmethods.net/input/datatypes.html">More information on Factors</a></li>
-</ul></li>
-<li><p>NA</p>
-
-<ul>
-<li>an additional data type in R for value <strong>NOT AVAILABLE</strong>, which can be found in any of the data type above</li>
+<li>Generic data type used as alternative to all of the above. We recommend <strong>not</strong> using excecpt in advanced uses. </li>
+<li>Specifically, there are typically challenges with factor =&gt; integer/numeric conversions. We&#39;ll talk about this later.</li>
+<li>For additional information on working with factors in your data: <a href="http://www.statmethods.net/input/datatypes.html">More information on Factors</a></li>
 </ul></li>
 </ol>
 
-<h3>getting row content by calling the row number</h3>
+<p>A note: <code>NA</code> or <strong>Not Available</strong> is a internal value in R, and can be of any type. For example, look at the <code>num_doctors_fulltime</code> column:</p>
 
-<ul>
-<li>a row in our data set is equavilent to one full survey i.e. one facility</li>
-<li>note: index in R starts at 1 instead of 0</li>
-</ul>
-
-<pre><code class="r">sample_data[2, ]
+<pre><code class="r">small_data$num_doctors_fulltime
 </code></pre>
 
-<pre><code>##       lga lga_id   state      zone c_section_yn num_nurses_fulltime
-## 2 Anaocha     49 Anambra Southeast        FALSE                   2
-##                                           gps num_lab_techs_fulltime
-## 2 6.07903635 7.00366347 276.1000061035156 5.0                     NA
-##   management num_doctors_fulltime
-## 2     public                   NA
+<pre><code>## Error: object &#39;small_data&#39; not found
 </code></pre>
 
-<h3>more slicing and dicing in R</h3>
+<pre><code class="r">class(small_data$num_doctors_fulltime)
+</code></pre>
 
-<ul>
-<li>getting the element in 4th row and 5th column</li>
-</ul>
+<pre><code>## Error: object &#39;small_data&#39; not found
+</code></pre>
+
+<p>This is incredibly helpful for dealing with survey data. In survey data, NA means &#39;missing value&#39;. This can happen for many reasons. For example, an enumerator can simply have skipped the question. Or the question may have been skipped because of skip logic (more on that later).</p>
+
+<h3>Rows of a data frame</h3>
+
+<p>We have looked at data frame columns so far. Lets look at a row in our dataset. A row in our data set is equavilent to one full survey i.e. one facility (though in this case it is a subset of all the data at the facilty).</p>
+
+<p>NOTE: Indexing starts at 1 in R, not 0. There is no 0th item. </p>
+
+<pre><code class="r">small_data[1, ]  # the first row
+</code></pre>
+
+<pre><code>## Error: object &#39;small_data&#39; not found
+</code></pre>
+
+<pre><code class="r">small_data[5, ]  # the fifth row
+</code></pre>
+
+<pre><code>## Error: object &#39;small_data&#39; not found
+</code></pre>
+
+<pre><code class="r">small_data[100, ]  # the 100th row, which doesn&#39;t exist
+</code></pre>
+
+<pre><code>## Error: object &#39;small_data&#39; not found
+</code></pre>
+
+<p>Question: what do you think <code>class(small_data[1,])</code> is?</p>
+
+<h3>More slicing and dicing</h3>
+
+<p>If you remember, we used the [,] operator before. For a <code>data.frame</code>, the [,] operator selects one or more rows or columns. The syntax is <code>data.frame[row, col]</code>, though row and col can be many things.</p>
+
+<p>The simplest example; lets get the 4th row and 5th column:</p>
 
 <pre><code class="r">sample_data[4, 5]
 </code></pre>
@@ -399,9 +474,13 @@ sample_data[, &quot;lga&quot;]
 <pre><code>## [1] FALSE
 </code></pre>
 
-<ul>
-<li>getting the elements from 4th to 6th row and column 1 to column 5(inclusive)</li>
-</ul>
+<p>In R (like in python), the <code>:</code> operator is an operator for making a list of numbers.</p>
+
+<pre><code class="r">1:5
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5
+</code></pre>
 
 <pre><code class="r">sample_data[4:6, 1:5]
 </code></pre>
@@ -412,60 +491,23 @@ sample_data[, &quot;lga&quot;]
 ## 6 Ayamelum     76 Anambra     Southeast        FALSE
 </code></pre>
 
-<h3>exploring the data frame with some useful functions</h3>
+<p>Note that the selectors for our [,] operator don&#39;t need to be integers. What do the following do?</p>
+
+<pre><code>sample_data[4:6, &#39;lga&#39;]
+sample_data[4:6, c(&#39;lga&#39;, &#39;zone&#39;)]
+</code></pre>
+
+<p>We haven&#39;t seen <code>c</code> before. What does <code>c</code> do?</p>
+
+<h3>Summary statistics</h3>
+
+<p>R is also called the &ldquo;the R project for stastical computing. The power of R is in data analysis and statistics, which is why we are working with it. Lets start exploring some of R&#39;s very basic statistic functionalities.</p>
+
+<p>The first set of functions will just give you a simple <code>summary</code> of the values in a certain column. There are two useful functions for this:</p>
 
 <ul>
-<li>getting the structure</li>
-</ul>
-
-<pre><code class="r">str(sample_data)
-</code></pre>
-
-<ul>
-<li>getting the dimension of data.frame</li>
-</ul>
-
-<pre><code class="r">dim(sample_data)
-</code></pre>
-
-<pre><code>## [1] 50 10
-</code></pre>
-
-<ul>
-<li><p>getting the class of specific column</p>
-
-<ul>
-<li>note: class is the type of things in R. In python, this is equivalent to calling type(obj). In javascript, you would use typeof</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">class(sample_data$lga)
-</code></pre>
-
-<pre><code>## [1] &quot;character&quot;
-</code></pre>
-
-<pre><code class="r">
-class(sample_data[, 1])
-</code></pre>
-
-<pre><code>## [1] &quot;character&quot;
-</code></pre>
-
-<pre><code class="r">
-class(sample_data[, &quot;lga&quot;])
-</code></pre>
-
-<pre><code>## [1] &quot;character&quot;
-</code></pre>
-
-<ul>
-<li><p>getting the summary/descriptive statistics </p>
-
-<ul>
-<li><strong>table()</strong> should be used for character and string variables</li>
+<li><strong>table()</strong> should be used for character (string) variables</li>
 <li><strong>summary()</strong> should be used for numerical or boolean variables</li>
-</ul></li>
 </ul>
 
 <pre><code class="r">table(sample_data$zone)
@@ -485,31 +527,77 @@ class(sample_data[, &quot;lga&quot;])
 ##    0.00    0.00    0.00    1.02    1.00    8.00       3
 </code></pre>
 
-<h3>libraries</h3>
+<pre><code class="r">summary(sample_data$c_section_yn)
+</code></pre>
+
+<pre><code>##    Mode   FALSE    TRUE    NA&#39;s 
+## logical      39      10       1
+</code></pre>
+
+<p>Note that <code>table</code> can also be used for numeric and categorical variables. </p>
+
+<pre><code class="r">table(sample_data$num_nurses_fulltime)
+</code></pre>
+
+<pre><code>## 
+##  0  1  2  3  5  6  7  8 
+## 30  6  5  2  1  1  1  1
+</code></pre>
+
+<pre><code class="r">table(sample_data$c_section_yn)
+</code></pre>
+
+<pre><code>## 
+## FALSE  TRUE 
+##    39    10
+</code></pre>
+
+<p>Questions:</p>
 
 <ul>
-<li>install packages</li>
-<li>to install packges in R, call <strong>install.packages()</strong> with quoted package name: </li>
+<li>What is different between table and summary for numerical variables?</li>
+<li>What is different between table and summary for boolean (&#39;logical&#39;) variables?</li>
 </ul>
+
+<h4>Sums, Mean, Standard Deviation</h4>
+
+<p>Calculating the mean is easy, but it does require some care:</p>
+
+<pre><code class="r">sum(sample_data$num_nurses_fulltime)
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">sum(sample_data$num_nurses_fulltime, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 48
+</code></pre>
+
+<p>There are many numerical functions that return <code>NA</code> unless <code>na.rm</code> is passed as true, if there are any NAs in  your data (and in NMIS data, there always are):</p>
+
+<pre><code class="r">mean(sample_data$num_nurses_fulltime, na.rm = T)
+</code></pre>
+
+<pre><code>## [1] 1.021
+</code></pre>
+
+<p>What do you think the function for calculating standard deviation is? How would you find out?</p>
+
+<h2>Libraries</h2>
+
+<p>R is a programming languages, so it allows you to write &quot;modules&rdquo; or &ldquo;libraries&rdquo; that can be distributed to others. These are called packages in R. To install packges in R, use <code>install.packages</code> with quoted package name: </p>
 
 <pre><code class="r">install.packages(&quot;plyr&quot;)
 </code></pre>
 
-<ul>
-<li>to load libraries in R call <strong>library()</strong> fucntion</li>
-</ul>
+<p>To load the library (similar to <code>import</code> in other languages), you use the <code>library</code> function:</p>
 
 <pre><code class="r">library(plyr)
 </code></pre>
 
-<ul>
-<li>libraries are additional packages to R that contain additional specialized functions </li>
-<li><p>plyr library is used for aggregating data, which will be explored in detail later</p>
-
-<ul>
-<li>be sure that the package you are trying to load is installed on your computer</li>
-</ul></li>
-</ul>
+<p>R packages (or libraries) contain additional specialized functions for different purposes. <code>plyr</code> is one of our favorites, and contains very useful functions for aggregating data that we will explore soon. Be sure that the package you are trying to load is installed on your computer.</p>
 
 <pre><code class="r">library(eaf)
 </code></pre>
@@ -517,16 +605,16 @@ class(sample_data[, &quot;lga&quot;])
 <pre><code>## Error: there is no package called &#39;eaf&#39;
 </code></pre>
 
-<h2>creating data frames</h2>
+<p>What should you see if you see this error?</p>
 
-<h3>joining columns:</h3>
+<h2>Joing data frames, creating new from old</h2>
 
-<ul>
-<li>R supports SQL-like join functionality with merge()
-*first we&#39;ll prepare the data for a merge</li>
-</ul>
+<h3>Joining columns:</h3>
 
-<pre><code class="r">head(data1)
+<p>R supports SQL-like join functionality with <code>merge</code>. First lets prepare some data to merge:</p>
+
+<pre><code class="r">data1 &lt;- subset(sample_data, select = -c(zone, gps))
+head(data1)
 </code></pre>
 
 <pre><code>##           lga lga_id   state c_section_yn num_nurses_fulltime
@@ -545,7 +633,9 @@ class(sample_data[, &quot;lga&quot;])
 ## 6                      1     public                    1
 </code></pre>
 
-<pre><code class="r">head(data2)
+<pre><code class="r">data2 &lt;- unique(subset(sample_data, select = c(state, zone), subset = zone != 
+    &quot;Southeast&quot;))
+head(data2)
 </code></pre>
 
 <pre><code>##         state          zone
@@ -557,23 +647,17 @@ class(sample_data[, &quot;lga&quot;])
 ## 9 Cross River   South-South
 </code></pre>
 
-<ul>
-<li>inner join</li>
-</ul>
+<p>Inner join:</p>
 
 <pre><code class="r">inner_join &lt;- merge(data1, data2, by = &quot;state&quot;)
 </code></pre>
 
-<ul>
-<li>outer join</li>
-</ul>
+<p>Outer join:</p>
 
 <pre><code class="r">outer_join &lt;- merge(data1, data2, by = &quot;state&quot;, all = TRUE)
 </code></pre>
 
-<ul>
-<li>left outer join</li>
-</ul>
+<p>Left outer join:</p>
 
 <pre><code class="r">left_outer_join &lt;- merge(data1, data2, by.x = &quot;lga_id&quot;, by.y = &quot;lga_id&quot;, all.x = TRUE)
 </code></pre>
@@ -581,10 +665,7 @@ class(sample_data[, &quot;lga&quot;])
 <pre><code>## Error: &#39;by&#39; must specify a uniquely valid column
 </code></pre>
 
-<ul>
-<li>concatenate data.frames COLUMNwise with cbind()</li>
-<li>note that the order of rows in original data is unchanged</li>
-</ul>
+<p>We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:</p>
 
 <pre><code class="r">cbind(data1, data2)
 </code></pre>
@@ -592,16 +673,39 @@ class(sample_data[, &quot;lga&quot;])
 <pre><code>## Error: arguments imply differing number of rows: 50, 21
 </code></pre>
 
-<ul>
-<li>concatenate data.frames ROWise with cbind()</li>
-<li>note that the order of columns in original data is unchanged</li>
-</ul>
+<pre><code class="r">cbind(head(data1), head(data2))
+</code></pre>
+
+<pre><code>##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime       state
+## 1                      1     public                    0     Plateau
+## 2                     NA     public                   NA     Katsina
+## 3                      1     public                    0       Benue
+## 4                      0     public                    0      Bauchi
+## 5                      0     public                    0       Lagos
+## 6                      1     public                    1 Cross River
+##            zone
+## 1 North-Central
+## 2     Northwest
+## 3 North-Central
+## 4     Northeast
+## 5     Southwest
+## 6   South-South
+</code></pre>
+
+<p>Can you break down what the last statement did, one by one?</p>
+
+<p>Row-wise concatenation happens with <code>rbind</code>. Again, you need the same rows in both data sets:</p>
 
 <pre><code class="r">data4 &lt;- sample_data[1:5, ]
 data5 &lt;- sample_data[6:10, ]
-</code></pre>
-
-<pre><code class="r">rbind(data4, data5)
+rbind(data4, data5)
 </code></pre>
 
 <pre><code>##            lga lga_id       state          zone c_section_yn
@@ -639,9 +743,7 @@ data5 &lt;- sample_data[6:10, ]
 ## 10                      0     public                    0
 </code></pre>
 
-<ul>
-<li>use with care: make sure your columns alligns before using, and here is an example of misuse</li>
-</ul>
+<p>Use this function with care. If your columns don&#39;t align, you&#39;ll have a problem:</p>
 
 <pre><code class="r">rbind(data1, data2)
 </code></pre>
@@ -649,23 +751,14 @@ data5 &lt;- sample_data[6:10, ]
 <pre><code>## Error: numbers of columns of arguments do not match
 </code></pre>
 
-<ul>
-<li>rbind.fill() is a powerful rbind() realization in <strong>plyr</strong> package</li>
-<li>with rbind you have to make every column in both data.frames exist and allign(have the same index number), but with rbind.fill you need not be concerned. </li>
-<li>rbind.fill() finds the corresponding column in data.frame2 and concatenate the data, and if there&#39;s no corresponding part it assigns <strong><em>NA</em></strong></li>
-</ul>
+<p>There is a powerful replacement of <code>rbind</code> in the <strong>plyr</strong> package, called <code>rbind.fill</code>. With <code>rbind</code> you have to make every column in both data.frames exist and allign (ie, have the same index number), but with <code>rbind.fill</code> you need not be concerned. <code>rbind.fill</code> finds the corresponding column in data.frame2 and concatenates the data, and if there&#39;s no corresponding part it assigns <strong><em>NA</em></strong>. Do be careful though, you might accidentally concatenate the wrong data frames, and instead of complaining, <code>rbind.fill</code> will just fill your dataset with NAs.</p>
 
-<pre><code class="r">rbind.fill(data1, data2)
+<pre><code class="r">head(rbind.fill(data1, data2))
 </code></pre>
 
-<pre><code>## Error: undefined columns selected
-</code></pre>
+<h3>Subset</h3>
 
-<h3>creating derivative data frames via subset:</h3>
-
-<ul>
-<li>getting a subset of original data with a handy functions saves a lot of typing</li>
-</ul>
+<p>Getting a subset of original data with a handy functions saves a lot of typing</p>
 
 <pre><code class="r">subset(sample_data, lga_id &lt; 500, select = c(&quot;lga_id&quot;, &quot;lga&quot;, &quot;state&quot;))
 </code></pre>
@@ -704,42 +797,45 @@ data5 &lt;- sample_data[6:10, ]
 ## 49    304        Ifelodun        Osun
 </code></pre>
 
-<h2>data cleaning:</h2>
+<h2>Data cleaning:</h2>
 
-<h3>type conversion</h3>
+<h3>Type conversion</h3>
 
-<ul>
-<li>type conversion can be forced by <strong>as.*()</strong> function</li>
-<li>common <strong>*</strong> types you&#39;d encounter are: 
+<p>Type conversion can be forced by <code>as.*</code> functions. Common <strong>*</strong> types you&#39;d encounter are: </p>
 
 <ol>
 <li>numeric</li>
 <li>integer</li>
 <li>character</li>
-<li>logical</li>
-</ol></li>
-<li><p>sometimes you&#39;ll encounter <strong>factor</strong> variables, we recommend using <strong>as.character()</strong> function to convert it into character type before proceeding </p></li>
-<li><p>here&#39;s some examples</p></li>
-</ul>
+<li>logical
+Sometimes you&#39;ll encounter <strong>factor</strong> variables, we recommend using <strong>as.character()</strong> function to convert it into character type before proceeding </li>
+</ol>
 
-<pre><code class="r">my_numbers &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;)
+<pre><code class="r">my_numbers &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;TRUE&quot;)
 my_numbers
 </code></pre>
 
-<pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;
+<pre><code>## [1] &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    &quot;4&quot;    &quot;TRUE&quot;
 </code></pre>
 
 <pre><code class="r">as.numeric(my_numbers)
 </code></pre>
 
-<pre><code>## [1] 1 2 3 4 5
+<pre><code>## Warning: NAs introduced by coercion
 </code></pre>
 
-<h2>creating and deleting columns</h2>
+<pre><code>## [1]  1  2  3  4 NA
+</code></pre>
 
-<ul>
-<li>creating a column from a vector </li>
-</ul>
+<pre><code class="r">as.logical(my_numbers)
+</code></pre>
+
+<pre><code>## [1]   NA   NA   NA   NA TRUE
+</code></pre>
+
+<h2>Creating and deleting columns</h2>
+
+<p>Creating a column from a vector </p>
 
 <pre><code class="r">sample_data$simple &lt;- 1:50
 # a head() of the newly created simple column:
@@ -850,6 +946,38 @@ summary(sample_data$num_nurselabtechs_fulltime)
 
 <pre><code>## Length  Class   Mode 
 ##      0   NULL   NULL
+</code></pre>
+
+<h3>Libraries</h3>
+
+<ul>
+<li>install packages</li>
+<li>to install packges in R, call <strong>install.packages()</strong> with quoted package name: </li>
+</ul>
+
+<pre><code class="r">install.packages(&quot;plyr&quot;)
+</code></pre>
+
+<ul>
+<li>to load libraries in R call <strong>library()</strong> fucntion</li>
+</ul>
+
+<pre><code class="r">library(plyr)
+</code></pre>
+
+<ul>
+<li>libraries are additional packages to R that contain additional specialized functions </li>
+<li><p>plyr library is used for aggregating data, which will be explored in detail later</p>
+
+<ul>
+<li>be sure that the package you are trying to load is installed on your computer</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">library(eaf)
+</code></pre>
+
+<pre><code>## Error: there is no package called &#39;eaf&#39;
 </code></pre>
 
 <h2>data cleaning</h2>
@@ -1122,55 +1250,16 @@ head(subset(sample_data, select = c(&quot;num_nurses_fulltime&quot;, &quot;num_l
 <li>first step: install and load <strong>devtools</strong> package from cran</li>
 </ul>
 
-<pre><code class="r">install.packages(&quot;devtools&quot;)
-</code></pre>
-
-<pre><code>## Installing package into &#39;/Users/prabhaspokharel/Library/R/3.0/library&#39; (as
-## &#39;lib&#39; is unspecified)
-</code></pre>
-
-<pre><code>## Error: trying to use CRAN without setting a mirror
-</code></pre>
-
-<pre><code class="r">library(devtools)
+<pre><code>install.packages(&#39;devtools&#39;) 
+library(devtools)
 </code></pre>
 
 <ul>
 <li>second step: use <strong>install_github(&ldquo;repo_name&rdquo;, &ldquo;user_name&rdquo;)</strong> function to install packages on github</li>
 </ul>
 
-<pre><code class="r">install_github(&quot;formhub.R&quot;, username = &quot;SEL-Columbia&quot;)
-</code></pre>
-
-<pre><code>## Installing github repo(s) formhub.R/master from SEL-Columbia Downloading
-## formhub.R.zip from
-## https://github.com/SEL-Columbia/formhub.R/archive/master.zip Installing
-## package from
-## /var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T//Rtmpw2EbgA/formhub.R.zip
-## Installing formhub &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39;
-## --vanilla CMD INSTALL \
-## &#39;/private/var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T/Rtmpw2EbgA/formhub.R-master&#39;
-## \ --library=&#39;/Users/prabhaspokharel/Library/R/3.0/library&#39; \
-## --with-keep.source --install-tests
-</code></pre>
-
-<pre><code class="r">library(formhub)
-</code></pre>
-
-<pre><code>## Loading required package: RJSONIO Loading required package: stringr
-## Loading required package: RCurl Loading required package: bitops Loading
-## required package: lubridate
-## 
-## Attaching package: &#39;lubridate&#39;
-## 
-## The following object is masked from &#39;package:plyr&#39;:
-## 
-## here
-## 
-## Loading required package: doBy Loading required package: multcomp Loading
-## required package: mvtnorm Loading required package: survival Loading
-## required package: splines Loading required package: MASS Loading required
-## package: sp
+<pre><code>install_github(&quot;formhub.R&quot;, username=&quot;SEL-Columbia&quot;)
+library(formhub)
 </code></pre>
 
 <h2>map functions: apply()</h2>
@@ -1242,4 +1331,3 @@ my_sum(1, 2)
 </body>
 
 </html>
-
