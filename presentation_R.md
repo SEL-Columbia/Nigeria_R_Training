@@ -182,8 +182,21 @@ Examples below. Note! We are using small_data, which is just the first ten rows 
 ```r
 small_data <- head(sample_data, 10)
 small_data$lga
+```
+
+```
+##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
+##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
+```
+
+```r
 
 small_data[, "lga"]
+```
+
+```
+##  [1] "Barkin-Ladi" "Anaocha"     "Batsari"     "Orlu"        "Guma"       
+##  [6] "Ayamelum"    "Gamawa"      "Kosofe"      "Bekwara"     "Gurara"
 ```
 
 
@@ -275,7 +288,7 @@ small_data$num_doctors_fulltime
 ```
 
 ```
-## Error: object 'small_data' not found
+##  [1]  0 NA  0  0  0  1  0  1  0  0
 ```
 
 ```r
@@ -283,7 +296,7 @@ class(small_data$num_doctors_fulltime)
 ```
 
 ```
-## Error: object 'small_data' not found
+## [1] "integer"
 ```
 
 
@@ -301,7 +314,12 @@ small_data[1, ]  # the first row
 ```
 
 ```
-## Error: object 'small_data' not found
+##           lga lga_id   state          zone c_section_yn
+## 1 Barkin-Ladi     91 Plateau North-Central        FALSE
+##   num_nurses_fulltime                                         gps
+## 1                   0 9.57723376 8.98908176 1285.699951171875 5.0
+##   num_lab_techs_fulltime management num_doctors_fulltime
+## 1                      1     public                    0
 ```
 
 ```r
@@ -309,7 +327,12 @@ small_data[5, ]  # the fifth row
 ```
 
 ```
-## Error: object 'small_data' not found
+##    lga lga_id state          zone c_section_yn num_nurses_fulltime
+## 5 Guma    258 Benue North-Central        FALSE                   0
+##                                            gps num_lab_techs_fulltime
+## 5 7.71806025 8.74342196 147.89999389648438 5.0                      0
+##   management num_doctors_fulltime
+## 5     public                    0
 ```
 
 ```r
@@ -317,7 +340,10 @@ small_data[100, ]  # the 100th row, which doesn't exist
 ```
 
 ```
-## Error: object 'small_data' not found
+##     lga lga_id state zone c_section_yn num_nurses_fulltime  gps
+## NA <NA>     NA  <NA> <NA>           NA                  NA <NA>
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## NA                     NA       <NA>                   NA
 ```
 
 
@@ -441,7 +467,7 @@ Questions:
 
 #### Sums, Mean, Standard Deviation
 
-Calculating the mean is easy, but it does require some care:
+Calculating the sum is easy, but it does require some care:
 
 ```r
 sum(sample_data$num_nurses_fulltime)
@@ -476,11 +502,9 @@ What do you think the function for calculating standard deviation is? How would 
 Libraries
 ---------
 R is a programming languages, so it allows you to write "modules" or "libraries" that can be distributed to others. These are called packages in R. To install packges in R, use `install.packages` with quoted package name: 
-
-```r
-install.packages("plyr")
 ```
-
+install.packages("plyr")
+```   
 
 To load the library (similar to `import` in other languages), you use the `library` function:
 
@@ -501,10 +525,55 @@ library(eaf)
 ```
 
 
-What should you see if you see this error?
+Question: what should you see if you see this error?
 
-Joing data frames, creating new from old
+Creating new data frames from old data frames
 ---------------------
+
+### Subset
+Getting a subset of original data with a handy functions saves a lot of typing
+
+
+```r
+subset(sample_data, lga_id < 500, select = c("lga_id", "lga", "state"))
+```
+
+```
+##    lga_id             lga       state
+## 1      91     Barkin-Ladi     Plateau
+## 2      49         Anaocha     Anambra
+## 3      96         Batsari     Katsina
+## 5     258            Guma       Benue
+## 6      76        Ayamelum     Anambra
+## 7     232          Gamawa      Bauchi
+## 8     441          Kosofe       Lagos
+## 9     101         Bekwara Cross River
+## 10    261          Gurara       Niger
+## 11    359        Ise/Orun       Ekiti
+## 15    218      Ezinihitte         Imo
+## 17    312          Ihiala     Anambra
+## 18    152           Daura     Katsina
+## 21    488         Maradun     Zamfara
+## 22    396    kaduna South      Kaduna
+## 24    452          Kusada     Katsina
+## 25     43          Aliero       Kebbi
+## 27    191        Ekwusigo     Anambra
+## 29    161           Donga      Taraba
+## 31    324       Ika South       Delta
+## 32    183     Ehime-Mbano         Imo
+## 33    142          Damban      Bauchi
+## 36    466             Lau      Taraba
+## 37    473          Madobi        Kano
+## 38    349          Ingawa     Katsina
+## 39    223         Faskari     Katsina
+## 42    487            Mani     Katsina
+## 44    316     Ijebu North        Ogun
+## 46     67 Atakunmosa West        Osun
+## 47     79          Babura      Jigawa
+## 49    304        Ifelodun        Osun
+```
+
+
 
 ### Joining columns:
 R supports SQL-like join functionality with `merge`. First lets prepare some data to merge:
@@ -677,49 +746,23 @@ There is a powerful replacement of `rbind` in the __plyr__ package, called `rbin
 head(rbind.fill(data1, data2))
 ```
 
-
-### Subset
-Getting a subset of original data with a handy functions saves a lot of typing
-
-
-```r
-subset(sample_data, lga_id < 500, select = c("lga_id", "lga", "state"))
+```
+##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime zone
+## 1                      1     public                    0 <NA>
+## 2                     NA     public                   NA <NA>
+## 3                      1     public                    0 <NA>
+## 4                      0     public                    0 <NA>
+## 5                      0     public                    0 <NA>
+## 6                      1     public                    1 <NA>
 ```
 
-```
-##    lga_id             lga       state
-## 1      91     Barkin-Ladi     Plateau
-## 2      49         Anaocha     Anambra
-## 3      96         Batsari     Katsina
-## 5     258            Guma       Benue
-## 6      76        Ayamelum     Anambra
-## 7     232          Gamawa      Bauchi
-## 8     441          Kosofe       Lagos
-## 9     101         Bekwara Cross River
-## 10    261          Gurara       Niger
-## 11    359        Ise/Orun       Ekiti
-## 15    218      Ezinihitte         Imo
-## 17    312          Ihiala     Anambra
-## 18    152           Daura     Katsina
-## 21    488         Maradun     Zamfara
-## 22    396    kaduna South      Kaduna
-## 24    452          Kusada     Katsina
-## 25     43          Aliero       Kebbi
-## 27    191        Ekwusigo     Anambra
-## 29    161           Donga      Taraba
-## 31    324       Ika South       Delta
-## 32    183     Ehime-Mbano         Imo
-## 33    142          Damban      Bauchi
-## 36    466             Lau      Taraba
-## 37    473          Madobi        Kano
-## 38    349          Ingawa     Katsina
-## 39    223         Faskari     Katsina
-## 42    487            Mani     Katsina
-## 44    316     Ijebu North        Ogun
-## 46     67 Atakunmosa West        Osun
-## 47     79          Babura      Jigawa
-## 49    304        Ifelodun        Osun
-```
 
 
 Data cleaning:
@@ -770,71 +813,67 @@ Creating and deleting columns
 Creating a column from a vector 
 
 ```r
-sample_data$simple <- 1:50
-# a head() of the newly created simple column:
+sample_data$one_to_fifty <- 1:50
+head(sample_data$one_to_fifty)
 ```
-
-
 
 ```
 ## [1] 1 2 3 4 5 6
 ```
 
-* column creation: __broadcasting__  
-  * R makes column creation very straightforward by repeating a value which is known as "broadcasting"
+
+Column creation: __broadcasting__  
+R makes column creation very straightforward by repeating a value which is known as "broadcasting". When you want to have a whole column created, but you have only one value for that column, you want to use this type of "broadcasting".
 
 ```r
-sample_data$simple <- "who wants some egusi?"
-# a head() of the newly defined simple column:
+sample_data$country <- "Nigeria"
+head(sample_data$country)
+```
+
+```
+## [1] "Nigeria" "Nigeria" "Nigeria" "Nigeria" "Nigeria" "Nigeria"
 ```
 
 
-
-```
-## [1] "who wants some egusi?" "who wants some egusi?" "who wants some egusi?"
-## [4] "who wants some egusi?" "who wants some egusi?" "who wants some egusi?"
-```
-
-
-* creating a column from a single value
-  * R allows the user to broadcast numerical values as well
+Creating a column from a single value. R allows the user to broadcast numerical values as well:
 
 ```r
-sample_data$simple <- 1963
-# a head() of the newly defined simple column
+sample_data$ONE <- 1
+head(samle_data$ONE)
 ```
 
-
-
 ```
-## [1] 1963 1963 1963 1963 1963 1963
+## Error: object 'samle_data' not found
 ```
 
   
-* column creation: using already existing columns
+Column creation: using already existing columns
 
 ```r
-# a look at the lga column
-head(sample_data$lga_id)
+head(sample_data$num_nurses_fulltime)
 ```
 
 ```
-## [1]  91  49  96 611 258  76
+## [1] 0 2 1 0 0 0
 ```
 
 ```r
-# creating a new column, by pasting '9ja:' to the values of the lga column
-sample_data$lga_id_national <- paste("9ja:", sample_data$lga_id, sep = "")
-# a look at the the new lga_id_national column
-head(sample_data$lga_id_national)
+sample_data$skilled_birth_attendants <- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
+head(sample_data[, c("num_nurses_fulltime", "num_doctors_fulltime", "skilled_birth_attendants")])
 ```
 
 ```
-## [1] "9ja:91"  "9ja:49"  "9ja:96"  "9ja:611" "9ja:258" "9ja:76"
+##   num_nurses_fulltime num_doctors_fulltime skilled_birth_attendants
+## 1                   0                    0                        0
+## 2                   2                   NA                       NA
+## 3                   1                    0                        1
+## 4                   0                    0                        0
+## 5                   0                    0                        0
+## 6                   0                    1                        1
 ```
 
 
-* column creation: boolean columns
+Column creation: boolean columns
 
 ```r
 sample_data$public <- sample_data$management == "public"
@@ -869,7 +908,7 @@ head(sample_data[, c("public_2_docs", "management", "public")])
 ```
 
 
-* renaming  	
+Renaming  	
 
 ```r
 # quote the current variable name, and set it equal the quoted desired name
@@ -877,7 +916,7 @@ sample_data <- rename(sample_data, c(gps = "global_positioning_system"))
 ```
 
 
-* removing columns
+Removing columns
 
 ```r
 sample_data$num_nurselabtechs_fulltime <- NULL
@@ -891,35 +930,9 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ```
 
  
-### Libraries
- * install packages
- * to install packges in R, call __install.packages()__ with quoted package name: 
 
-```r
-install.packages("plyr")
-```
-
- * to load libraries in R call __library()__ fucntion
-  
-
-```r
-library(plyr)
-```
-
-  * libraries are additional packages to R that contain additional specialized functions 
-  * plyr library is used for aggregating data, which will be explored in detail later
-
-* be sure that the package you are trying to load is installed on your computer
-
-```r
-library(eaf)
-```
-
-```
-## Error: there is no package called 'eaf'
-```
-
-
+Review
+======
 
 data cleaning
 --------------
@@ -1142,20 +1155,27 @@ head(my_summary)
 ## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
 ## 5                5.95802932 6.84972263 148.0 5.0                      0
 ## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
-##   management num_doctors_fulltime simple lga_id_national public
-## 1     public                  308   1963         9ja:728   TRUE
-## 2     public                    1   1963         9ja:676   TRUE
-## 3     public                   NA   1963          9ja:49   TRUE
-## 4     public                    1   1963          9ja:76   TRUE
-## 5       <NA>                    1   1963         9ja:191     NA
-## 6       <NA>                    1   1963         9ja:312     NA
-##   public_2_docs counts total_num_nurse avg_c_section
-## 1         FALSE      1               0             1
-## 2         FALSE      1               2             0
-## 3            NA      1               2             0
-## 4         FALSE      1               0             0
-## 5         FALSE      1               0             1
-## 6         FALSE      1               2             1
+##   management num_doctors_fulltime one_to_fifty country ONE
+## 1     public                  308           28 Nigeria   1
+## 2     public                    1           26 Nigeria   1
+## 3     public                   NA            2 Nigeria   1
+## 4     public                    1            6 Nigeria   1
+## 5       <NA>                    1           27 Nigeria   1
+## 6       <NA>                    1           17 Nigeria   1
+##   skilled_birth_attendants public public_2_docs counts total_num_nurse
+## 1                       NA   TRUE         FALSE      1               0
+## 2                        3   TRUE         FALSE      1               2
+## 3                       NA   TRUE            NA      1               2
+## 4                        1   TRUE         FALSE      1               0
+## 5                        1     NA         FALSE      1               0
+## 6                        3     NA         FALSE      1               2
+##   avg_c_section
+## 1             1
+## 2             0
+## 3             0
+## 4             0
+## 5             1
+## 6             1
 ```
 
 
@@ -1250,7 +1270,7 @@ apply(sample_data, MARGIN = 1, function(x) {
 
 
 ```
-##  [1] 0 4 0 0 0 0 0 2 0 0
+##  [1] 0 5 0 0 0 0 0 2 0 0
 ```
 
 

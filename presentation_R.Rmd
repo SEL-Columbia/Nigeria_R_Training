@@ -115,7 +115,7 @@ A column in our data frame is equivalent to either a column in the survey, or a 
  2. using the [,] method, or bracket method (eg. dataframe[,'column_name'])
 
 Examples below. Note! We are using small_data, which is just the first ten rows of sample_data
-```{r echo=TRUE, eval=FALSE}
+```{r}
 small_data <- head(sample_data, 10)
 small_data$lga
 
@@ -230,7 +230,7 @@ Questions:
 
 #### Sums, Mean, Standard Deviation
 
-Calculating the mean is easy, but it does require some care:
+Calculating the sum is easy, but it does require some care:
 ```{r}
 sum(sample_data$num_nurses_fulltime)
 sum(sample_data$num_nurses_fulltime, na.rm=TRUE)
@@ -246,7 +246,7 @@ What do you think the function for calculating standard deviation is? How would 
 Libraries
 ---------
 R is a programming languages, so it allows you to write "modules" or "libraries" that can be distributed to others. These are called packages in R. To install packges in R, use `install.packages` with quoted package name: 
-```{r echo=TRUE, eval=FALSE}
+```
 install.packages("plyr")
 ```   
 
@@ -261,10 +261,18 @@ R packages (or libraries) contain additional specialized functions for different
 library(eaf)
 ```
 
-What should you see if you see this error?
+Question: what should you see if you see this error?
 
-Joing data frames, creating new from old
+Creating new data frames from old data frames
 ---------------------
+
+### Subset
+Getting a subset of original data with a handy functions saves a lot of typing
+
+```{r}
+subset(sample_data, lga_id < 500, select=c("lga_id", "lga", "state" ))
+```
+
 
 ### Joining columns:
 R supports SQL-like join functionality with `merge`. First lets prepare some data to merge:
@@ -313,16 +321,10 @@ rbind(data1, data2)
 
 There is a powerful replacement of `rbind` in the __plyr__ package, called `rbind.fill`. With `rbind` you have to make every column in both data.frames exist and allign (ie, have the same index number), but with `rbind.fill` you need not be concerned. `rbind.fill` finds the corresponding column in data.frame2 and concatenates the data, and if there's no corresponding part it assigns __*NA*__. Do be careful though, you might accidentally concatenate the wrong data frames, and instead of complaining, `rbind.fill` will just fill your dataset with NAs.
 
-```{r echo=TRUE, eval=FALSE}
+```{r}
 head(rbind.fill(data1, data2))
 ```
 
-### Subset
-Getting a subset of original data with a handy functions saves a lot of typing
-
-```{r}
-subset(sample_data, lga_id < 500, select=c("lga_id", "lga", "state" ))
-```
 
 Data cleaning:
 ----
@@ -347,46 +349,31 @@ Creating and deleting columns
 
 Creating a column from a vector 
 ```{r}
-sample_data$simple <- 1:50
-#a head() of the newly created simple column:
+sample_data$one_to_fifty <- 1:50
+head(sample_data$one_to_fifty)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
-head(sample_data$simple)
-```
-* column creation: __broadcasting__  
-  * R makes column creation very straightforward by repeating a value which is known as "broadcasting"
+Column creation: __broadcasting__  
+R makes column creation very straightforward by repeating a value which is known as "broadcasting". When you want to have a whole column created, but you have only one value for that column, you want to use this type of "broadcasting".
 ```{r}
-sample_data$simple <- "who wants some egusi?"
-#a head() of the newly defined simple column:
+sample_data$country <- "Nigeria"
+head(sample_data$country)
 ```
 
-```{r, echo=FALSE, eval=TRUE}
-head(sample_data$simple)
-```
-
-* creating a column from a single value
-  * R allows the user to broadcast numerical values as well
+Creating a column from a single value. R allows the user to broadcast numerical values as well:
 ```{r}
-sample_data$simple <- 1963
-#a head() of the newly defined simple column
-```
-
-```{r, echo=FALSE, eval=TRUE}
-head(sample_data$simple)
+sample_data$ONE <- 1
+head(samle_data$ONE)
 ```
   
-* column creation: using already existing columns
+Column creation: using already existing columns
 ```{r}
-#a look at the lga column 
-head(sample_data$lga_id)
-#creating a new column, by pasting "9ja:" to the values of the lga column
-sample_data$lga_id_national <- paste("9ja:", sample_data$lga_id, sep = "")
-#a look at the the new lga_id_national column
-head(sample_data$lga_id_national)
+head(sample_data$num_nurses_fulltime)
+sample_data$skilled_birth_attendants <- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
+head(sample_data[,c("num_nurses_fulltime", "num_doctors_fulltime", "skilled_birth_attendants")])
 ```
 
-* column creation: boolean columns
+Column creation: boolean columns
 ```{r}
 sample_data$public <- sample_data$management == "public"
 head(sample_data[, c("management", "public")])
@@ -396,38 +383,22 @@ head(sample_data[, c("public_2_docs", "management", "public")])
   
 ```
 
-* renaming  	
+Renaming  	
 ```{r}
 #quote the current variable name, and set it equal the quoted desired name  
 sample_data <- rename(sample_data, c("gps" = "global_positioning_system"))
 ```
 
-* removing columns
+Removing columns
 ```{r}
 sample_data$num_nurselabtechs_fulltime <- NULL
 #testing to make sure it no longer exists
 summary(sample_data$num_nurselabtechs_fulltime)
 ```
  
-### Libraries
- * install packages
- * to install packges in R, call __install.packages()__ with quoted package name: 
-```{r echo=TRUE, eval=FALSE}
-install.packages("plyr")
-```   
- * to load libraries in R call __library()__ fucntion
-  
-```{r}
-library(plyr)
-```
-  * libraries are additional packages to R that contain additional specialized functions 
-  * plyr library is used for aggregating data, which will be explored in detail later
 
-* be sure that the package you are trying to load is installed on your computer
-```{r}
-library(eaf)
-```
-
+Review
+======
 
 data cleaning
 --------------

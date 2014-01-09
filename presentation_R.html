@@ -344,8 +344,18 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 
 <pre><code class="r">small_data &lt;- head(sample_data, 10)
 small_data$lga
+</code></pre>
 
+<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
+##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
+</code></pre>
+
+<pre><code class="r">
 small_data[, &quot;lga&quot;]
+</code></pre>
+
+<pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
+##  [6] &quot;Ayamelum&quot;    &quot;Gamawa&quot;      &quot;Kosofe&quot;      &quot;Bekwara&quot;     &quot;Gurara&quot;
 </code></pre>
 
 <p>We generally prefer the first strategy, but sometimes we&#39;ll need to use the second strategy, particularly when working with mulitple columns. Before we go there, though, lets talk about data types in R. Type</p>
@@ -425,13 +435,13 @@ small_data[, &quot;lga&quot;]
 <pre><code class="r">small_data$num_doctors_fulltime
 </code></pre>
 
-<pre><code>## Error: object &#39;small_data&#39; not found
+<pre><code>##  [1]  0 NA  0  0  0  1  0  1  0  0
 </code></pre>
 
 <pre><code class="r">class(small_data$num_doctors_fulltime)
 </code></pre>
 
-<pre><code>## Error: object &#39;small_data&#39; not found
+<pre><code>## [1] &quot;integer&quot;
 </code></pre>
 
 <p>This is incredibly helpful for dealing with survey data. In survey data, NA means &#39;missing value&#39;. This can happen for many reasons. For example, an enumerator can simply have skipped the question. Or the question may have been skipped because of skip logic (more on that later).</p>
@@ -445,19 +455,32 @@ small_data[, &quot;lga&quot;]
 <pre><code class="r">small_data[1, ]  # the first row
 </code></pre>
 
-<pre><code>## Error: object &#39;small_data&#39; not found
+<pre><code>##           lga lga_id   state          zone c_section_yn
+## 1 Barkin-Ladi     91 Plateau North-Central        FALSE
+##   num_nurses_fulltime                                         gps
+## 1                   0 9.57723376 8.98908176 1285.699951171875 5.0
+##   num_lab_techs_fulltime management num_doctors_fulltime
+## 1                      1     public                    0
 </code></pre>
 
 <pre><code class="r">small_data[5, ]  # the fifth row
 </code></pre>
 
-<pre><code>## Error: object &#39;small_data&#39; not found
+<pre><code>##    lga lga_id state          zone c_section_yn num_nurses_fulltime
+## 5 Guma    258 Benue North-Central        FALSE                   0
+##                                            gps num_lab_techs_fulltime
+## 5 7.71806025 8.74342196 147.89999389648438 5.0                      0
+##   management num_doctors_fulltime
+## 5     public                    0
 </code></pre>
 
 <pre><code class="r">small_data[100, ]  # the 100th row, which doesn&#39;t exist
 </code></pre>
 
-<pre><code>## Error: object &#39;small_data&#39; not found
+<pre><code>##     lga lga_id state zone c_section_yn num_nurses_fulltime  gps
+## NA &lt;NA&gt;     NA  &lt;NA&gt; &lt;NA&gt;           NA                  NA &lt;NA&gt;
+##    num_lab_techs_fulltime management num_doctors_fulltime
+## NA                     NA       &lt;NA&gt;                   NA
 </code></pre>
 
 <p>Question: what do you think <code>class(small_data[1,])</code> is?</p>
@@ -561,7 +584,7 @@ sample_data[4:6, c(&#39;lga&#39;, &#39;zone&#39;)]
 
 <h4>Sums, Mean, Standard Deviation</h4>
 
-<p>Calculating the mean is easy, but it does require some care:</p>
+<p>Calculating the sum is easy, but it does require some care:</p>
 
 <pre><code class="r">sum(sample_data$num_nurses_fulltime)
 </code></pre>
@@ -589,7 +612,7 @@ sample_data[4:6, c(&#39;lga&#39;, &#39;zone&#39;)]
 
 <p>R is a programming languages, so it allows you to write &quot;modules&rdquo; or &ldquo;libraries&rdquo; that can be distributed to others. These are called packages in R. To install packges in R, use <code>install.packages</code> with quoted package name: </p>
 
-<pre><code class="r">install.packages(&quot;plyr&quot;)
+<pre><code>install.packages(&quot;plyr&quot;)
 </code></pre>
 
 <p>To load the library (similar to <code>import</code> in other languages), you use the <code>library</code> function:</p>
@@ -605,9 +628,50 @@ sample_data[4:6, c(&#39;lga&#39;, &#39;zone&#39;)]
 <pre><code>## Error: there is no package called &#39;eaf&#39;
 </code></pre>
 
-<p>What should you see if you see this error?</p>
+<p>Question: what should you see if you see this error?</p>
 
-<h2>Joing data frames, creating new from old</h2>
+<h2>Creating new data frames from old data frames</h2>
+
+<h3>Subset</h3>
+
+<p>Getting a subset of original data with a handy functions saves a lot of typing</p>
+
+<pre><code class="r">subset(sample_data, lga_id &lt; 500, select = c(&quot;lga_id&quot;, &quot;lga&quot;, &quot;state&quot;))
+</code></pre>
+
+<pre><code>##    lga_id             lga       state
+## 1      91     Barkin-Ladi     Plateau
+## 2      49         Anaocha     Anambra
+## 3      96         Batsari     Katsina
+## 5     258            Guma       Benue
+## 6      76        Ayamelum     Anambra
+## 7     232          Gamawa      Bauchi
+## 8     441          Kosofe       Lagos
+## 9     101         Bekwara Cross River
+## 10    261          Gurara       Niger
+## 11    359        Ise/Orun       Ekiti
+## 15    218      Ezinihitte         Imo
+## 17    312          Ihiala     Anambra
+## 18    152           Daura     Katsina
+## 21    488         Maradun     Zamfara
+## 22    396    kaduna South      Kaduna
+## 24    452          Kusada     Katsina
+## 25     43          Aliero       Kebbi
+## 27    191        Ekwusigo     Anambra
+## 29    161           Donga      Taraba
+## 31    324       Ika South       Delta
+## 32    183     Ehime-Mbano         Imo
+## 33    142          Damban      Bauchi
+## 36    466             Lau      Taraba
+## 37    473          Madobi        Kano
+## 38    349          Ingawa     Katsina
+## 39    223         Faskari     Katsina
+## 42    487            Mani     Katsina
+## 44    316     Ijebu North        Ogun
+## 46     67 Atakunmosa West        Osun
+## 47     79          Babura      Jigawa
+## 49    304        Ifelodun        Osun
+</code></pre>
 
 <h3>Joining columns:</h3>
 
@@ -756,45 +820,20 @@ rbind(data4, data5)
 <pre><code class="r">head(rbind.fill(data1, data2))
 </code></pre>
 
-<h3>Subset</h3>
-
-<p>Getting a subset of original data with a handy functions saves a lot of typing</p>
-
-<pre><code class="r">subset(sample_data, lga_id &lt; 500, select = c(&quot;lga_id&quot;, &quot;lga&quot;, &quot;state&quot;))
-</code></pre>
-
-<pre><code>##    lga_id             lga       state
-## 1      91     Barkin-Ladi     Plateau
-## 2      49         Anaocha     Anambra
-## 3      96         Batsari     Katsina
-## 5     258            Guma       Benue
-## 6      76        Ayamelum     Anambra
-## 7     232          Gamawa      Bauchi
-## 8     441          Kosofe       Lagos
-## 9     101         Bekwara Cross River
-## 10    261          Gurara       Niger
-## 11    359        Ise/Orun       Ekiti
-## 15    218      Ezinihitte         Imo
-## 17    312          Ihiala     Anambra
-## 18    152           Daura     Katsina
-## 21    488         Maradun     Zamfara
-## 22    396    kaduna South      Kaduna
-## 24    452          Kusada     Katsina
-## 25     43          Aliero       Kebbi
-## 27    191        Ekwusigo     Anambra
-## 29    161           Donga      Taraba
-## 31    324       Ika South       Delta
-## 32    183     Ehime-Mbano         Imo
-## 33    142          Damban      Bauchi
-## 36    466             Lau      Taraba
-## 37    473          Madobi        Kano
-## 38    349          Ingawa     Katsina
-## 39    223         Faskari     Katsina
-## 42    487            Mani     Katsina
-## 44    316     Ijebu North        Ogun
-## 46     67 Atakunmosa West        Osun
-## 47     79          Babura      Jigawa
-## 49    304        Ifelodun        Osun
+<pre><code>##           lga lga_id   state c_section_yn num_nurses_fulltime
+## 1 Barkin-Ladi     91 Plateau        FALSE                   0
+## 2     Anaocha     49 Anambra        FALSE                   2
+## 3     Batsari     96 Katsina        FALSE                   1
+## 4        Orlu    611     Imo        FALSE                   0
+## 5        Guma    258   Benue        FALSE                   0
+## 6    Ayamelum     76 Anambra        FALSE                   0
+##   num_lab_techs_fulltime management num_doctors_fulltime zone
+## 1                      1     public                    0 &lt;NA&gt;
+## 2                     NA     public                   NA &lt;NA&gt;
+## 3                      1     public                    0 &lt;NA&gt;
+## 4                      0     public                    0 &lt;NA&gt;
+## 5                      0     public                    0 &lt;NA&gt;
+## 6                      1     public                    1 &lt;NA&gt;
 </code></pre>
 
 <h2>Data cleaning:</h2>
@@ -837,67 +876,54 @@ my_numbers
 
 <p>Creating a column from a vector </p>
 
-<pre><code class="r">sample_data$simple &lt;- 1:50
-# a head() of the newly created simple column:
+<pre><code class="r">sample_data$one_to_fifty &lt;- 1:50
+head(sample_data$one_to_fifty)
 </code></pre>
 
 <pre><code>## [1] 1 2 3 4 5 6
 </code></pre>
 
-<ul>
-<li>column creation: <strong>broadcasting</strong><br/>
+<p>Column creation: <strong>broadcasting</strong><br/>
+R makes column creation very straightforward by repeating a value which is known as &ldquo;broadcasting&rdquo;. When you want to have a whole column created, but you have only one value for that column, you want to use this type of &ldquo;broadcasting&rdquo;.</p>
 
-<ul>
-<li>R makes column creation very straightforward by repeating a value which is known as &ldquo;broadcasting&rdquo;</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">sample_data$simple &lt;- &quot;who wants some egusi?&quot;
-# a head() of the newly defined simple column:
+<pre><code class="r">sample_data$country &lt;- &quot;Nigeria&quot;
+head(sample_data$country)
 </code></pre>
 
-<pre><code>## [1] &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot;
-## [4] &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot; &quot;who wants some egusi?&quot;
+<pre><code>## [1] &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot;
 </code></pre>
 
-<ul>
-<li>creating a column from a single value
+<p>Creating a column from a single value. R allows the user to broadcast numerical values as well:</p>
 
-<ul>
-<li>R allows the user to broadcast numerical values as well</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">sample_data$simple &lt;- 1963
-# a head() of the newly defined simple column
+<pre><code class="r">sample_data$ONE &lt;- 1
+head(samle_data$ONE)
 </code></pre>
 
-<pre><code>## [1] 1963 1963 1963 1963 1963 1963
+<pre><code>## Error: object &#39;samle_data&#39; not found
 </code></pre>
 
-<ul>
-<li>column creation: using already existing columns</li>
-</ul>
+<p>Column creation: using already existing columns</p>
 
-<pre><code class="r"># a look at the lga column
-head(sample_data$lga_id)
+<pre><code class="r">head(sample_data$num_nurses_fulltime)
 </code></pre>
 
-<pre><code>## [1]  91  49  96 611 258  76
+<pre><code>## [1] 0 2 1 0 0 0
 </code></pre>
 
-<pre><code class="r"># creating a new column, by pasting &#39;9ja:&#39; to the values of the lga column
-sample_data$lga_id_national &lt;- paste(&quot;9ja:&quot;, sample_data$lga_id, sep = &quot;&quot;)
-# a look at the the new lga_id_national column
-head(sample_data$lga_id_national)
+<pre><code class="r">sample_data$skilled_birth_attendants &lt;- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
+head(sample_data[, c(&quot;num_nurses_fulltime&quot;, &quot;num_doctors_fulltime&quot;, &quot;skilled_birth_attendants&quot;)])
 </code></pre>
 
-<pre><code>## [1] &quot;9ja:91&quot;  &quot;9ja:49&quot;  &quot;9ja:96&quot;  &quot;9ja:611&quot; &quot;9ja:258&quot; &quot;9ja:76&quot;
+<pre><code>##   num_nurses_fulltime num_doctors_fulltime skilled_birth_attendants
+## 1                   0                    0                        0
+## 2                   2                   NA                       NA
+## 3                   1                    0                        1
+## 4                   0                    0                        0
+## 5                   0                    0                        0
+## 6                   0                    1                        1
 </code></pre>
 
-<ul>
-<li>column creation: boolean columns</li>
-</ul>
+<p>Column creation: boolean columns</p>
 
 <pre><code class="r">sample_data$public &lt;- sample_data$management == &quot;public&quot;
 head(sample_data[, c(&quot;management&quot;, &quot;public&quot;)])
@@ -927,17 +953,13 @@ head(sample_data[, c(&quot;public_2_docs&quot;, &quot;management&quot;, &quot;pu
 ## 6         FALSE     public   TRUE
 </code></pre>
 
-<ul>
-<li>renaming<br/></li>
-</ul>
+<p>Renaming    </p>
 
 <pre><code class="r"># quote the current variable name, and set it equal the quoted desired name
 sample_data &lt;- rename(sample_data, c(gps = &quot;global_positioning_system&quot;))
 </code></pre>
 
-<ul>
-<li>removing columns</li>
-</ul>
+<p>Removing columns</p>
 
 <pre><code class="r">sample_data$num_nurselabtechs_fulltime &lt;- NULL
 # testing to make sure it no longer exists
@@ -948,37 +970,7 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ##      0   NULL   NULL
 </code></pre>
 
-<h3>Libraries</h3>
-
-<ul>
-<li>install packages</li>
-<li>to install packges in R, call <strong>install.packages()</strong> with quoted package name: </li>
-</ul>
-
-<pre><code class="r">install.packages(&quot;plyr&quot;)
-</code></pre>
-
-<ul>
-<li>to load libraries in R call <strong>library()</strong> fucntion</li>
-</ul>
-
-<pre><code class="r">library(plyr)
-</code></pre>
-
-<ul>
-<li>libraries are additional packages to R that contain additional specialized functions </li>
-<li><p>plyr library is used for aggregating data, which will be explored in detail later</p>
-
-<ul>
-<li>be sure that the package you are trying to load is installed on your computer</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">library(eaf)
-</code></pre>
-
-<pre><code>## Error: there is no package called &#39;eaf&#39;
-</code></pre>
+<h1>Review</h1>
 
 <h2>data cleaning</h2>
 
@@ -1198,20 +1190,27 @@ head(my_summary)
 ## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
 ## 5                5.95802932 6.84972263 148.0 5.0                      0
 ## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
-##   management num_doctors_fulltime simple lga_id_national public
-## 1     public                  308   1963         9ja:728   TRUE
-## 2     public                    1   1963         9ja:676   TRUE
-## 3     public                   NA   1963          9ja:49   TRUE
-## 4     public                    1   1963          9ja:76   TRUE
-## 5       &lt;NA&gt;                    1   1963         9ja:191     NA
-## 6       &lt;NA&gt;                    1   1963         9ja:312     NA
-##   public_2_docs counts total_num_nurse avg_c_section
-## 1         FALSE      1               0             1
-## 2         FALSE      1               2             0
-## 3            NA      1               2             0
-## 4         FALSE      1               0             0
-## 5         FALSE      1               0             1
-## 6         FALSE      1               2             1
+##   management num_doctors_fulltime one_to_fifty country ONE
+## 1     public                  308           28 Nigeria   1
+## 2     public                    1           26 Nigeria   1
+## 3     public                   NA            2 Nigeria   1
+## 4     public                    1            6 Nigeria   1
+## 5       &lt;NA&gt;                    1           27 Nigeria   1
+## 6       &lt;NA&gt;                    1           17 Nigeria   1
+##   skilled_birth_attendants public public_2_docs counts total_num_nurse
+## 1                       NA   TRUE         FALSE      1               0
+## 2                        3   TRUE         FALSE      1               2
+## 3                       NA   TRUE            NA      1               2
+## 4                        1   TRUE         FALSE      1               0
+## 5                        1     NA         FALSE      1               0
+## 6                        3     NA         FALSE      1               2
+##   avg_c_section
+## 1             1
+## 2             0
+## 3             0
+## 4             0
+## 5             1
+## 6             1
 </code></pre>
 
 <h1>Advanced R</h1>
@@ -1304,7 +1303,7 @@ library(formhub)
 })
 </code></pre>
 
-<pre><code>##  [1] 0 4 0 0 0 0 0 2 0 0
+<pre><code>##  [1] 0 5 0 0 0 0 0 2 0 0
 </code></pre>
 
 <h2>improvements:</h2>
