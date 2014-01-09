@@ -1,29 +1,30 @@
-Before started
+Before getting started
 =======
 
-we recommend watch the following video before reading this document
+We recommend watch the following video before reading this document
 * [Video tutorial for R from Google Developer](http://www.youtube.com/watch?v=iffR3fWv4xw&list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP)
 
-basic R
+Basic R
 ========================================================
 
-getting started
+Getting started
 ----
-### interface of Rstudio
+### Interface of Rstudio
 
 ![alt text][R_studio]
 
 [R_studio]: https://lh3.googleusercontent.com/-fFe1VlFiVzA/TWvS0Cuvc3I/AAAAAAAALmk/RfFLB0h5dUM/s1600/rstudio-windows.png
 
-### getting help!
-*after a question mark, enter the function name of your choice to get help on
+Items:
+* Console
+* Script
+* Environment (will make sense later)
+* Help, Plots
 
-```r
-`?`(getwd)
-```
+### Working directory 
 
+R has a notion of a "working directory". This is the directory that R can load files directly from.
 
-### set working directory 
 
 ```r
 # getting the current working directory
@@ -31,9 +32,8 @@ getwd()
 ```
 
 ```
-## [1] "/home/zaiming/work/r/nigeria_r_training"
+## [1] "/Users/prabhaspokharel/Code/Nigeria_R_Training"
 ```
-
 
 
 
@@ -43,63 +43,49 @@ setwd("~/work/r/nigeria_r_training/")
 ```
 
 
-### libraries
- * install packages
- * to install packges in R, call __install.packages()__ with quoted package name: 
+### Getting help!
+
+Before we get any further, lets see how to get help. You can go to the "Help" tab in R-studio (right-hand-side bottom), or if you know the function to get help on, just use a question mark followed by the function name.
 
 ```r
-install.packages("plyr")
+`?`(getwd)
 ```
 
- * to load libraries in R call __library()__ fucntion
-  
+
+Use two question marks to search for functions if you don't know the name:
 
 ```r
-library(plyr)
+`?`(`?`(workingdirectory))
 ```
 
-  * libraries are additional packages to R that contain additional specialized functions 
-  * plyr library is used for aggregating data, which will be explored in detail later
 
-* be sure that the package you are trying to load is installed on your computer
+### Reading data: read.csv
+
+.csv is the prefered data format in NMIS and in the data science space in general. Although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading. Our motivations for using csv formats are similar to [this article's](http://dataprotocols.org/simple-data-format/#why-csv).
+
 
 ```r
-library(eaf)
-```
-
-```
-## Error: there is no package called 'eaf'
+sample_data <- read.csv("sample_health_facilities.csv", stringsAsFactors = FALSE)
 ```
 
 
+This command calls read.csv on a filename, with an extra named argument, `stringsAsFactors`. The result is then assigned to sample_data. This command is equivalent to running `sample_data = read.csv(sample_health_facilities.csv, stringsAsFactors=FALSE)`, but the preferred syntax for assignment in R is `<-` (ie, `<` followed by `-`.)
 
-### reading data: read.csv
-  * csv is the prefered data format in NMIS and in the data science space in general. although there are functions in R to read other data formats, we recommend that one converts to csv prior to loading.  
+### The sample dataset
 
-```r
-sample_data <- read.csv("./sample_health_facilities.csv", na.strings = "NA", 
-    stringsAsFactors = FALSE)
-```
+The dataset is a subset of our health dataset. We're providing you with a small piece of it, so that we can begin to understand things with small datasets, and eventually move on to the bigger datasets that we handle in the NMIS system.
 
-  *stringsAsFactors will be explained later, but for now we recommend always using it
-  
-### data types: 
-  1. numerical
-  2. integer
-  3. boolean
-  4. character
-  5. factors
-    * generic data type used as alternative to all of the above. we recommend __not__ using. 
-    * specifically, there are typically challenges with factor => integer/numeric conversions
-    * for additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
+Have a look at the dataset on [https://github.com/SEL-Columbia/Nigeria_R_Training/blob/master/sample_health_facilities.csv](github), or open it in your favorite spreadsheet program (Excel, OpenOffice).
 
-  6. NA
-    * an additional data type in R for value __NOT AVAILABLE__, which can be found in any of the data type above
 
-data.frames
+data.frame
 --------------
+CSVs represent tabular data, which R is excellent at handling. Turns out that the data we have for NMIS is also tabular data, so we will be working with data.frames in R most of the time.
 
-* a data.frame is made up of: __[rows, columns]__
+`sample_data`, the object we created by reading in a CSV, is a data.frame. Look at the top-left side of Rstudio. You can open up the dataset by clicking on it.
+
+A data.frame is made up of rows and columns. Lets get the "dimensions" of the data.frame:
+
 
 ```r
 dim(sample_data)
@@ -109,27 +95,76 @@ dim(sample_data)
 ## [1] 50 10
 ```
 
+
+This shows that that `sample_data` has `{r} nrow(sample_data)` rows and `{r ncol(sample_data) }` columns. The functions `nrow` and `ncol` can give you these values individually:
+
+
 ```r
-# dimensions function shows 2000 rows and 104 columns for sample_data
+nrow(sample_data)
+```
+
+```
+## [1] 50
+```
+
+```r
+ncol(sample_data)
+```
+
+```
+## [1] 10
 ```
 
 
-### getting names/headers of the data.frame
+### Displaying the data.frame
+
+After loading the data.frame, we often want to know what columns are in it (columns usually have names). To check the column names of a dataset, we can use the `colnames` function, or more simply, the `names` function:
+
 
 ```r
 names(sample_data)
 ```
 
 
+But that just shows us the "headers" of our dataset, not the values. What happens if you just type sample_data into the console? Often, seeing the whole dataset is too much. But it is easy to "take a peek" at your dataset by using `head` (which UNIX users may have heard of already):
+
+
+```r
+head(sample_data)
 ```
-##  [1] "lga"                    "lga_id"                
-##  [3] "state"                  "zone"                  
-##  [5] "c_section_yn"           "num_nurses_fulltime"   
-##  [7] "gps"                    "num_lab_techs_fulltime"
-##  [9] "management"             "num_doctors_fulltime"
+
+```
+##           lga lga_id   state          zone c_section_yn
+## 1 Barkin-Ladi     91 Plateau North-Central        FALSE
+## 2     Anaocha     49 Anambra     Southeast        FALSE
+## 3     Batsari     96 Katsina     Northwest        FALSE
+## 4        Orlu    611     Imo     Southeast        FALSE
+## 5        Guma    258   Benue North-Central        FALSE
+## 6    Ayamelum     76 Anambra     Southeast        FALSE
+##   num_nurses_fulltime                                           gps
+## 1                   0   9.57723376 8.98908176 1285.699951171875 5.0
+## 2                   2   6.07903635 7.00366347 276.1000061035156 5.0
+## 3                   1  12.91273864 7.31050997 472.3999938964844 5.0
+## 4                   0 5.768364071846008 7.061988115310669 241.0 4.0
+## 5                   0  7.71806025 8.74342196 147.89999389648438 5.0
+## 6                   0  6.481826305389404 6.938955187797546 78.0 6.0
+##   num_lab_techs_fulltime management num_doctors_fulltime
+## 1                      1     public                    0
+## 2                     NA     public                   NA
+## 3                      1     public                    0
+## 4                      0     public                    0
+## 5                      0     public                    0
+## 6                      1     public                    1
 ```
 
 
+
+Questions:
+ * How many rows of data did we get out?
+ * Did you count to get your answer? If you did, how could you get your answer from R?
+ * How many columns of data did we get out? How would you check in R?
+ * Could you change the number of rows that head outputs? How would you find out?
+ * Can you create a new data.frame, called `small_sample`, which is just the first 10 rows of `sample_data`?
 
 ### getting value/column from a data.frame
 * a column in our data set is equavilent to a question in the survey
@@ -156,6 +191,20 @@ sample_data[, "lga"]
 ```
 
 * We generally prefer the first strategy, but sometimes we'll need to use the second strategy. Note that spellings have to be exact, and when using the $ notation, you can use tab completion. Try writing sample_data$l and hitting tab, for example. 
+
+### Data types: 
+  1. numerical
+  2. integer
+  3. boolean
+  4. character
+  5. factors
+    * generic data type used as alternative to all of the above. we recommend __not__ using. 
+    * specifically, there are typically challenges with factor => integer/numeric conversions
+    * for additional information on working with factors in your data: [More information on Factors](http://www.statmethods.net/input/datatypes.html)
+
+  6. NA
+    * an additional data type in R for value __NOT AVAILABLE__, which can be found in any of the data type above
+
 
 ### getting row content by calling the row number
  * a row in our data set is equavilent to one full survey i.e. one facility
@@ -265,8 +314,8 @@ table(sample_data$zone)
 
 ```
 ## 
-## North-Central     Northeast     Northwest     Southeast   South-South 
-##             7             5            12             8             9 
+## North-Central     Northeast     Northwest   South-South     Southeast 
+##             7             5            12             9             8 
 ##     Southwest 
 ##             9
 ```
@@ -283,6 +332,36 @@ summary(sample_data$num_nurses_fulltime)
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00    0.00    0.00    1.02    1.00    8.00       3
 ```
+
+
+### libraries
+ * install packages
+ * to install packges in R, call __install.packages()__ with quoted package name: 
+
+```r
+install.packages("plyr")
+```
+
+ * to load libraries in R call __library()__ fucntion
+  
+
+```r
+library(plyr)
+```
+
+  * libraries are additional packages to R that contain additional specialized functions 
+  * plyr library is used for aggregating data, which will be explored in detail later
+
+* be sure that the package you are trying to load is installed on your computer
+
+```r
+library(eaf)
+```
+
+```
+## Error: there is no package called 'eaf'
+```
+
 
 
 creating data frames
@@ -938,8 +1017,8 @@ install.packages("devtools")
 ```
 
 ```
-## Installing package into '/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'
-## (as 'lib' is unspecified)
+## Installing package into '/Users/prabhaspokharel/Library/R/3.0/library' (as
+## 'lib' is unspecified)
 ```
 
 ```
@@ -957,15 +1036,16 @@ install_github("formhub.R", username = "SEL-Columbia")
 ```
 
 ```
-## Installing github repo formhub.R/master from SEL-Columbia
-## Downloading formhub.R.zip from https://github.com/SEL-Columbia/formhub.R/archive/master.zip
-## Installing package from /tmp/RtmppsvqSP/formhub.R.zip
-## arguments 'minimized' and 'invisible' are for Windows only
-## Installing formhub
-## '/usr/lib/R/bin/R' --vanilla CMD INSTALL  \
-##   '/tmp/RtmppsvqSP/devtools30c41df32450/formhub.R-master'  \
-##   --library='/home/zaiming/R/x86_64-pc-linux-gnu-library/3.0'  \
-##   --install-tests
+## Installing github repo(s) formhub.R/master from SEL-Columbia Downloading
+## formhub.R.zip from
+## https://github.com/SEL-Columbia/formhub.R/archive/master.zip Installing
+## package from
+## /var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T//Rtmpw2EbgA/formhub.R.zip
+## Installing formhub '/Library/Frameworks/R.framework/Resources/bin/R'
+## --vanilla CMD INSTALL \
+## '/private/var/folders/9x/t4rzrttx23335x72l6pc7__h0000gn/T/Rtmpw2EbgA/formhub.R-master'
+## \ --library='/Users/prabhaspokharel/Library/R/3.0/library' \
+## --with-keep.source --install-tests
 ```
 
 ```r
@@ -973,23 +1053,20 @@ library(formhub)
 ```
 
 ```
-## Loading required package: RJSONIO
-## Loading required package: stringr
-## Loading required package: RCurl
-## Loading required package: bitops
-## Loading required package: lubridate
+## Loading required package: RJSONIO Loading required package: stringr
+## Loading required package: RCurl Loading required package: bitops Loading
+## required package: lubridate
 ## 
 ## Attaching package: 'lubridate'
 ## 
 ## The following object is masked from 'package:plyr':
 ## 
-##     here
+## here
 ## 
-## Loading required package: doBy
-## Loading required package: survival
-## Loading required package: splines
-## Loading required package: MASS
-## Loading required package: sp
+## Loading required package: doBy Loading required package: multcomp Loading
+## required package: mvtnorm Loading required package: survival Loading
+## required package: splines Loading required package: MASS Loading required
+## package: sp
 ```
 
 
