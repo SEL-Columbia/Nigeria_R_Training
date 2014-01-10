@@ -723,10 +723,7 @@ head(data2)
 
 <p>Left outer join:</p>
 
-<pre><code class="r">left_outer_join &lt;- merge(data1, data2, by.x = &quot;lga_id&quot;, by.y = &quot;lga_id&quot;, all.x = TRUE)
-</code></pre>
-
-<pre><code>## Error: &#39;by&#39; must specify a uniquely valid column
+<pre><code class="r">left_outer_join &lt;- merge(data1, data2, by.x = &quot;state&quot;, by.y = &quot;state&quot;, all.x = TRUE)
 </code></pre>
 
 <p>We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:</p>
@@ -835,6 +832,21 @@ rbind(data4, data5)
 ## 5                      0     public                    0 &lt;NA&gt;
 ## 6                      1     public                    1 &lt;NA&gt;
 </code></pre>
+
+<h1>Assignment:</h1>
+
+<p>Until tomorrow, please do the following activity:</p>
+
+<ul>
+<li>Go to this link (<a href="http://bit.ly/1fj3sjD">http://bit.ly/1fj3sjD</a>) and download the file into the working directory.</li>
+<li>Produce a new dataset, which has the following properties:
+
+<ul>
+<li>Only those facilities in sample_data that are in the Southern zones of Nigeria should be included.</li>
+<li>You should incorporate the pop_2006 column from the lgas.csv file into your new dataset. (Hint: your id column is <code>lga_id</code>).</li>
+<li>In the end, you should have a dataset that has only the facilities in the southern zone, and one extra column. ie, You should  have a dataset with 26 rows and 11 columns.</li>
+</ul></li>
+</ul>
 
 <h2>Data cleaning:</h2>
 
@@ -969,8 +981,6 @@ summary(sample_data$num_nurselabtechs_fulltime)
 <pre><code>## Length  Class   Mode 
 ##      0   NULL   NULL
 </code></pre>
-
-<h1>Review</h1>
 
 <h2>data cleaning</h2>
 

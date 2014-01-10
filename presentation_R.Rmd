@@ -295,8 +295,8 @@ outer_join <- merge(data1, data2, by="state", all=TRUE)
 
 Left outer join:
 ```{r}
-left_outer_join <- merge(data1, data2, by.x="lga_id",
-                    by.y="lga_id",all.x=TRUE)
+left_outer_join <- merge(data1, data2, by.x="state",
+                    by.y="state",all.x=TRUE)
 ```
 
 We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:
@@ -325,7 +325,15 @@ There is a powerful replacement of `rbind` in the __plyr__ package, called `rbin
 head(rbind.fill(data1, data2))
 ```
 
-
+Assignment:
+==========
+Until tomorrow, please do the following activity:
+ * Go to this link (http://bit.ly/1fj3sjD) and download the file into the working directory.
+ * Produce a new dataset, which has the following properties:
+   * Only those facilities in sample_data that are in the Southern zones of Nigeria should be included.
+   * You should incorporate the pop_2006 column from the lgas.csv file into your new dataset. (Hint: your id column is `lga_id`).
+   * In the end, you should have a dataset that has only the facilities in the southern zone, and one extra column. ie, You should  have a dataset with 26 rows and 11 columns.
+   
 Data cleaning:
 ----
 
@@ -396,9 +404,6 @@ sample_data$num_nurselabtechs_fulltime <- NULL
 summary(sample_data$num_nurselabtechs_fulltime)
 ```
  
-
-Review
-======
 
 data cleaning
 --------------
