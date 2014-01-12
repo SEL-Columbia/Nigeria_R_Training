@@ -261,7 +261,7 @@ R packages (or libraries) contain additional specialized functions for different
 library(eaf)
 ```
 
-Question: what should you see if you see this error?
+Question: what should you do if you see this error?
 
 Creating new data frames from old data frames
 ---------------------
@@ -298,6 +298,7 @@ Left outer join:
 left_outer_join <- merge(data1, data2, by.x="state",
                     by.y="state",all.x=TRUE)
 ```
+Question: what is the between these three data frames?
 
 We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:
 
@@ -305,7 +306,7 @@ We can also concatenate two data.frames together, either column-wise (ie, side-b
 cbind(data1, data2)
 cbind(head(data1), head(data2))
 ```
-Can you break down what the last statement did, one by one?
+Question: Can you break down what the last statement did, one by one?
 
 Row-wise concatenation happens with `rbind`. Again, you need the same rows in both data sets:
 ```{r}
@@ -337,13 +338,15 @@ Until tomorrow, please do the following activity:
 Data cleaning:
 ----
 
+We will be working mostly with our previous __sample_data__ set - so be sure that you have it loaded in your workspace. 
+
 ### Type conversion
 Type conversion can be forced by `as.*` functions. Common __\*__ types you'd encounter are: 
   1. numeric
   2. integer
   3. character
-  4. logical
-Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
+  4. logical  
+* Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
 
 ```{r}
 my_numbers <- c("1", "2", "3", "4", "TRUE")
@@ -371,7 +374,7 @@ head(sample_data$country)
 Creating a column from a single value. R allows the user to broadcast numerical values as well:
 ```{r}
 sample_data$ONE <- 1
-head(samle_data$ONE)
+head(sample_data$ONE)
 ```
   
 Column creation: using already existing columns
@@ -405,11 +408,11 @@ summary(sample_data$num_nurselabtechs_fulltime)
 ```
  
 
-data cleaning
+Data Cleaning
 --------------
 ### string manipulations
-* we're going to cover regex suite comes with base R, string_r packages have similar implementations.
-* we're not going to cover regex/ regular expression in this tuorial.
+* although regex suite comes with base R, string_r packages have similar implementations.
+* we're not going to cover regex i.e. regular expression in this tuorial.
 * getting position of matched pattern with grep()
 ```{r}
 my_strings = c("Hello", "World", 'Foo')
