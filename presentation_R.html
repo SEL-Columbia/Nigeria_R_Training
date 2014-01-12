@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Before getting started</title>
+<title>Extra material</title>
 
 <!-- Styles for R syntax highlighter -->
 <style type="text/css">
@@ -182,13 +182,9 @@ hr {
 <body>
 <p><link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link></p>
 
-<h1>Before getting started</h1>
+<h1>Extra material</h1>
 
-<p>We recommend watch the following video before reading this document</p>
-
-<ul>
-<li><a href="http://www.youtube.com/watch?v=iffR3fWv4xw&amp;list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP">Video tutorial for R from Google Developer</a></li>
-</ul>
+<p>We recommend that at some point soon following this tutorial, you watch the following <a href="http://www.youtube.com/watch?v=iffR3fWv4xw&amp;list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP">video tutorial for R from Google Developer</a>.</p>
 
 <h1>Basic R</h1>
 
@@ -340,10 +336,10 @@ setwd(&quot;~/work/r/nigeria_r_training/&quot;)
 <li>using the [,] method, or bracket method (eg. dataframe[,&#39;column_name&#39;])</li>
 </ol>
 
-<p>Examples below. Note! We are using small_data, which is just the first ten rows of sample_data</p>
+<p>Examples below. Note! We are using small_sample, which is just the first ten rows of sample_data</p>
 
-<pre><code class="r">small_data &lt;- head(sample_data, 10)
-small_data$lga
+<pre><code class="r">small_sample &lt;- head(sample_data, 10)
+small_sample$lga
 </code></pre>
 
 <pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
@@ -351,7 +347,7 @@ small_data$lga
 </code></pre>
 
 <pre><code class="r">
-small_data[, &quot;lga&quot;]
+small_sample[, &quot;lga&quot;]
 </code></pre>
 
 <pre><code>##  [1] &quot;Barkin-Ladi&quot; &quot;Anaocha&quot;     &quot;Batsari&quot;     &quot;Orlu&quot;        &quot;Guma&quot;       
@@ -432,13 +428,13 @@ small_data[, &quot;lga&quot;]
 
 <p>A note: <code>NA</code> or <strong>Not Available</strong> is a internal value in R, and can be of any type. For example, look at the <code>num_doctors_fulltime</code> column:</p>
 
-<pre><code class="r">small_data$num_doctors_fulltime
+<pre><code class="r">small_sample$num_doctors_fulltime
 </code></pre>
 
 <pre><code>##  [1]  0 NA  0  0  0  1  0  1  0  0
 </code></pre>
 
-<pre><code class="r">class(small_data$num_doctors_fulltime)
+<pre><code class="r">class(small_sample$num_doctors_fulltime)
 </code></pre>
 
 <pre><code>## [1] &quot;integer&quot;
@@ -452,7 +448,7 @@ small_data[, &quot;lga&quot;]
 
 <p>NOTE: Indexing starts at 1 in R, not 0. There is no 0th item. </p>
 
-<pre><code class="r">small_data[1, ]  # the first row
+<pre><code class="r">small_sample[1, ]  # the first row
 </code></pre>
 
 <pre><code>##           lga lga_id   state          zone c_section_yn
@@ -463,7 +459,7 @@ small_data[, &quot;lga&quot;]
 ## 1                      1     public                    0
 </code></pre>
 
-<pre><code class="r">small_data[5, ]  # the fifth row
+<pre><code class="r">small_sample[5, ]  # the fifth row
 </code></pre>
 
 <pre><code>##    lga lga_id state          zone c_section_yn num_nurses_fulltime
@@ -474,7 +470,7 @@ small_data[, &quot;lga&quot;]
 ## 5     public                    0
 </code></pre>
 
-<pre><code class="r">small_data[100, ]  # the 100th row, which doesn&#39;t exist
+<pre><code class="r">small_sample[100, ]  # the 100th row, which doesn&#39;t exist
 </code></pre>
 
 <pre><code>##     lga lga_id state zone c_section_yn num_nurses_fulltime  gps
@@ -483,7 +479,7 @@ small_data[, &quot;lga&quot;]
 ## NA                     NA       &lt;NA&gt;                   NA
 </code></pre>
 
-<p>Question: what do you think <code>class(small_data[1,])</code> is?</p>
+<p>Question: what do you think <code>class(small_sample[1,])</code> is?</p>
 
 <h3>More slicing and dicing</h3>
 
@@ -628,7 +624,7 @@ sample_data[4:6, c(&#39;lga&#39;, &#39;zone&#39;)]
 <pre><code>## Error: there is no package called &#39;eaf&#39;
 </code></pre>
 
-<p>Question: what should you see if you see this error?</p>
+<p>Question: what should you do if you see this error?</p>
 
 <h2>Creating new data frames from old data frames</h2>
 
@@ -726,6 +722,8 @@ head(data2)
 <pre><code class="r">left_outer_join &lt;- merge(data1, data2, by.x = &quot;state&quot;, by.y = &quot;state&quot;, all.x = TRUE)
 </code></pre>
 
+<p>Question: what is the between these three data frames?</p>
+
 <p>We can also concatenate two data.frames together, either column-wise (ie, side-by-side) or row-wise (ie, top-and-bottom). Note that the number of rows have to be same in order to combine side-by-side:</p>
 
 <pre><code class="r">cbind(data1, data2)
@@ -760,7 +758,7 @@ head(data2)
 ## 6   South-South
 </code></pre>
 
-<p>Can you break down what the last statement did, one by one?</p>
+<p>Question: Can you break down what the last statement did, one by one?</p>
 
 <p>Row-wise concatenation happens with <code>rbind</code>. Again, you need the same rows in both data sets:</p>
 
@@ -845,495 +843,6 @@ rbind(data4, data5)
 <li>Only those facilities in sample_data that are in the Southern zones of Nigeria should be included.</li>
 <li>You should incorporate the pop_2006 column from the lgas.csv file into your new dataset. (Hint: your id column is <code>lga_id</code>).</li>
 <li>In the end, you should have a dataset that has only the facilities in the southern zone, and one extra column. ie, You should  have a dataset with 26 rows and 11 columns.</li>
-</ul></li>
-</ul>
-
-<h2>Data cleaning:</h2>
-
-<h3>Type conversion</h3>
-
-<p>Type conversion can be forced by <code>as.*</code> functions. Common <strong>*</strong> types you&#39;d encounter are: </p>
-
-<ol>
-<li>numeric</li>
-<li>integer</li>
-<li>character</li>
-<li>logical
-Sometimes you&#39;ll encounter <strong>factor</strong> variables, we recommend using <strong>as.character()</strong> function to convert it into character type before proceeding </li>
-</ol>
-
-<pre><code class="r">my_numbers &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;TRUE&quot;)
-my_numbers
-</code></pre>
-
-<pre><code>## [1] &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    &quot;4&quot;    &quot;TRUE&quot;
-</code></pre>
-
-<pre><code class="r">as.numeric(my_numbers)
-</code></pre>
-
-<pre><code>## Warning: NAs introduced by coercion
-</code></pre>
-
-<pre><code>## [1]  1  2  3  4 NA
-</code></pre>
-
-<pre><code class="r">as.logical(my_numbers)
-</code></pre>
-
-<pre><code>## [1]   NA   NA   NA   NA TRUE
-</code></pre>
-
-<h2>Creating and deleting columns</h2>
-
-<p>Creating a column from a vector </p>
-
-<pre><code class="r">sample_data$one_to_fifty &lt;- 1:50
-head(sample_data$one_to_fifty)
-</code></pre>
-
-<pre><code>## [1] 1 2 3 4 5 6
-</code></pre>
-
-<p>Column creation: <strong>broadcasting</strong><br/>
-R makes column creation very straightforward by repeating a value which is known as &ldquo;broadcasting&rdquo;. When you want to have a whole column created, but you have only one value for that column, you want to use this type of &ldquo;broadcasting&rdquo;.</p>
-
-<pre><code class="r">sample_data$country &lt;- &quot;Nigeria&quot;
-head(sample_data$country)
-</code></pre>
-
-<pre><code>## [1] &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot; &quot;Nigeria&quot;
-</code></pre>
-
-<p>Creating a column from a single value. R allows the user to broadcast numerical values as well:</p>
-
-<pre><code class="r">sample_data$ONE &lt;- 1
-head(samle_data$ONE)
-</code></pre>
-
-<pre><code>## Error: object &#39;samle_data&#39; not found
-</code></pre>
-
-<p>Column creation: using already existing columns</p>
-
-<pre><code class="r">head(sample_data$num_nurses_fulltime)
-</code></pre>
-
-<pre><code>## [1] 0 2 1 0 0 0
-</code></pre>
-
-<pre><code class="r">sample_data$skilled_birth_attendants &lt;- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
-head(sample_data[, c(&quot;num_nurses_fulltime&quot;, &quot;num_doctors_fulltime&quot;, &quot;skilled_birth_attendants&quot;)])
-</code></pre>
-
-<pre><code>##   num_nurses_fulltime num_doctors_fulltime skilled_birth_attendants
-## 1                   0                    0                        0
-## 2                   2                   NA                       NA
-## 3                   1                    0                        1
-## 4                   0                    0                        0
-## 5                   0                    0                        0
-## 6                   0                    1                        1
-</code></pre>
-
-<p>Column creation: boolean columns</p>
-
-<pre><code class="r">sample_data$public &lt;- sample_data$management == &quot;public&quot;
-head(sample_data[, c(&quot;management&quot;, &quot;public&quot;)])
-</code></pre>
-
-<pre><code>##   management public
-## 1     public   TRUE
-## 2     public   TRUE
-## 3     public   TRUE
-## 4     public   TRUE
-## 5     public   TRUE
-## 6     public   TRUE
-</code></pre>
-
-<pre><code class="r">
-sample_data$public_2_docs &lt;- sample_data$management == &quot;public&quot; &amp; sample_data$num_doctors_fulltime == 
-    2
-head(sample_data[, c(&quot;public_2_docs&quot;, &quot;management&quot;, &quot;public&quot;)])
-</code></pre>
-
-<pre><code>##   public_2_docs management public
-## 1         FALSE     public   TRUE
-## 2            NA     public   TRUE
-## 3         FALSE     public   TRUE
-## 4         FALSE     public   TRUE
-## 5         FALSE     public   TRUE
-## 6         FALSE     public   TRUE
-</code></pre>
-
-<p>Renaming    </p>
-
-<pre><code class="r"># quote the current variable name, and set it equal the quoted desired name
-sample_data &lt;- rename(sample_data, c(gps = &quot;global_positioning_system&quot;))
-</code></pre>
-
-<p>Removing columns</p>
-
-<pre><code class="r">sample_data$num_nurselabtechs_fulltime &lt;- NULL
-# testing to make sure it no longer exists
-summary(sample_data$num_nurselabtechs_fulltime)
-</code></pre>
-
-<pre><code>## Length  Class   Mode 
-##      0   NULL   NULL
-</code></pre>
-
-<h2>data cleaning</h2>
-
-<h3>string manipulations</h3>
-
-<ul>
-<li>we&#39;re going to cover regex suite comes with base R, string_r packages have similar implementations.</li>
-<li>we&#39;re not going to cover regex/ regular expression in this tuorial.</li>
-<li>getting position of matched pattern with grep()</li>
-</ul>
-
-<pre><code class="r">my_strings = c(&quot;Hello&quot;, &quot;World&quot;, &quot;Foo&quot;)
-grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE)
-</code></pre>
-
-<pre><code>## [1] 1 2
-</code></pre>
-
-<pre><code class="r"># when value argument is set to true, grep() returns the actual strings
-# matchs the patterns
-grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE, value = T)
-</code></pre>
-
-<pre><code>## [1] &quot;Hello&quot; &quot;World&quot;
-</code></pre>
-
-<ul>
-<li>find pattern in strings and replace with sub()</li>
-<li>gsub() means global sub, which replace all the occurance of matching pattern, while sub() only works on the first appearance.</li>
-</ul>
-
-<pre><code class="r">my_strings
-</code></pre>
-
-<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
-</code></pre>
-
-<pre><code class="r">sub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
-</code></pre>
-
-<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXo&quot;
-</code></pre>
-
-<pre><code class="r">gsub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
-</code></pre>
-
-<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXX&quot;
-</code></pre>
-
-<ul>
-<li>change to upper/lower case with toupper()/ tolower()</li>
-</ul>
-
-<pre><code class="r">my_strings
-</code></pre>
-
-<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
-</code></pre>
-
-<pre><code class="r">toupper(my_strings)
-</code></pre>
-
-<pre><code>## [1] &quot;HELLO&quot; &quot;WORLD&quot; &quot;FOO&quot;
-</code></pre>
-
-<pre><code class="r">tolower(my_strings)
-</code></pre>
-
-<pre><code>## [1] &quot;hello&quot; &quot;world&quot; &quot;foo&quot;
-</code></pre>
-
-<ul>
-<li>concatenate strings with paste():</li>
-</ul>
-
-<pre><code class="r">paste(&quot;hello&quot;, &quot;world&quot;, &quot;foo&quot;, sep = &quot;,&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;hello,world,foo&quot;
-</code></pre>
-
-<ul>
-<li>if you&#39;re trying to concate every element in a vector/ list, use <strong>collapse</strong> argument in paste()</li>
-</ul>
-
-<pre><code class="r">paste(my_strings, sep = &quot;,&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
-</code></pre>
-
-<pre><code class="r">paste(my_strings, collapse = &quot;,&quot;)
-</code></pre>
-
-<pre><code>## [1] &quot;Hello,World,Foo&quot;
-</code></pre>
-
-<h3>writing out data</h3>
-
-<ul>
-<li>R can output multiple different output format, but we&#39;re going to cover csv and RDS format</li>
-<li>writing csv file with write.csv()
-
-<ul>
-<li>if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">write.csv(sample_data, &quot;./my_output.csv&quot;, row.names = FALSE)
-</code></pre>
-
-<ul>
-<li>we recommend output your data as RDS file, if you&#39;re only going to reuse it in R.</li>
-<li>use saveRDS() to save object in workspace to your harddrive
-
-<ul>
-<li>no row.names argument needs to be used, since we&#39;re saving the R object into a binary file</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">saveRDS(sample_data, &quot;./my_output.RDS&quot;)
-</code></pre>
-
-<ul>
-<li>use readRDS() function to load saved RDS file</li>
-</ul>
-
-<pre><code class="r">readRDS(&quot;./my_output.RDS&quot;)
-</code></pre>
-
-<pre><code>##            lga lga_id       state          zone c_section_yn
-## 1  Barkin-Ladi     91     Plateau North-Central        FALSE
-## 2      Anaocha     49     Anambra     Southeast        FALSE
-## 3      Batsari     96     Katsina     Northwest        FALSE
-## 4         Orlu    611         Imo     Southeast        FALSE
-## 5         Guma    258       Benue North-Central        FALSE
-## 6     Ayamelum     76     Anambra     Southeast        FALSE
-## 7       Gamawa    232      Bauchi     Northeast        FALSE
-## 8       Kosofe    441       Lagos     Southwest         TRUE
-## 9      Bekwara    101 Cross River   South-South        FALSE
-## 10      Gurara    261       Niger North-Central        FALSE
-##    num_nurses_fulltime                      global_positioning_system
-## 1                    0    9.57723376 8.98908176 1285.699951171875 5.0
-## 2                    2    6.07903635 7.00366347 276.1000061035156 5.0
-## 3                    1   12.91273864 7.31050997 472.3999938964844 5.0
-## 4                    0  5.768364071846008 7.061988115310669 241.0 4.0
-## 5                    0   7.71806025 8.74342196 147.89999389648438 5.0
-## 6                    0   6.481826305389404 6.938955187797546 78.0 6.0
-## 7                    0  12.27000784 10.52387339 382.6000061035156 5.0
-## 8                    1    6.60113991 3.41806628 35.29999923706055 5.0
-## 9                    3 6.6513848304748535 8.869051337242126 151.0 4.0
-## 10                   0    9.38993463 7.07370386 531.2000122070313 5.0
-##    num_lab_techs_fulltime management num_doctors_fulltime
-## 1                       1     public                    0
-## 2                      NA     public                   NA
-## 3                       1     public                    0
-## 4                       0     public                    0
-## 5                       0     public                    0
-## 6                       1     public                    1
-## 7                       0     public                    0
-## 8                       0       &lt;NA&gt;                    1
-## 9                       2     public                    0
-## 10                      0     public                    0
-</code></pre>
-
-<h2>Aggregations in R:</h2>
-
-<ul>
-<li><p>there are many functions that can do aggregation for you, but we are only going to cover <strong>ddply()</strong> in <strong>plyr</strong> package</p></li>
-<li><p>creating simple aggregated summary:</p></li>
-<li><p>note: </p>
-
-<ol>
-<li><strong>(group) by</strong> variable must have at least one input</li>
-<li>you <strong>must</strong> specify what type of aggregation you want to perform, choose one from: summarize, transform</li>
-</ol></li>
-<li><p><a href="http://cran.r-project.org/web/packages/plyr/plyr.pdf">the link to the package dodument</a></p></li>
-</ul>
-
-<pre><code class="r">library(plyr)
-my_summary &lt;- ddply(sample_data, .(state, lga), summarise, counts = length(lga_id), 
-    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
-        T, na.rm = T))
-head(my_summary)
-</code></pre>
-
-<pre><code>##     state           lga counts total_num_nurse avg_c_section
-## 1    Abia Umuahia North      1               0             1
-## 2 Adamawa      Shelleng      1               2             0
-## 3 Anambra       Anaocha      1               2             0
-## 4 Anambra      Ayamelum      1               0             0
-## 5 Anambra      Ekwusigo      1               0             1
-## 6 Anambra        Ihiala      1               2             1
-</code></pre>
-
-<ul>
-<li>look at the output and compare the difference, the only change here is replacing summarize with transform</li>
-</ul>
-
-<pre><code class="r">my_summary &lt;- ddply(sample_data, .(state, lga), transform, counts = length(lga_id), 
-    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
-        T, na.rm = T))
-head(my_summary)
-</code></pre>
-
-<pre><code>##             lga lga_id   state      zone c_section_yn num_nurses_fulltime
-## 1 Umuahia North    728    Abia Southeast         TRUE                  NA
-## 2      Shelleng    676 Adamawa Northeast        FALSE                   2
-## 3       Anaocha     49 Anambra Southeast        FALSE                   2
-## 4      Ayamelum     76 Anambra Southeast        FALSE                   0
-## 5      Ekwusigo    191 Anambra Southeast         TRUE                   0
-## 6        Ihiala    312 Anambra Southeast         TRUE                   2
-##                        global_positioning_system num_lab_techs_fulltime
-## 1     5.5224549 7.49361609 175.1999969482422 5.0                     41
-## 2 9.884562492370605 12.023136019706726 219.0 4.0                     NA
-## 3    6.07903635 7.00366347 276.1000061035156 5.0                     NA
-## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
-## 5                5.95802932 6.84972263 148.0 5.0                      0
-## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
-##   management num_doctors_fulltime one_to_fifty country ONE
-## 1     public                  308           28 Nigeria   1
-## 2     public                    1           26 Nigeria   1
-## 3     public                   NA            2 Nigeria   1
-## 4     public                    1            6 Nigeria   1
-## 5       &lt;NA&gt;                    1           27 Nigeria   1
-## 6       &lt;NA&gt;                    1           17 Nigeria   1
-##   skilled_birth_attendants public public_2_docs counts total_num_nurse
-## 1                       NA   TRUE         FALSE      1               0
-## 2                        3   TRUE         FALSE      1               2
-## 3                       NA   TRUE            NA      1               2
-## 4                        1   TRUE         FALSE      1               0
-## 5                        1     NA         FALSE      1               0
-## 6                        3     NA         FALSE      1               2
-##   avg_c_section
-## 1             1
-## 2             0
-## 3             0
-## 4             0
-## 5             1
-## 6             1
-</code></pre>
-
-<h1>Advanced R</h1>
-
-<h2>creation of more complex columns(indicators) with <strong>rowSums()</strong>:</h2>
-
-<ul>
-<li>column creation: sum of multiple numerical columns </li>
-</ul>
-
-<pre><code class="r">sample_data$num_nurselabtechs_fulltime &lt;- rowSums(cbind(sample_data$num_nurses_fulltime, 
-    sample_data$num_lab_techs_fulltime, na.rm = T))
-</code></pre>
-
-<pre><code class="r"># now we can view all three variables: the new num_nurselabtechs_fulltime
-# variable, and the two used to create it
-head(subset(sample_data, select = c(&quot;num_nurses_fulltime&quot;, &quot;num_lab_techs_fulltime&quot;, 
-    &quot;num_nurselabtechs_fulltime&quot;)), 5)
-</code></pre>
-
-<pre><code>##   num_nurses_fulltime num_lab_techs_fulltime num_nurselabtechs_fulltime
-## 1                   0                      1                          2
-## 2                   2                     NA                         NA
-## 3                   1                      1                          3
-## 4                   0                      0                          1
-## 5                   0                      0                          1
-</code></pre>
-
-<h2>creation of more complex columns(indicators) with <strong>ifelse()</strong>:</h2>
-
-<h2>install packages from outside of cran</h2>
-
-<ul>
-<li>in order to install packages on github we need some extra work</li>
-<li>this tutorial will use the example of formhub.R</li>
-<li>first step: install and load <strong>devtools</strong> package from cran</li>
-</ul>
-
-<pre><code>install.packages(&#39;devtools&#39;) 
-library(devtools)
-</code></pre>
-
-<ul>
-<li>second step: use <strong>install_github(&ldquo;repo_name&rdquo;, &ldquo;user_name&rdquo;)</strong> function to install packages on github</li>
-</ul>
-
-<pre><code>install_github(&quot;formhub.R&quot;, username=&quot;SEL-Columbia&quot;)
-library(formhub)
-</code></pre>
-
-<h2>map functions: apply()</h2>
-
-<ul>
-<li>instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R</li>
-<li>Here&#39;s the simply example for using apply to loop through every column and see the class of the column
-
-<ul>
-<li>note: <strong>MARGIN = 2</strong> specifies doing column-wise process</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">apply(sample_data, MARGIN = 2, FUN = class)
-</code></pre>
-
-<pre><code>##                       lga                    lga_id 
-##               &quot;character&quot;               &quot;character&quot; 
-##                     state                      zone 
-##               &quot;character&quot;               &quot;character&quot; 
-##              c_section_yn       num_nurses_fulltime 
-##               &quot;character&quot;               &quot;character&quot; 
-## global_positioning_system    num_lab_techs_fulltime 
-##               &quot;character&quot;               &quot;character&quot; 
-##                management      num_doctors_fulltime 
-##               &quot;character&quot;               &quot;character&quot;
-</code></pre>
-
-<ul>
-<li>you can also define your own function in apply()</li>
-<li>the following code returns sum of <strong>NAs</strong> in each row
-
-<ul>
-<li>note: when you&#39;re define your own function in apply use semi-colon as the line marker.</li>
-<li>note: <strong>MARGIN = 1</strong> specifies doing row-wise process</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">apply(sample_data, MARGIN = 1, function(x) {
-    na_idx &lt;- is.na(x)
-    length(which(na_idx))
-})
-</code></pre>
-
-<pre><code>##  [1] 0 5 0 0 0 0 0 2 0 0
-</code></pre>
-
-<h2>improvements:</h2>
-
-<ul>
-<li>load your own functions into workspace with source()</li>
-</ul>
-
-<pre><code class="r">source(&quot;./my_source_functions.R&quot;)
-my_sum(1, 2)
-</code></pre>
-
-<pre><code>## [1] 3
-</code></pre>
-
-<ul>
-<li>optimize ddply with idata.frame()
-
-<ul>
-<li>idata.frame optimizes the computation speed but at the cost of a slight more complicated code</li>
 </ul></li>
 </ul>
 
