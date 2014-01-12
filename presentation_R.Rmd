@@ -113,12 +113,12 @@ A column in our data frame is equivalent to either a column in the survey, or a 
  1. using "$" operator and the column's name (eg. dataframe$col_name)
  2. using the [,] method, or bracket method (eg. dataframe[,'column_name'])
 
-Examples below. Note! We are using small_data, which is just the first ten rows of sample_data
+Examples below. Note! We are using small_sample, which is just the first ten rows of sample_data
 ```{r}
-small_data <- head(sample_data, 10)
-small_data$lga
+small_sample <- head(sample_data, 10)
+small_sample$lga
 
-small_data[, "lga"]
+small_sample[, "lga"]
 ```
 
 We generally prefer the first strategy, but sometimes we'll need to use the second strategy, particularly when working with mulitple columns. Before we go there, though, lets talk about data types in R. Type
@@ -155,8 +155,8 @@ The core types in R are:
 A note: `NA` or __Not Available__ is a internal value in R, and can be of any type. For example, look at the `num_doctors_fulltime` column:
 
 ```{r}
-small_data$num_doctors_fulltime
-class(small_data$num_doctors_fulltime)
+small_sample$num_doctors_fulltime
+class(small_sample$num_doctors_fulltime)
 ```
 
 This is incredibly helpful for dealing with survey data. In survey data, NA means 'missing value'. This can happen for many reasons. For example, an enumerator can simply have skipped the question. Or the question may have been skipped because of skip logic (more on that later).
@@ -168,12 +168,12 @@ We have looked at data frame columns so far. Lets look at a row in our dataset. 
 NOTE: Indexing starts at 1 in R, not 0. There is no 0th item. 
 
 ```{r echo=TRUE}
-small_data[1, ] # the first row
-small_data[5, ] # the fifth row
-small_data[100,] # the 100th row, which doesn't exist
+small_sample[1, ] # the first row
+small_sample[5, ] # the fifth row
+small_sample[100,] # the 100th row, which doesn't exist
 ```
 
-Question: what do you think `class(small_data[1,])` is?
+Question: what do you think `class(small_sample[1,])` is?
 
 ### More slicing and dicing
 If you remember, we used the [,] operator before. For a `data.frame`, the [,] operator selects one or more rows or columns. The syntax is `data.frame[row, col]`, though row and col can be many things.
