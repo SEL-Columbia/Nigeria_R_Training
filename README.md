@@ -512,7 +512,7 @@ system.time(replicate(100, ddply(isample, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.600   0.002   0.603
+##   0.585   0.002   0.587
 ```
 
 ```r
@@ -522,7 +522,7 @@ system.time(replicate(100, ddply(sample_data, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.599   0.003   0.603
+##   0.601   0.004   0.605
 ```
 
 Question: what is the result that we calculate here?
@@ -745,6 +745,7 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point() + geom_smo
 
 
 #### Limits and scales
+
 If you look at the original plot carefully, you will notice that the limits are very different to what you see right now. In fact, in the original plot, I have only looked at LGAs where the number of doctors and nurses is less than 75. These are the majority of LGAs, and allow us to see the relationship between the doctors and nurses much clearer. The functions for limiting your data (and dropping all the data outside of these limits) are called `xlim` and `ylim`.
 
 
@@ -1006,6 +1007,24 @@ ggplot(lga_data, aes(x = zone, y = num_doctors)) + geom_jitter() + ylim(0, 100)
 
 ![plot of chunk unnamed-chunk-42](figure/unnamed-chunk-422.png) 
 
+
+#### Geom_text
+Sometimes it is useful to add text to your data, for example to explore what some of the LGAs with extreme values are. The "geometry" for text is called `geom_text`, and the main aesthetic required is a "label".
+
+
+```r
+ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_text(aes(label = lga)) + 
+    geom_point(color = "gray")
+```
+
+```
+## Warning: Removed 13 rows containing missing values (geom_text). Warning:
+## Removed 13 rows containing missing values (geom_point).
+```
+
+![plot of chunk unnamed-chunk-43](figure/unnamed-chunk-43.png) 
+
+Generally, geom_text only works when there are very few values that you want to explore. But it can be useful in examples where you want extreme values nevertheless.
 
 ### Exercises:
  * Make a plot to show the relationship between number of primary school students (`avg_num_students_primary`) and number of primary school teachers (`avg_num_tchrs_primary`) in the LGAs of Nigeria. Does this relationship depend on the zone you are in?
