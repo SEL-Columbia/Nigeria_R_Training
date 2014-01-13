@@ -399,7 +399,7 @@ names(sample_data)
 
 <ul>
 <li>Create a new column in sample_data that goes from fifty down to 1. Call it <code>descending_row_name</code>.</li>
-<li>Create a new column, called <code>even_and_no_doctor</code>, which is TRUE if <code>descending_row_name</code> is odd, and there is a doctor in that facility.</li>
+<li>Create a new column, called <code>odd_and_no_doctor</code>, which is TRUE if <code>descending_row_name</code> is odd, and there is a doctor in that facility.</li>
 <li>Hint: Type in <code>10:1 %% 2</code> into the R console. What do you get? %% is the &ldquo;mod&rdquo; operator, it outputs the remainder when you divide a number by another. Example, <code>5 %% 2</code> is 1, <code>4 %% 2</code> is 0</li>
 <li>You can check your answer; there should be 40 FALSE and 7 TRUE values.</li>
 </ul>
@@ -639,7 +639,7 @@ head(my_summary)
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.579   0.003   0.582
+##   0.600   0.002   0.603
 </code></pre>
 
 <pre><code class="r">
@@ -647,7 +647,7 @@ system.time(replicate(100, ddply(sample_data, &quot;state&quot;, nrow)))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.598   0.003   0.602
+##   0.599   0.003   0.603
 </code></pre>
 
 <p>Question: what is the result that we calculate here?</p>
