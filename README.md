@@ -317,56 +317,314 @@ Note that the column `a` is a Factor column in the first example, but character 
 Aggregations in R:
 ----
 
-There are many functions that can do aggregations for you in R; we will cover `ddply()` from the `plyr` package in this tutorial. This is also the function that we have found most useful when writing aggregate indicators for NMIS.
-# * creating simple aggregated summary:
+* There are many functions that can do aggregations for you in R; we will cover `ddply()` from the `plyr` package in this tutorial. This is also the function that we have found most useful when writing aggregate indicators for NMIS.
 
-#   * note: 
-# 1. __(group) by__ variable must have at least one input
-# 2. you __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform
-# * [the link to the package dodument](http://cran.r-project.org/web/packages/plyr/plyr.pdf)
-sample_data <- read.csv("./sample_health_facilities.csv")
+### Creating simple aggregated summary:
+* Note: 
+ 1. __(group) by__ variable must have at least one input.
+ 2. You __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform, your own complicated function .
+ 3. [The link to the package dodument.](http://cran.r-project.org/web/packages/plyr/plyr.pdf)
 
+
+
+
+```r
 library(plyr)
-my_summary <- ddply(sample_data, .(state, lga), summarise, 
-                    counts = length(lga_id),
-                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
-                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+```
+
+
+* First example, we use the "transform" keyword to specify adding aggregation to the right of original data.
+
+```r
+my_summary <- ddply(sample_data, .(state, lga), transform, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
 head(my_summary)
+```
+
+```
+##             lga lga_id   state      zone c_section_yn num_nurses_fulltime
+## 1 Umuahia North    728    Abia Southeast         TRUE                  NA
+## 2      Shelleng    676 Adamawa Northeast        FALSE                   2
+## 3       Anaocha     49 Anambra Southeast        FALSE                   2
+## 4      Ayamelum     76 Anambra Southeast        FALSE                   0
+## 5      Ekwusigo    191 Anambra Southeast         TRUE                   0
+## 6        Ihiala    312 Anambra Southeast         TRUE                   2
+##                        global_positioning_system num_lab_techs_fulltime
+## 1     5.5224549 7.49361609 175.1999969482422 5.0                     41
+## 2 9.884562492370605 12.023136019706726 219.0 4.0                     NA
+## 3    6.07903635 7.00366347 276.1000061035156 5.0                     NA
+## 4   6.481826305389404 6.938955187797546 78.0 6.0                      1
+## 5                5.95802932 6.84972263 148.0 5.0                      0
+## 6   5.88475837 6.89508114 110.30000305175781 5.0                      0
+##   management num_doctors_fulltime one_to_fifty country ONE
+## 1     public                  308           28 Nigeria   1
+## 2     public                    1           26 Nigeria   1
+## 3     public                   NA            2 Nigeria   1
+## 4     public                    1            6 Nigeria   1
+## 5       <NA>                    1           27 Nigeria   1
+## 6       <NA>                    1           17 Nigeria   1
+##   skilled_birth_attendants public counts total_num_nurse avg_c_section
+## 1                       NA   TRUE      1               0             1
+## 2                        3   TRUE      1               2             0
+## 3                       NA   TRUE      1               2             0
+## 4                        1   TRUE      1               0             0
+## 5                        1     NA      1               0             1
+## 6                        3     NA      1               2             1
+```
 
 
-# ddply could take by variable in string format which is very handy when you want to use it in a function
-my_summary <- ddply(sample_data, c("state", "lga"), summarise, 
-                    counts = length(lga_id),
-                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
-                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+* Look at the output and compare the difference, the only change here is replacing summarize with transform.
+
+```r
+my_summary <- ddply(sample_data, .(state, lga), summarise, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
 head(my_summary)
+```
 
-# * look at the output and compare the difference, the only change here is replacing summarize with transform
+```
+##     state           lga counts total_num_nurse avg_c_section
+## 1    Abia Umuahia North      1               0             1
+## 2 Adamawa      Shelleng      1               2             0
+## 3 Anambra       Anaocha      1               2             0
+## 4 Anambra      Ayamelum      1               0             0
+## 5 Anambra      Ekwusigo      1               0             1
+## 6 Anambra        Ihiala      1               2             1
+```
 
-my_summary <- ddply(sample_data, .(state, lga), transform, 
-                    counts = length(lga_id),
-                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
-                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+
+* ddply() could take by variable in string format which is very handy when you want to use it in a function.
+
+```r
+my_summary <- ddply(sample_data, c("state", "lga"), summarise, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
 head(my_summary)
+```
 
-# define your own function in ddply
-# the syntax is pretty much the same as defining functions in R, except 
-# it is CRITICAL to add data.frame() function so that it returns a data.frame
-# for each small chunk of data splitted by ddply()
+```
+##     state           lga counts total_num_nurse avg_c_section
+## 1    Abia Umuahia North      1               0             1
+## 2 Adamawa      Shelleng      1               2             0
+## 3 Anambra       Anaocha      1               2             0
+## 4 Anambra      Ayamelum      1               0             0
+## 5 Anambra      Ekwusigo      1               0             1
+## 6 Anambra        Ihiala      1               2             1
+```
 
-my_summary <- ddply(sample_data, .(state), function(df){
-                                            data.frame(
-                                              unique_lga_number = nrow(df),
-                                              avg_c_section = mean(df$c_section_yn == T,na.rm=T),
-                                              avg_c_section_true = length(which(df$c_section_yn))
-                                            )
-                                            })
 
-# idata.frame
-# If you have HUGE amount of data for ddply to aggregate and you find it annoying to wait a long time before seeing the result
-# idata.frame is the solution to this, but it comes with the cost of slightly complicated code.
+* ddply() could also take formulars wihch conforms the R convention.
 
-count(sample_data$c_section_yn == T)
+```r
+my_summary <- ddply(sample_data, ~state + lga, summarise, counts = length(lga_id), 
+    total_num_nurse = sum(num_nurses_fulltime, na.rm = T), avg_c_section = mean(c_section_yn == 
+        T, na.rm = T))
+head(my_summary)
+```
+
+```
+##     state           lga counts total_num_nurse avg_c_section
+## 1    Abia Umuahia North      1               0             1
+## 2 Adamawa      Shelleng      1               2             0
+## 3 Anambra       Anaocha      1               2             0
+## 4 Anambra      Ayamelum      1               0             0
+## 5 Anambra      Ekwusigo      1               0             1
+## 6 Anambra        Ihiala      1               2             1
+```
+
+
+
+### Advanced ddply aggregation, with user defined functions:
+* You are allowed/ encouraged to define your own function in ddply.
+* The syntax is pretty much the same as defining functions in R, except it is __CRITICAL__ to add data.frame() function since ddply combines __data.frame__s, so make sure __include__ __data.frame()__ in the function definition.
+* For each small chunk of data splitted by ddply()
+
+
+```r
+my_summary <- ddply(sample_data, .(state), function(df) {
+    data.frame(unique_lga_number = nrow(df), avg_c_section = mean(df$c_section_yn == 
+        T, na.rm = T), avg_c_section_true = length(which(df$c_section_yn)))
+})
+
+head(my_summary)
+```
+
+```
+##         state unique_lga_number avg_c_section avg_c_section_true
+## 1        Abia                 1           1.0                  1
+## 2     Adamawa                 1           0.0                  0
+## 3     Anambra                 4           0.5                  2
+## 4      Bauchi                 2           0.0                  0
+## 5       Benue                 1           0.0                  0
+## 6 Cross River                 3           0.0                  0
+```
+
+### Advanced ddply aggregation, with user idata.frame functions:
+* idata.frame comes from __plyr__ package, insted of making copies in memory, idata.frame simply creates a reference to the original object, thus to boost up the speed.
+* If you have HUGE amount of data for ddply to process and you find it annoying to wait a long time before seeing the result, idata.frame is your solution.
+* Please be noted it comes with the price of slightly complicated code.
+* "An immutable data frame works like an ordinary data frame, except that when you subset it, it returns a reference to the original data frame, not a a copy. This makes subsetting substantially faster and has a big impact when you are working
+with large datasets with many groups."
+
+
+```r
+isample <- idata.frame(sample_data)
+my_summary <- ddply(isample, .(state), function(df) {
+    data.frame(unique_lga_number = nrow(df), avg_c_section = mean(df$c_section_yn == 
+        T, na.rm = T), avg_c_section_true = length(which(df$c_section_yn)))
+})
+head(my_summary)
+```
+
+```
+##         state unique_lga_number avg_c_section avg_c_section_true
+## 1        Abia                 1           1.0                  1
+## 2     Adamawa                 1           0.0                  0
+## 3     Anambra                 4           0.5                  2
+## 4      Bauchi                 2           0.0                  0
+## 5       Benue                 1           0.0                  0
+## 6 Cross River                 3           0.0                  0
+```
+
+
+
+* Check the time, the difference with grow bigger with BIG dataset.
+* Note: the first example doesn't actually work, we'll cover it in the next topic.
+
+```r
+system.time(replicate(100, ddply(isample, .(state), summarise, mean(num_nurses_fulltime, 
+    na.rm = T))))
+```
+
+```
+##    user  system elapsed 
+##   1.702   0.007   1.711
+```
+
+```r
+
+system.time(replicate(100, ddply(sample_data, .(state), summarise, mean(num_nurses_fulltime, 
+    na.rm = T))))
+```
+
+```
+##    user  system elapsed 
+##   1.066   0.000   1.067
+```
+
+
+* Draw backs of idata.frame: sometimes certain functions doesn't work with idata.frame
+* Oops it seems that which() function doesn't like idtat.frame
+
+```r
+my_summary <- ddply(sample_data, .(state), summarise, length(which(c_section_yn)))
+
+my_summary <- ddply(isample, .(state), summarise, length(which(c_section_yn)))
+```
+
+```
+## Error: argument to 'which' is not logical
+```
+
+
+### Excercise: How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
+* Since the length(which()) doesn't work, what might be the candidate function go get counts of instances of TRUE and FALSE
+* Hint from day1: we learned table(), nrow()
+* Use table() to get frequency count of TRUE and FALSE values
+* Check if 'TRUE' is contained in the table() output, and assign 'TRUE' counts to numerator. If not return 0
+* Lastly getting the length of the c_section_yn column, do remember to use na.omit() to skim off the NA values.
+
+* Answer
+
+```r
+my_summary <- ddply(isample, .(state), function(df) {
+    my_count <- table(df$c_section_yn)
+    data.frame(num_true = if ("TRUE" %in% names(my_count)) {
+        my_count[["TRUE"]]
+    } else {
+        0
+    }, total_non_na = length(na.omit(df$c_section_yn)))
+})
+head(my_summary)
+```
+
+```
+##         state num_true total_non_na
+## 1        Abia        1            1
+## 2     Adamawa        0            1
+## 3     Anambra        2            4
+## 4      Bauchi        0            2
+## 5       Benue        0            1
+## 6 Cross River        0            3
+```
+
+
+### Handy functions we created to do calculations with idata.frame
+
+* icount(), function for counting the __TRUE__s in logical variable.
+* Does it look familiar to the solution above?
+* In order to get number of __FALSE__ simple evalute the logical variable.
+
+```r
+icount <- function(predicate) {
+    counts <- table(predicate)
+    if ("TRUE" %in% names(counts)) {
+        counts["TRUE"]
+    } else {
+        0
+    }
+}
+
+my_summary <- ddply(isample, .(state), function(df) {
+    data.frame(num_true_c_section = icount(df$c_section_yn), num_true_c_section = icount(df$c_section_yn == 
+        FALSE), total_instances = nrow(df))
+})
+head(my_summary)
+```
+
+```
+##         state num_true_c_section num_true_c_section.1 total_instances
+## 1        Abia                  1                    0               1
+## 2     Adamawa                  0                    1               1
+## 3     Anambra                  2                    2               4
+## 4      Bauchi                  0                    2               2
+## 5       Benue                  0                    1               1
+## 6 Cross River                  0                    3               3
+```
+
+
+* ratio(), function for getting ratio of two __logical__ varibles with filter.
+* First argument is the numerator, second argument is the denominator, and the third argument is the __boolean filter_.
+
+```r
+ratio <- function(numerator_col, denominator_col, filter) {
+    df <- data.frame(cbind(num = numerator_col, den = denominator_col))
+    df <- na.omit(df[filter, ])
+    if (nrow(df) == 0 | sum(df$den) == 0) {
+        return(NA)
+    }
+    return(sum(df$num)/sum(df$den))
+}
+
+
+my_summary <- ddply(isample, .(state), function(df) {
+    data.frame(tru_false_ratio_public = ratio(df$c_section_yn == FALSE, df$num_nurses_fulltime >= 
+        1, df$management == "public"))
+})
+head(my_summary)
+```
+
+```
+##         state tru_false_ratio_public
+## 1        Abia                     NA
+## 2     Adamawa                      1
+## 3     Anambra                      2
+## 4      Bauchi                     NA
+## 5       Benue                     NA
+## 6 Cross River                      2
+```
+
 
 Visualizations in R
 -----
@@ -434,7 +692,7 @@ Lets begin with an example that we will re-construct over time. Download [this c
 
 
 Here is the plot we will reconstruct over time:
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
+![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26.png) 
 
 
 ##### The data layer
@@ -468,7 +726,7 @@ p
 ## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16.png) 
+![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28.png) 
 
 
 There are a few things to take away from this step. First and foremost, the way you add new layers, of any kind, to a plot is with the + operator. And, as we'll see in a moment, there's no need to only add them one at a time. You can string together any number of layers to add to a plot, separated by +.
@@ -483,7 +741,7 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point(shape = "+")
 ## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-171.png) 
+![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-291.png) 
 
 ```r
 ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point(color = "red")
@@ -493,7 +751,7 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point(color = "red
 ## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-172.png) 
+![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-292.png) 
 
 
 Speaking of defaults, the default of ggplot is to label the x and y axes with the column names from the data frame. I'll inject a bit of best practice advice here, and tell you to always change the axis names. It's nearly guaranteed that your data frame column names will make for very poor axis labels. We'll cover how to do that shortly.
@@ -509,11 +767,11 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point() + geom_smo
 ```
 
 ```
-## Warning: Removed 13 rows containing missing values (stat_smooth). Warning:
-## Removed 13 rows containing missing values (geom_point).
+## Warning: Removed 13 rows containing missing values (stat_smooth).
+## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
+![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30.png) 
 
                                
 We'll skip over the detailed behavior of `stat_smooth()`, but in this plot, the `method='lm'` parameter tells geom_smooth to use a linear model, or a linear regression line (the blue line). The grey semi-transparent ribbon surrounding the line is the 95% confidence interval.
@@ -528,11 +786,11 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point() + geom_smo
 ```
 
 ```
-## Warning: Removed 13 rows containing missing values (stat_smooth). Warning:
-## Removed 13 rows containing missing values (geom_point).
+## Warning: Removed 13 rows containing missing values (stat_smooth).
+## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19.png) 
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31.png) 
 
 
 #### Limits and scales
@@ -546,11 +804,11 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point() + geom_smo
 ```
 
 ```
-## Warning: Removed 76 rows containing missing values (stat_smooth). Warning:
-## Removed 76 rows containing missing values (geom_point).
+## Warning: Removed 76 rows containing missing values (stat_smooth).
+## Warning: Removed 76 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20.png) 
+![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32.png) 
 
 
 #### More aesthetics
@@ -565,16 +823,16 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors, color = zone)) + geom_poin
 ```
 
 ```
-## Warning: Removed 17 rows containing missing values (stat_smooth). Warning:
-## Removed 11 rows containing missing values (stat_smooth). Warning: Removed
-## 4 rows containing missing values (stat_smooth). Warning: Removed 8 rows
-## containing missing values (stat_smooth). Warning: Removed 9 rows
-## containing missing values (stat_smooth). Warning: Removed 27 rows
-## containing missing values (stat_smooth). Warning: Removed 76 rows
-## containing missing values (geom_point).
+## Warning: Removed 17 rows containing missing values (stat_smooth).
+## Warning: Removed 11 rows containing missing values (stat_smooth).
+## Warning: Removed 4 rows containing missing values (stat_smooth).
+## Warning: Removed 8 rows containing missing values (stat_smooth).
+## Warning: Removed 9 rows containing missing values (stat_smooth).
+## Warning: Removed 27 rows containing missing values (stat_smooth).
+## Warning: Removed 76 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21.png) 
+![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-33.png) 
 
 
 Interesting. Did you notice a side-effect of our addition of color as an aesthetic? All of a sudden, we have six lines, one for each zone, all on top of each other. Notice that the color aesthetic was added to the `ggplot` call. All of the `geom`s inherit the aesthetics that are inside the `ggplot` call. If we want the colors to vary for the points, but leave the line alone, we simply put the color aesthetic inside the `geom_point` function call.
@@ -587,11 +845,11 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors)) + geom_point(aes(color = 
 ```
 
 ```
-## Warning: Removed 76 rows containing missing values (stat_smooth). Warning:
-## Removed 76 rows containing missing values (geom_point).
+## Warning: Removed 76 rows containing missing values (stat_smooth).
+## Warning: Removed 76 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22.png) 
+![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34.png) 
 
 
 Certainly interesting, but in order to compare the zones to each other, we have to do something different here.
@@ -607,21 +865,21 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors, color = zone)) + geom_poin
 ```
 
 ```
-## Warning: Removed 17 rows containing missing values (stat_smooth). Warning:
-## Removed 11 rows containing missing values (stat_smooth). Warning: Removed
-## 4 rows containing missing values (stat_smooth). Warning: Removed 8 rows
-## containing missing values (stat_smooth). Warning: Removed 9 rows
-## containing missing values (stat_smooth). Warning: Removed 27 rows
-## containing missing values (stat_smooth). Warning: Removed 17 rows
-## containing missing values (geom_point). Warning: Removed 11 rows
-## containing missing values (geom_point). Warning: Removed 4 rows containing
-## missing values (geom_point). Warning: Removed 8 rows containing missing
-## values (geom_point). Warning: Removed 9 rows containing missing values
-## (geom_point). Warning: Removed 27 rows containing missing values
-## (geom_point).
+## Warning: Removed 17 rows containing missing values (stat_smooth).
+## Warning: Removed 11 rows containing missing values (stat_smooth).
+## Warning: Removed 4 rows containing missing values (stat_smooth).
+## Warning: Removed 8 rows containing missing values (stat_smooth).
+## Warning: Removed 9 rows containing missing values (stat_smooth).
+## Warning: Removed 27 rows containing missing values (stat_smooth).
+## Warning: Removed 17 rows containing missing values (geom_point).
+## Warning: Removed 11 rows containing missing values (geom_point).
+## Warning: Removed 4 rows containing missing values (geom_point).
+## Warning: Removed 8 rows containing missing values (geom_point).
+## Warning: Removed 9 rows containing missing values (geom_point).
+## Warning: Removed 27 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23.png) 
+![plot of chunk unnamed-chunk-35](figure/unnamed-chunk-35.png) 
 
 You'll notice that I put the color back into the global `ggplot` aesthetic; I don't care about lines on top of each other because now they are separated into their own chunks. I also added a color label, because the lowercase `zone` looks out of place with the rest of the graph, and modified the title a little bit.
 
@@ -637,21 +895,21 @@ ggplot(lga_data, aes(x = num_nurses, y = num_doctors, color = zone)) + geom_poin
 ```
 
 ```
-## Warning: Removed 17 rows containing missing values (stat_smooth). Warning:
-## Removed 11 rows containing missing values (stat_smooth). Warning: Removed
-## 4 rows containing missing values (stat_smooth). Warning: Removed 8 rows
-## containing missing values (stat_smooth). Warning: Removed 9 rows
-## containing missing values (stat_smooth). Warning: Removed 27 rows
-## containing missing values (stat_smooth). Warning: Removed 17 rows
-## containing missing values (geom_point). Warning: Removed 11 rows
-## containing missing values (geom_point). Warning: Removed 4 rows containing
-## missing values (geom_point). Warning: Removed 8 rows containing missing
-## values (geom_point). Warning: Removed 9 rows containing missing values
-## (geom_point). Warning: Removed 27 rows containing missing values
-## (geom_point).
+## Warning: Removed 17 rows containing missing values (stat_smooth).
+## Warning: Removed 11 rows containing missing values (stat_smooth).
+## Warning: Removed 4 rows containing missing values (stat_smooth).
+## Warning: Removed 8 rows containing missing values (stat_smooth).
+## Warning: Removed 9 rows containing missing values (stat_smooth).
+## Warning: Removed 27 rows containing missing values (stat_smooth).
+## Warning: Removed 17 rows containing missing values (geom_point).
+## Warning: Removed 11 rows containing missing values (geom_point).
+## Warning: Removed 4 rows containing missing values (geom_point).
+## Warning: Removed 8 rows containing missing values (geom_point).
+## Warning: Removed 9 rows containing missing values (geom_point).
+## Warning: Removed 27 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24.png) 
+![plot of chunk unnamed-chunk-36](figure/unnamed-chunk-36.png) 
 
 
 
@@ -668,11 +926,10 @@ We saw a [histogram](https://en.wikipedia.org/wiki/Histogram) in day one actuall
 The geometry for a histogram is called `geom_histogram`, and in its most basic form, all a histogram needs is a variable mapped to the x-axis. Can anyone come up with the code to generate the following histogram?
 
 ```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust
-## this.
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25.png) 
+![plot of chunk unnamed-chunk-37](figure/unnamed-chunk-37.png) 
 
 
 ##### Some useful things to do with histograms (and our datasets)
@@ -683,11 +940,10 @@ ggplot(lga_data, aes(x = num_doctors)) + geom_histogram() + scale_x_log10()
 ```
 
 ```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust
-## this.
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26.png) 
+![plot of chunk unnamed-chunk-38](figure/unnamed-chunk-38.png) 
 
 Notice the scale now. It is highly squished; the distance on the x-axis between 10 and 100 is the same as the distance bewtween 100 and 1000. Also notice that the labels aren't in log, they are in their original form; this is very convenient.
 
@@ -698,11 +954,10 @@ ggplot(lga_data, aes(x = num_doctors, color = zone)) + geom_histogram() + scale_
 ```
 
 ```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust
-## this.
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-27](figure/unnamed-chunk-27.png) 
+![plot of chunk unnamed-chunk-39](figure/unnamed-chunk-39.png) 
 
 But turns out that you want to change the `fill` for objects like histograms (and polygons, and boxplots), not the `color` (which is equivalent to the "stroke" of the shape, for graphic artists out there).
 
@@ -711,11 +966,10 @@ ggplot(lga_data, aes(x = num_doctors, fill = zone)) + geom_histogram() + scale_x
 ```
 
 ```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust
-## this.
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
-![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28.png) 
+![plot of chunk unnamed-chunk-40](figure/unnamed-chunk-40.png) 
 
 This can be difficult to interpet, but is sometimes useful.
 
@@ -728,7 +982,7 @@ The geometry is called `geom_boxplot`. Guesses on how to make the following?
 ## Warning: Removed 13 rows containing non-finite values (stat_boxplot).
 ```
 
-![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29.png) 
+![plot of chunk unnamed-chunk-41](figure/unnamed-chunk-41.png) 
 
 Like with histograms, making the fill equal to the color is most pleasing. And if we wanted to, we could also log-transform the boxplots:
 
@@ -741,7 +995,7 @@ ggplot(lga_data, aes(x = zone, y = num_doctors, fill = zone)) + geom_boxplot() +
 ## Warning: Removed 96 rows containing non-finite values (stat_boxplot).
 ```
 
-![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30.png) 
+![plot of chunk unnamed-chunk-42](figure/unnamed-chunk-42.png) 
 
 
 As always, be careful with log-transformations. It is hard to read numeric values off of log-transformed plots! Often, it is easier to often "zoom in" to the data. 
@@ -756,7 +1010,7 @@ ggplot(lga_data, aes(x = zone, y = num_doctors, fill = zone)) + geom_boxplot() +
 ## Warning: Removed 52 rows containing non-finite values (stat_boxplot).
 ```
 
-![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31.png) 
+![plot of chunk unnamed-chunk-43](figure/unnamed-chunk-43.png) 
 
 Note that `xlim` and `ylim` should be used with care. They throw out data outside of our limits, which can be dangerous when calculating some summary statistics. The quartiles are not especially sensitive, when the data being thrown out is little. However, a safer alternative is the `coord_cartesian` function.
 
@@ -770,7 +1024,7 @@ ggplot(lga_data, aes(x = zone, y = num_doctors, fill = zone)) + geom_boxplot() +
 ## Warning: Removed 13 rows containing non-finite values (stat_boxplot).
 ```
 
-![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32.png) 
+![plot of chunk unnamed-chunk-44](figure/unnamed-chunk-44.png) 
 
 
 #### Jitter plots
@@ -785,17 +1039,17 @@ ggplot(lga_data, aes(x = zone, y = num_doctors)) + geom_jitter()
 ## Warning: Removed 13 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-331.png) 
+![plot of chunk unnamed-chunk-45](figure/unnamed-chunk-451.png) 
 
 ```r
 ggplot(lga_data, aes(x = zone, y = num_doctors)) + geom_jitter() + ylim(0, 100)
 ```
 
 ```
-## Warning: Removed 96 rows containing missing values (geom_point).
+## Warning: Removed 89 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-332.png) 
+![plot of chunk unnamed-chunk-45](figure/unnamed-chunk-452.png) 
 
 
 ### Exercises:

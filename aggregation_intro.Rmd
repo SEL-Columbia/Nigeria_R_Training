@@ -1,11 +1,9 @@
 Aggregations in R:
 ----
 
-* There are many functions that can do aggregation for you, but we are only going to cover __ddply()__ in __plyr__ package
+* There are many functions that can do aggregations for you in R; we will cover `ddply()` from the `plyr` package in this tutorial. This is also the function that we have found most useful when writing aggregate indicators for NMIS.
 
 ### Creating simple aggregated summary:
-
-
 * note: 
  1. __(group) by__ variable must have at least one input
  2. You __must__ specify what type of aggregation you want to perform, choose one from: summarize, transform, your own complicated function 
@@ -107,7 +105,7 @@ my_summary <- ddply(isample, .(state), summarise, length(which(c_section_yn)))
 my_summary <- ddply(sample_data, .(state), summarise, length(which(c_section_yn)))
 ```
 
-* Excercise: How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
+### Excercise: How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
 * since the length(which()) doesn't work, what might be the candidate function go get counts of instances of TRUE and FALSE
 * hint from day1: we learned table(), nrow()
 * use table() to get frequency count of TRUE and FALSE values
@@ -119,11 +117,11 @@ my_summary <- ddply(isample, .(state), function(df){
                     my_count <- table(df$c_section_yn)
                     data.frame(
                     num_true = if('TRUE' %in% names(my_count)){
-                                my_count['TRUE']
+                                my_count[['TRUE']]
                                 }else{
                                     0
                                 },
-                    total_non_na = length(na.omit(df$c_section_yn)),
+                    total_non_na = length(na.omit(df$c_section_yn))
                     )})
 head(my_summary)
 ```
