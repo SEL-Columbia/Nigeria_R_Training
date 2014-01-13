@@ -45,8 +45,36 @@ my_summary <- ddply(sample_data, .(state), function(df){
                                             )
                                             })
 
+head(my_summary)
 # idata.frame
 # If you have HUGE amount of data for ddply to aggregate and you find it annoying to wait a long time before seeing the result
 # idata.frame is the solution to this, but it comes with the cost of slightly complicated code.
 
-count(sample_data$c_section_yn == T)
+
+# An immutable data frame works like an ordinary data frame, except that when you subset
+# it, it returns a reference to the original data frame, not a a copy. 
+# This makes subsetting substantially faster and has a big impact when you are working
+# with large datasets with many groups."
+
+isample <- idata.frame(sample_data)
+my_summary <- ddply(isample, .(state), function(df){
+                                          data.frame(
+                                            unique_lga_number = nrow(df),
+                                            avg_c_section = mean(df$c_section_yn == T,na.rm=T),
+                                            avg_c_section_true = length(which(df$c_section_yn))
+                                          )
+                                        })
+head(my_summary)
+
+# check the time, the difference with grow bigger with BIG dataset
+system.time(replicate(100, ddply(isample, .(state), summarise, mean(num_nurses_fulltime))))
+
+system.time(replicate(100, ddply(sample_data, .(state), summarise, mean(num_nurses_fulltime))))
+
+# Draw backs of idata.frame: sometimes certain functions doesn't work with idata.frame
+my_summary <- ddply(isample, .(state), summarise, length(which(c_section_yn)))
+
+my_summary <- ddply(sample_data, .(state), summarise, length(which(c_section_yn)))
+
+## Question: How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
+
