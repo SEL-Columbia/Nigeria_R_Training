@@ -247,7 +247,7 @@ Questions:
  * Create a new column in sample_data that goes from fifty down to 1. Call it `descending_row_name`.
  * Create a new column, called `even_and_no_doctor`, which is TRUE if `descending_row_name` is odd, and there is a doctor in that facility.
  * Hint: Type in `10:1 %% 2` into the R console. What do you get? %% is the "mod" operator, it outputs the remainder when you divide a number by another. Example, `5 %% 2` is 1, `4 %% 2` is 0
- * You can check your answer; there should be 31 FALSE and 19 TRUE values.
+ * You can check your answer; there should be 40 FALSE and 7 TRUE values.
  
 One final note regarding column creation; be careful about broadcasting. R will broadcast things that you may not expect it to. For example, what do you think will happen if you type in `sample_data$one_two <- c(1:2)`. What happened?
 
@@ -512,7 +512,7 @@ system.time(replicate(100, ddply(isample, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.595   0.003   0.598
+##   0.579   0.003   0.582
 ```
 
 ```r
@@ -522,7 +522,7 @@ system.time(replicate(100, ddply(sample_data, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.598   0.002   0.601
+##   0.598   0.003   0.602
 ```
 
 Question: what is the result that we calculate here?
