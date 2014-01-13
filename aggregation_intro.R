@@ -10,6 +10,14 @@
 sample_data <- read.csv("./sample_health_facilities.csv")
 
 library(plyr)
+my_summary <- ddply(sample_data, .(state, lga), transform, 
+                    counts = length(lga_id),
+                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
+                    avg_c_section = mean(c_section_yn == T,na.rm=T))
+head(my_summary)
+
+
+# * look at the output and compare the difference, the only change here is replacing summarize with transform
 my_summary <- ddply(sample_data, .(state, lga), summarise, 
                     counts = length(lga_id),
                     total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
@@ -24,13 +32,7 @@ my_summary <- ddply(sample_data, c("state", "lga"), summarise,
                     avg_c_section = mean(c_section_yn == T,na.rm=T))
 head(my_summary)
 
-# * look at the output and compare the difference, the only change here is replacing summarize with transform
 
-my_summary <- ddply(sample_data, .(state, lga), transform, 
-                    counts = length(lga_id),
-                    total_num_nurse = sum(num_nurses_fulltime, na.rm=T),
-                    avg_c_section = mean(c_section_yn == T,na.rm=T))
-head(my_summary)
 
 # define your own function in ddply
 # the syntax is pretty much the same as defining functions in R, except 
@@ -76,5 +78,22 @@ my_summary <- ddply(isample, .(state), summarise, length(which(c_section_yn)))
 
 my_summary <- ddply(sample_data, .(state), summarise, length(which(c_section_yn)))
 
-## Question: How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
+## Question: # How would you calculate the proportion of of c_section_yn==TRUE versus total non-NA records in each state?
+
+# since the length(which()) doesn't work, what might be the candidate function go get counts of instances of TRUE and FALSE
+# hint from day1: we learned table(), nrow()
+# use table() to get frequency count of TRUE and FALSE values
+# check if 'TRUE' is contained in the table() output, and assign 'TRUE' counts to numerator. If not return 0
+# lastly getting the length of the c_section_yn column, do remember to use na.omit() to skim off the NA values.
+my_summary <- ddply(isample, .(state), function(df){ 
+                    my_count <- table(df$c_section_yn)
+                    data.frame(
+                    num_true = if('TRUE' %in% names(my_count)){
+                                my_count['TRUE']
+                                }else{
+                                    0
+                                },
+                    total_non_na = length(na.omit(df$c_section_yn)),
+                    )})
+head(my_summary)
 

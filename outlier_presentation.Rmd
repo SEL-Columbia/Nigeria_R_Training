@@ -1,0 +1,103 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+Outlier Cleaning
+========================================================
+# revalue ??
+#outlier cleaning
+
+```{r}
+
+```
+
+#The Function: outlierreplace()
+ 
+```{r}
+library(stringr)
+#functions for outlier removal
+outlierOutputList = list() #for generating a running list of what is being knocked out
+outlierreplace = function(df, c, rowpredicate, replaceVal=NA) {
+  naCount1 <- length(which(is.na(df[,c])))
+  df[,c] <- replace(df[,c], rowpredicate, replaceVal)
+  naCount2 <- length(which(is.na(df[,c])))
+  print(str_c(naCount2-naCount1, " outliers replaced for field: ", c)) #comment-out line if not desired
+  outlierOutputList <<- c(outlierOutputList, 
+                          str_c(naCount2-naCount1, " outliers replaced for field: ", c))
+  df
+}
+
+```
+
+#Logic Checks 
+```{r}
+edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_male', 
+                    (edu_normalized$num_tchrs_male > edu_normalized$num_tchrs_total))
+```
+
+#Outlier Detection/Removal: Using One Variable  
+
+## A Logic Example
+```{r}
+edu_normalized <- outlierreplace(edu_normalized, 'num_classrms_total',
+                    (edu_normalized$num_classrms_total == 0))
+
+```
+
+## A Summary Example
+
+```{r}
+################################ 
+####misunderstood questions ##### 
+################################
+#num_exercise_books_per_student_pry
+#Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+#0.00    83.75   260.00   725.20   700.00 70780.00    52691   
+
+#num_exercise_books_per_student_jss
+#Min.       1stQu.  Median  Mean   3rd Qu.  Max.    NA's 
+#0      60     569    1818    1738   34740   57139
+
+```
+
+Question: Let's take a look at the __sample_data__ we worked with in previous trainings. Below is the source path to read in the data. Detect and eliminate any outliers for the `num_doctors_available` variable. 
+```{r}
+
+# summary(sample_data$num_doctors_fulltime)
+# table(sample_data$num_doctors_fulltime)
+```
+
+
+## A Graphical Example
+If there were not egregious by using the summary method above, the final step of outlier detection/removal was to plot the data.
+```{r}
+
+```
+
+
+#Outlier Detection/Removal: Using Multiple Variable  
+
+## A Logic Example
+```{r}
+edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_total',
+                    (edu_normalized$num_tchrs_total > edu_normalized$num_tchrs_male + 
+                         edu_normalized$num_tchrs_female))
+
+edu_normalized <- outlierreplace(edu_normalized, 'num_js_female',
+                                (edu_normalized$num_js_female > 1250 & 
+                                 edu_normalized$num_classrms_total < 25 &
+                                 edu_normalized$num_tchrs_total < 10))
+
+```
+
+## A Graphical Example
+*FILL IN EXAMPLE
+```{r}
+
+```
+
+## A Summary Example
+*FILL IN EXAMPLE
+```{r}
+
+```
+
+
