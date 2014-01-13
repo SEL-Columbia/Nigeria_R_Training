@@ -244,7 +244,7 @@ Questions:
  * What is another way that we learned in Day 1 that also allows for column deletion?
 
 #### Exercise:
- * Create a new column in sample_data that goes from ten down to 1. Call it `descending_row_name`.
+ * Create a new column in sample_data that goes from fifty down to 1. Call it `descending_row_name`.
  * Create a new column, called `even_and_no_doctor`, which is TRUE if `descending_row_name` is odd, and there is a doctor in that facility.
  * Hint: Type in `10:1 %% 2` into the R console. What do you get? %% is the "mod" operator, it outputs the remainder when you divide a number by another. Example, `5 %% 2` is 1, `4 %% 2` is 0
  * You can check your answer; there should be 31 FALSE and 19 TRUE values.
@@ -512,7 +512,7 @@ system.time(replicate(100, ddply(isample, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.582   0.002   0.585
+##   0.595   0.003   0.598
 ```
 
 ```r
@@ -522,7 +522,7 @@ system.time(replicate(100, ddply(sample_data, "state", nrow)))
 
 ```
 ##    user  system elapsed 
-##   0.585   0.003   0.588
+##   0.598   0.002   0.601
 ```
 
 Question: what is the result that we calculate here?
