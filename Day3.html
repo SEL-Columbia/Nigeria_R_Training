@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Day 3</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p><link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link></p>
+
+<h1>Day 3</h1>
+
+<h2>Review</h2>
+
+<p>Assignment review: </p>
+
+<ul>
+<li>Relationship of students to teachers. Zonal differences in pupil to teacher ratio X 2. Just average number of students in primary schools.</li>
+<li>Review &ldquo;quiz&rdquo;: open <code>lgas.csv</code>. Delete your pop_density_2006 column. Now, re-create a new column, called <code>hundred_people_per_sq_km</code>. For example, if an LGA has population 1000 and sq km of 10, <code>hundred_people_per_sq_km</code> should be one.</li>
+<li>Review &ldquo;quiz&rdquo; 2: in <code>sample_data</code>, calculate the number of nurses per doctor in every facility. Lets look at the results. What do you notice?</li>
+</ul>
+
+<h2>Aggregations in R:</h2>
+
+<p>There are many functions that can do aggregations for you in R; we will cover <code>ddply()</code> from the <code>plyr</code> package in this tutorial. This is also the function that we have found most useful when writing aggregate indicators for NMIS.</p>
+
+<pre><code class="r">library(plyr)
+</code></pre>
+
+<h4>Basic ddply: summarise</h4>
+
+<p>Lets say that we want to calculate the total number of doctors in the different states for which we have data. The aggregations provided by <code>ddply</code> make this very easy. The syntax for ddply is:</p>
+
+<pre><code>ddply(input_data_frame, group-by_variables, function, parameters)
+</code></pre>
+
+<p>The example below is similar to one you will find yourself using quite frequently:</p>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, # input_data_frame
+                    &quot;state&quot;, # group-by variable
+                    summarise, # function. in this case, we use summarise
+                        counts = length(lga_id),
+                        total_num_nurses = sum(num_nurses_fulltime, na.rm=T),
+                        avg_num_doctors = mean(num_doctors_fulltime, na.rm=T),
+                        avg_c_section_rate = mean(c_section_yn, na.rm=T))
+my_summary
+</code></pre>
+
+<pre><code>##          state counts total_num_nurses avg_num_doctors avg_c_section_rate
+## 1         Abia      1                0        308.0000             1.0000
+## 2      Adamawa      1                2          1.0000             0.0000
+## 3      Anambra      4                4          1.0000             0.5000
+## 4       Bauchi      2                0          0.0000             0.0000
+## 5        Benue      1                0          0.0000             0.0000
+## 6  Cross River      3                3          0.0000             0.0000
+## 7        Delta      4               10          0.5000             0.2500
+## 8          Edo      1                0          0.0000             0.0000
+## 9        Ekiti      1                2          1.0000             0.0000
+## 10         Imo      3                8          0.0000             0.3333
+## 11      Jigawa      1                0          0.0000             0.0000
+## 12      Kaduna      1                5          0.0000             0.0000
+## 13        Kano      1                0          0.0000             0.0000
+## 14     Katsina      6                1          0.0000             0.0000
+## 15       Kebbi      2                0          0.0000             0.0000
+## 16        Kogi      1                1          0.0000             0.0000
+## 17       Lagos      3                4          1.3333             0.6667
+## 18       Niger      3                0          0.0000             0.0000
+## 19        Ogun      3                0          0.6667             0.3333
+## 20        Osun      2                6          0.5000             0.5000
+## 21     Plateau      2                0          0.0000             0.0000
+## 22      Rivers      1                2          2.0000             0.0000
+## 23      Taraba      2                0          0.5000             0.5000
+## 24     Zamfara      1                0          0.0000             0.0000
+</code></pre>
+
+<h4>Understanding <code>ddply</code></h4>
+
+<p>What is ddply doing here? It does something quite complicated but useful. Lets try to repeat what <code>ddply</code> did above for two states in Nigeria.</p>
+
+<p><strong>Exercise 1:</strong> Before you knew <code>ddply</code>, and I said that I wnated the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named <code>anambra</code> and a dataframe called <code>katsina</code>.</p>
+
+<p><strong>Exercise 2:</strong> Now, lets say I want a two-row and two-column data.frame. The column names are <code>state</code> and <code>total_num_nurses</code>, and each row is the total number of nurses per state. Please do this without using ddply. If you have extra time, you can also do this with <code>ddply</code>. Check your work by manually counting the number of doctors in sample_data.</p>
+
+<p><strong>Exercise 3:</strong> On the flipboard, make a block diagram of the process that you went through to make this happen. We will do this as a group.</p>
+
+<h4>Explanation of how <code>ddply</code> works</h4>
+
+<p>If you did exercise 2 correctly, here are the steps you probably took:</p>
+
+<ul>
+<li>you created two dataframes, one for Anambra, one for Katsina</li>
+<li>you did some calculation with both of these smaller dataframes, in this case, calculating the total number of doctors</li>
+<li>you took your results, and combined it into a dataframe.</li>
+</ul>
+
+<p>This pattern of data manipulation is called &ldquo;split-apply-combine&rdquo; by the author of <code>plyr</code>, Hadley Wickam. ddply and associated functions basically make it easier to perform this pattern of data manipulation, which turns out to be extremely useful. The equivalent method of doing what we did above in ddply is the following:</p>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, # input_data_frame
+                    &quot;state&quot;, # group-by variable
+                    summarise, # function. in this case, we use summarise
+                        total_num_doctors = sum(num_doctors_fulltime, na.rm=T))
+head(my_summary)
+</code></pre>
+
+<pre><code>##         state total_num_doctors
+## 1        Abia               308
+## 2     Adamawa                 1
+## 3     Anambra                 3
+## 4      Bauchi                 0
+## 5       Benue                 0
+## 6 Cross River                 0
+</code></pre>
+
+<p>With the difference being that we have now done our calculation for <em>ALL</em> states. As we walk through the ddply, it is useful to see what summarize does for us; can you describe what summarize does based on the output below?</p>
+
+<pre><code class="r">anambra &lt;- subset(sample_data, state == &quot;Anambra&quot;)
+example &lt;- summarize(anambra, total_num_doctors = sum(num_doctors_fulltime, 
+    na.rm = T))
+str(example)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    1 obs. of  1 variable:
+##  $ total_num_doctors: int 3
+</code></pre>
+
+<pre><code class="r">example
+</code></pre>
+
+<pre><code>##   total_num_doctors
+## 1                 3
+</code></pre>
+
+<p>Okay, back to our <code>ddply</code>. The group-by variable <code>state</code> tells ddply that it should take our data.frame, and make many many small-small dataframes, one data frame for each state. So there is one dataframe for anambra, one for abia, one for katsina, and so on. Then, ddply &ldquo;applies&rdquo; the function at the end of the ddply command. This function should return a dataframe, like summarize does. Finally, it takes all of those small-small NEW dataframes, and <code>rbind</code>s them all together to a new large dataframe. Plus, it adds a column called <code>state</code>, whose value it knew from the subsetting process (anambra&#39;s state is Anambra, duh!), and adds it on.</p>
+
+<p>Awesome, or what?</p>
+
+<p><strong>Notes on <code>ddply</code> usage:</strong></p>
+
+<ol>
+<li>The <em>group-by variable</em> must have at least one input.</li>
+<li>You <em>must</em> specify what type of aggregation you want to perform, choose one from: summarize, or your own function (we&#39;ll see this below).</li>
+<li>To understand more, in addition to this tutorial, you should consider looking at <a href="http://cran.r-project.org/web/packages/plyr/plyr.pdf">the package document</a>, <a href="http://plyr.had.co.nz/">the plyr website</a>, or <a href="http://streaming.stat.iastate.edu/workshops/r-intro/lectures/6-advancedmanipulation.pdf">this tutorial on plyr</a>.</li>
+</ol>
+
+<h5>Exercise</h5>
+
+<ol>
+<li>Calculate the total number of public facilities per zone in our sample dataset. Your output should look like the following:</li>
+</ol>
+
+<pre><code>##            zone num_public_facilities
+## 1 North-Central                     6
+## 2     Northeast                     3
+## 3     Northwest                    10
+## 4   South-South                     6
+## 5     Southeast                     4
+## 6     Southwest                     4
+</code></pre>
+
+<p>Hint: what does <code>sum(c(TRUE, FALSE, TRUE, TRUE, FALSE))</code> return?</p>
+
+<ol>
+<li>Calculate the mean and standard deviation of number of doctors in each zone in Nigeria. Your output should look like the following:</li>
+</ol>
+
+<pre><code>##            zone avg_num_doctors standard_deviation_doctors
+## 1 North-Central          0.0000                     0.0000
+## 2     Northeast          0.4000                     0.5477
+## 3     Northwest          0.0000                     0.0000
+## 4   South-South          0.4444                     0.8819
+## 5     Southeast         44.4286                   116.2252
+## 6     Southwest          0.8889                     1.0541
+</code></pre>
+
+<p>Remember that facility with the 308 doctors?</p>
+
+<h4>More <code>ddply</code></h4>
+
+<p>You can use multiple by variables to perform an aggregation. For example, we can use both &ldquo;state&rdquo; and &ldquo;lga&rdquo; below:</p>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, c(&quot;state&quot;, &quot;lga&quot;), summarise, counts = length(lga_id), 
+    total_num_nurses = sum(num_nurses_fulltime, na.rm = T), avg_num_doctors = mean(num_doctors_fulltime, 
+        na.rm = T), avg_c_section_rate = mean(c_section_yn, na.rm = T))
+head(my_summary)
+</code></pre>
+
+<pre><code>##     state           lga counts total_num_nurses avg_num_doctors
+## 1    Abia Umuahia North      1                0             308
+## 2 Adamawa      Shelleng      1                2               1
+## 3 Anambra       Anaocha      1                2             NaN
+## 4 Anambra      Ayamelum      1                0               1
+## 5 Anambra      Ekwusigo      1                0               1
+## 6 Anambra        Ihiala      1                2               1
+##   avg_c_section_rate
+## 1                  1
+## 2                  0
+## 3                  0
+## 4                  0
+## 5                  1
+## 6                  1
+</code></pre>
+
+<p><code>ddply</code> also allows you to use a special . syntax, where you don&#39;t have to put your column names in string variables.</p>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, .(state, lga), summarise, counts = length(lga_id), 
+    total_num_nurses = sum(num_nurses_fulltime, na.rm = T), avg_num_doctors = mean(num_doctors_fulltime, 
+        na.rm = T), avg_c_section_rate = mean(c_section_yn, na.rm = T))
+head(my_summary)
+</code></pre>
+
+<pre><code>##     state           lga counts total_num_nurses avg_num_doctors
+## 1    Abia Umuahia North      1                0             308
+## 2 Adamawa      Shelleng      1                2               1
+## 3 Anambra       Anaocha      1                2             NaN
+## 4 Anambra      Ayamelum      1                0               1
+## 5 Anambra      Ekwusigo      1                0               1
+## 6 Anambra        Ihiala      1                2               1
+##   avg_c_section_rate
+## 1                  1
+## 2                  0
+## 3                  0
+## 4                  0
+## 5                  1
+## 6                  1
+</code></pre>
+
+<p><strong>Question</strong>: What is this summary of? Could you use a single group-by variable to get the same result? When might you want to use two variables instead of one?</p>
+
+<h4>User defined functions in ddply</h4>
+
+<p>You are allowed, and in fact, will need to, use your own function (instead of summarize) in ddply. The syntax is like any function definition in R; we will get to functions later on. For now, please pay attention to the syntax, and note that there must always be the data.frame included inside the function when using it with ddply. This is because, as we said above, <code>ddply</code>, at the end, rbinds a whole lot of small-small data.frames. Using the syntax below, each function returns a new data.frame.</p>
+
+<pre><code class="r">my_summary &lt;- ddply(sample_data, &quot;state&quot;, function(df) {
+    data.frame(counts = length(df$lga_id), total_num_nurses = sum(df$num_nurses_fulltime, 
+        na.rm = T), avg_num_doctors = mean(df$num_doctors_fulltime, na.rm = T), 
+        avg_c_section_rate = mean(df$c_section_yn, na.rm = T))
+})
+head(my_summary)
+</code></pre>
+
+<pre><code>##         state counts total_num_nurses avg_num_doctors avg_c_section_rate
+## 1        Abia      1                0             308                1.0
+## 2     Adamawa      1                2               1                0.0
+## 3     Anambra      4                4               1                0.5
+## 4      Bauchi      2                0               0                0.0
+## 5       Benue      1                0               0                0.0
+## 6 Cross River      3                3               0                0.0
+</code></pre>
+
+<p>How is this diferent from the above, which used summarize? Why do you think this is?</p>
+
+<h3>Using idata.frame</h3>
+
+<p>When you are working with bigger datasets, there is a type of data.frame called <code>idata.frame</code> that is more efficient to use than data.frames for aggregation. By default, R makes copies of the dataframes during a ddply operation (the same way we made copies of our data for anambra and katsina). In order to make R not make these copies, and work more efficiently, we can use something called an <code>idata.frame</code>. The way to do it is to create a new object from a data frame that is an idata.frame, and then perform the exact same operations as we did before.</p>
+
+<p>If <code>ddply</code> calls are starting to take a long time, you should think about using idata.frame. Note that the cost of idata.frames is slighly more complex code; certain functions don&#39;t work with idata.frames. One such function is summarize; WE ALWAYS NEED THE FUNCTION FORMAT when using ddply with <code>idata.frame</code>s. Please read the <code>idata.frame</code> documentation for further instructions. An example:</p>
+
+<pre><code class="r">isample_data &lt;- idata.frame(sample_data)
+my_summary &lt;- ddply(isample_data, &quot;state&quot;, function(df) {
+    data.frame(counts = length(df$lga_id), total_num_nurses = sum(df$num_nurses_fulltime, 
+        na.rm = T), avg_num_doctors = mean(df$num_doctors_fulltime, na.rm = T), 
+        avg_c_section_rate = mean(df$c_section_yn, na.rm = T))
+})
+head(my_summary)
+</code></pre>
+
+<pre><code>##         state counts total_num_nurses avg_num_doctors avg_c_section_rate
+## 1        Abia      1                0             308                1.0
+## 2     Adamawa      1                2               1                0.0
+## 3     Anambra      4                4               1                0.5
+## 4      Bauchi      2                0               0                0.0
+## 5       Benue      1                0               0                0.0
+## 6 Cross River      3                3               0                0.0
+</code></pre>
+
+<p>In the end, however, we get a data.frame back. Can someone remind me how to check if this is correct?</p>
+
+<h4>Advanced R: timing your functions.</h4>
+
+<p>To demonstrate the speedup, lets time the output of running ddply on an idata.frame versus a data.frame. We&#39;ll replicate a simple ddply call a thousand times so we can notice a difference. Note that the difference will grow larger as the datasets grow larger.</p>
+
+<pre><code class="r">system.time(replicate(1000, ddply(isample_data, &quot;state&quot;, nrow)))
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;ddply&quot;
+</code></pre>
+
+<pre><code>## Timing stopped at: 0 0 0
+</code></pre>
+
+<pre><code class="r">
+system.time(replicate(1000, ddply(sample_data, &quot;state&quot;, nrow)))
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;ddply&quot;
+</code></pre>
+
+<pre><code>## Timing stopped at: 0.001 0 0
+</code></pre>
+
+<p>Question: what is the result that we calculate, before replicate it many times and timing it?</p>
+
+<h4>Exercise: How would you calculate the proportion of of <code>c_section_yn==TRUE</code> versus total non-NA records in each state?</h4>
+
+<ul>
+<li>Hint: what does <code>sum(sample_data$c_section_yn)</code> do? Compare to the output of <code>summary</code>.</li>
+<li>Lastly get the length of the c_section_yn column, do remember to use na.omit() to skim off the NA values.</li>
+</ul>
+
+<pre><code>##         state num_c_sections total_non_na
+## 1        Abia              1            1
+## 2     Adamawa              0            1
+## 3     Anambra              2            4
+## 4      Bauchi              0            2
+## 5       Benue              0            1
+## 6 Cross River              0            3
+</code></pre>
+
+<h4>Slightly advanced: calculating ratios with ddply</h4>
+
+<p>Lets look at something similar to what we looked at in the beginning of this exercise: ratio of nurses to doctors per LGA. This is not an important indicator, but ratio of students to teacher is (pupil to teacher ratio). We are looking at nurses to doctors to avoid having to load another dataset. The concept is the same.</p>
+
+<p>First, lets do this at a single LGA. What is the ratio for Katsina?</p>
+
+<pre><code class="r">katsina[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;)]
+</code></pre>
+
+<pre><code>## Error: object &#39;katsina&#39; not found
+</code></pre>
+
+<p>Simple, right? 1.</p>
+
+<p>Okay, what is the nurses to doctor ratio for Anambra?</p>
+
+<pre><code class="r">anambra[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;)]
+</code></pre>
+
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime
+## 2                    NA                   2
+## 6                     1                   0
+## 17                    1                   2
+## 27                    1                   0
+</code></pre>
+
+<p>Remember that in survey data, we treat NA as &ldquo;missing value&rdquo;. The value could be 0, it could be 1, it could be 100. The ratio of nurses to doctors in anambra, for this small sample, is actually <code>2 / 3 ==</code> 0.6667. Because the number of doctors in the first facility is unknown, we have to drop that entire row from our sample before calculating the ratio.</p>
+
+<p>What do you think of the following calculation?</p>
+
+<pre><code class="r">x &lt;- ddply(sample_data, &quot;state&quot;, summarize, nurse_per_doctor_ratio = sum(num_nurses_fulltime, 
+    na.rm = T)/sum(num_doctors_fulltime, na.rm = T))
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;ddply&quot;
+</code></pre>
+
+<p>Okay, now that we know that it is incorrect. How we do implement it?</p>
+
+<h4>The ratio function</h4>
+
+<p>This kind of calculation has to be done a few times in NMIS. For special cases like this, we have written convenience functions. In fact, it even handles the cases of needing to filter out just some of the facilities:</p>
+
+<pre><code class="r"># returns sum(numerator_col) / sum(denominator_col) after subsetting by
+# filter, which should be a predicate vector (ie, a list of TRUE / FALSE)
+# and also drops NAs in the process
+ratio &lt;- function(numerator_col, denominator_col, filter) {
+    df &lt;- data.frame(cbind(num = numerator_col, den = denominator_col))
+    df &lt;- na.omit(df[filter, ])
+    if (nrow(df) == 0 | sum(df$den) == 0) {
+        return(NA)
+    }
+    return(sum(df$num)/sum(df$den))
+}
+my_summary &lt;- ddply(isample_data, .(state), function(df) {
+    data.frame(nurse_per_doctor_ratio = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime), 
+        nurse_per_doctor_ratio_public = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime, 
+            df$management == &quot;public&quot;))
+})
+head(my_summary)
+</code></pre>
+
+<pre><code>##         state nurse_per_doctor_ratio nurse_per_doctor_ratio_public
+## 1        Abia                     NA                            NA
+## 2     Adamawa                 2.0000                             2
+## 3     Anambra                 0.6667                             0
+## 4      Bauchi                     NA                            NA
+## 5       Benue                     NA                            NA
+## 6 Cross River                     NA                            NA
+</code></pre>
+
+<pre><code class="r">anambra[c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;, &quot;management&quot;)]
+</code></pre>
+
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime management
+## 2                    NA                   2     public
+## 6                     1                   0     public
+## 17                    1                   2       &lt;NA&gt;
+## 27                    1                   0       &lt;NA&gt;
+</code></pre>
+
+</body>
+
+</html>

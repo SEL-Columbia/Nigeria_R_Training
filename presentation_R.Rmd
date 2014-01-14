@@ -321,9 +321,18 @@ rbind(data1, data2)
 
 There is a powerful replacement of `rbind` in the __plyr__ package, called `rbind.fill`. With `rbind` you have to make every column in both data.frames exist and allign (ie, have the same index number), but with `rbind.fill` you need not be concerned. `rbind.fill` finds the corresponding column in data.frame2 and concatenates the data, and if there's no corresponding part it assigns __*NA*__. Do be careful though, you might accidentally concatenate the wrong data frames, and instead of complaining, `rbind.fill` will just fill your dataset with NAs.
 
-```{r}
+```{r cache=TRUE}
 head(rbind.fill(data1, data2))
 ```
+
+### Writing out data
+Notice that none of our files have changed so far. If you open `sample_health_facilities.csv`, it is the same as it was. If after some work, we want to save our work, we have to write out our data.frames to the file. This is like hitting the "save" button in Excel, but it isn't done automatically in R; you have to do it expicitly.
+
+Writing csv works like the following:
+```{r cache=TRUE}
+write.csv(sample_data, "./my_output.csv", row.names=FALSE)
+```
+Note the row.names argument. Try to see what the csv looks like if you omit the argument, or change row.names=TRUE. We generally prefer to output csv files without the row.names.
 
 Assignment:
 ==========

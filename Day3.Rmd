@@ -7,165 +7,233 @@ Review
 ------
 Assignment review: 
  * Relationship of students to teachers. Zonal differences in pupil to teacher ratio X 2. Just average number of students in primary schools.
- * Review "quiz": create a column that is 
-
-
-Data cleaning:
+ * Review "quiz": open `lgas.csv`. Delete your pop_density_2006 column. Now, re-create a new column, called `hundred_people_per_sq_km`. For example, if an LGA has population 1000 and sq km of 10, `hundred_people_per_sq_km` should be one.
+ * Review "quiz" 2: in `sample_data`, calculate the number of nurses per doctor in every facility. Lets look at the results. What do you notice?
+ 
+Aggregations in R:
 ----
 
-We will be working mostly with our previous __sample_data__ set - so be sure that you have it loaded in your workspace. 
+There are many functions that can do aggregations for you in R; we will cover `ddply()` from the `plyr` package in this tutorial. This is also the function that we have found most useful when writing aggregate indicators for NMIS.
 
-### Type conversion
-Type conversion can be forced by `as.*` functions. Common __\*__ types you'd encounter are: 
-  1. numeric
-  2. integer
-  3. character
-  4. logical  
-* Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
-
-```{r}
-my_numbers <- c("1", "2", "3", "4", "TRUE")
-my_numbers
-as.numeric(my_numbers)
-as.logical(my_numbers)
+```{r cache=T}
+library(plyr)
 ```
 
+#### Basic ddply: summarise
 
-Data Cleaning
---------------
-### string manipulations
-* although regex suite comes with base R, string_r packages have similar implementations.
-* we're not going to cover regex i.e. regular expression in this tuorial.
-* getting position of matched pattern with grep()
-```{r}
-my_strings = c("Hello", "World", 'Foo')
-grep(pattern="l", x=my_strings, ignore.case=FALSE)
-#when value argument is set to true, grep() returns the actual strings matchs the patterns
-grep(pattern="l", x=my_strings, ignore.case=FALSE, value=T)
+Lets say that we want to calculate the total number of doctors in the different states for which we have data. The aggregations provided by `ddply` make this very easy. The syntax for ddply is:
+
 ```
-* find pattern in strings and replace with sub()
-* gsub() means global sub, which replace all the occurance of matching pattern, while sub() only works on the first appearance.
-```{r}
-my_strings
-sub(pattern="o", replacement="X", x=my_strings)
-gsub(pattern="o", replacement="X", x=my_strings)
-```
-* change to upper/lower case with toupper()/ tolower()
-```{r}
-my_strings
-toupper(my_strings)
-tolower(my_strings)
-```
-* concatenate strings with paste():
-```{r}
-paste("hello", "world", "foo", sep=",")
-```
-* if you're trying to concate every element in a vector/ list, use __collapse__ argument in paste()
-```{r}
-paste(my_strings, sep=',')
-paste(my_strings, collapse=',')
+ddply(input_data_frame, group-by_variables, function, parameters)
 ```
 
-### writing out data
-* R can output multiple different output format, but we're going to cover csv and RDS format
-* writing csv file with write.csv()
- * if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()
-```{r}
-write.csv(sample_data, "./my_output.csv", row.names=FALSE)
-```
-* we recommend output your data as RDS file, if you're only going to reuse it in R.
-* use saveRDS() to save object in workspace to your harddrive
-  * no row.names argument needs to be used, since we're saving the R object into a binary file
-```{r}
-saveRDS(sample_data, "./my_output.RDS")
-```
-* use readRDS() function to load saved RDS file
-```{r echo=TRUE, eval=FALSE}
-readRDS("./my_output.RDS")
-```
-```{r echo=FALSE, eval=TRUE}
-readRDS("./my_output.RDS")[1:10, 1:10]
+The example below is similar to one you will find yourself using quite frequently:
+```{r cache=T}
+my_summary <- ddply(sample_data, # input_data_frame
+                    "state", # group-by variable
+                    summarise, # function. in this case, we use summarise
+                        counts = length(lga_id),
+                        total_num_nurses = sum(num_nurses_fulltime, na.rm=T),
+                        avg_num_doctors = mean(num_doctors_fulltime, na.rm=T),
+                        avg_c_section_rate = mean(c_section_yn, na.rm=T))
+my_summary
 ```
 
+#### Understanding `ddply`
 
-Advanced R
-========================================================
+What is ddply doing here? It does something quite complicated but useful. Lets try to repeat what `ddply` did above for two states in Nigeria.
 
-creation of more complex columns(indicators) with __rowSums()__:
--------------------------------------
-* column creation: sum of multiple numerical columns 
-```{r}
-sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
-                                            sample_data$num_lab_techs_fulltime, na.rm = T))
-```
+__Exercise 1:__ Before you knew `ddply`, and I said that I wnated the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named `anambra` and a dataframe called `katsina`.
+
+__Exercise 2:__ Now, lets say I want a two-row and two-column data.frame. The column names are `state` and `total_num_nurses`, and each row is the total number of nurses per state. Please do this without using ddply. If you have extra time, you can also do this with `ddply`. Check your work by manually counting the number of doctors in sample_data.
+
+__Exercise 3:__ On the flipboard, make a block diagram of the process that you went through to make this happen. We will do this as a group.
+
+#### Explanation of how `ddply` works
+
+If you did exercise 2 correctly, here are the steps you probably took:
+  * you created two dataframes, one for Anambra, one for Katsina
+  * you did some calculation with both of these smaller dataframes, in this case, calculating the total number of doctors
+  * you took your results, and combined it into a dataframe.
   
+This pattern of data manipulation is called "split-apply-combine" by the author of `plyr`, Hadley Wickam. ddply and associated functions basically make it easier to perform this pattern of data manipulation, which turns out to be extremely useful. The equivalent method of doing what we did above in ddply is the following:
+
+```{r cache=T}
+my_summary <- ddply(sample_data, # input_data_frame
+                    "state", # group-by variable
+                    summarise, # function. in this case, we use summarise
+                        total_num_doctors = sum(num_doctors_fulltime, na.rm=T))
+head(my_summary)
+```
+
+With the difference being that we have now done our calculation for _ALL_ states. As we walk through the ddply, it is useful to see what summarize does for us; can you describe what summarize does based on the output below?
+```{r cache=T}
+anambra <- subset(sample_data, state=="Anambra")
+example <- summarize(anambra, total_num_doctors = sum(num_doctors_fulltime, na.rm=T))
+str(example)
+example
+```
+
+Okay, back to our `ddply`. The group-by variable `state` tells ddply that it should take our data.frame, and make many many small-small dataframes, one data frame for each state. So there is one dataframe for anambra, one for abia, one for katsina, and so on. Then, ddply "applies" the function at the end of the ddply command. This function should return a dataframe, like summarize does. Finally, it takes all of those small-small NEW dataframes, and `rbind`s them all together to a new large dataframe. Plus, it adds a column called `state`, whose value it knew from the subsetting process (anambra's state is Anambra, duh!), and adds it on.
+
+Awesome, or what?
+
+__Notes on `ddply` usage:__
+ 1. The _group-by variable_ must have at least one input.
+ 2. You _must_ specify what type of aggregation you want to perform, choose one from: summarize, or your own function (we'll see this below).
+ 3. To understand more, in addition to this tutorial, you should consider looking at [the package document](http://cran.r-project.org/web/packages/plyr/plyr.pdf), [the plyr website](http://plyr.had.co.nz/), or [this tutorial on plyr](http://streaming.stat.iastate.edu/workshops/r-intro/lectures/6-advancedmanipulation.pdf).
+
+##### Exercise
+ 
+ 1. Calculate the total number of public facilities per zone in our sample dataset. Your output should look like the following:
+```{r cache=T, echo=FALSE}
+ddply(sample_data, "zone", summarize, 
+      num_public_facilities = sum(management=="public", na.rm=T))
+```
+ Hint: what does `sum(c(TRUE, FALSE, TRUE, TRUE, FALSE))` return?
+ 
+ 2. Calculate the mean and standard deviation of number of doctors in each zone in Nigeria. Your output should look like the following:
+```{r cache=T, echo=FALSE}
+ddply(sample_data, "zone", summarize, 
+      avg_num_doctors = mean(num_doctors_fulltime, na.rm=T),
+      standard_deviation_doctors = sd(num_doctors_fulltime, na.rm=T))
+```
+Remember that facility with the 308 doctors?
+
+#### More `ddply`
+
+You can use multiple by variables to perform an aggregation. For example, we can use both "state" and "lga" below:
+```{r cache=T}
+my_summary <- ddply(sample_data, 
+                    c("state", "lga"), 
+                    summarise, 
+                        counts = length(lga_id),
+                        total_num_nurses = sum(num_nurses_fulltime, na.rm=T),
+                        avg_num_doctors = mean(num_doctors_fulltime, na.rm=T),
+                        avg_c_section_rate = mean(c_section_yn, na.rm=T))
+head(my_summary)
+```
+
+`ddply` also allows you to use a special . syntax, where you don't have to put your column names in string variables.
+```{r cache=T}
+my_summary <- ddply(sample_data, 
+                    .(state, lga), 
+                    summarise, 
+                        counts = length(lga_id),
+                        total_num_nurses = sum(num_nurses_fulltime, na.rm=T),
+                        avg_num_doctors = mean(num_doctors_fulltime, na.rm=T),
+                        avg_c_section_rate = mean(c_section_yn, na.rm=T))
+head(my_summary)
+```
+
+__Question__: What is this summary of? Could you use a single group-by variable to get the same result? When might you want to use two variables instead of one?
+
+#### User defined functions in ddply
+You are allowed, and in fact, will need to, use your own function (instead of summarize) in ddply. The syntax is like any function definition in R; we will get to functions later on. For now, please pay attention to the syntax, and note that there must always be the data.frame included inside the function when using it with ddply. This is because, as we said above, `ddply`, at the end, rbinds a whole lot of small-small data.frames. Using the syntax below, each function returns a new data.frame.
+
+```{r cache=T}
+my_summary <- ddply(sample_data, "state", function(df) {
+    data.frame(
+        counts = length(df$lga_id),
+        total_num_nurses = sum(df$num_nurses_fulltime, na.rm=T),
+        avg_num_doctors = mean(df$num_doctors_fulltime, na.rm=T),
+        avg_c_section_rate = mean(df$c_section_yn, na.rm=T)
+    )})
+head(my_summary)
+```
+
+How is this diferent from the above, which used summarize? Why do you think this is?
+
+### Using idata.frame
+
+When you are working with bigger datasets, there is a type of data.frame called `idata.frame` that is more efficient to use than data.frames for aggregation. By default, R makes copies of the dataframes during a ddply operation (the same way we made copies of our data for anambra and katsina). In order to make R not make these copies, and work more efficiently, we can use something called an `idata.frame`. The way to do it is to create a new object from a data frame that is an idata.frame, and then perform the exact same operations as we did before.
+
+If `ddply` calls are starting to take a long time, you should think about using idata.frame. Note that the cost of idata.frames is slighly more complex code; certain functions don't work with idata.frames. One such function is summarize; WE ALWAYS NEED THE FUNCTION FORMAT when using ddply with `idata.frame`s. Please read the `idata.frame` documentation for further instructions. An example:
+
+```{r cache=T}
+isample_data <- idata.frame(sample_data)
+my_summary <- ddply(isample_data, "state", function(df) {
+    data.frame(
+        counts = length(df$lga_id),
+        total_num_nurses = sum(df$num_nurses_fulltime, na.rm=T),
+        avg_num_doctors = mean(df$num_doctors_fulltime, na.rm=T),
+        avg_c_section_rate = mean(df$c_section_yn, na.rm=T)
+    )})
+head(my_summary)
+```
+In the end, however, we get a data.frame back. Can someone remind me how to check if this is correct?
+
+#### Advanced R: timing your functions.
+
+To demonstrate the speedup, lets time the output of running ddply on an idata.frame versus a data.frame. We'll replicate a simple ddply call a thousand times so we can notice a difference. Note that the difference will grow larger as the datasets grow larger.
+```{r, warning=FALSE}
+system.time(replicate(1000, ddply(isample_data, "state", nrow)))
+
+system.time(replicate(1000, ddply(sample_data, "state", nrow)))
+```
+Question: what is the result that we calculate, before replicate it many times and timing it?
+
+#### Exercise: How would you calculate the proportion of of `c_section_yn==TRUE` versus total non-NA records in each state?
+* Hint: what does `sum(sample_data$c_section_yn)` do? Compare to the output of `summary`.
+* Lastly get the length of the c_section_yn column, do remember to use na.omit() to skim off the NA values.
+
+```{r cache=T, echo=FALSE}
+my_summary <- ddply(sample_data, .(state), function(df){ 
+                    data.frame(
+                        num_c_sections = sum(df$c_section_yn),
+                        total_non_na = length(na.omit(df$c_section_yn))
+                    )})
+head(my_summary)
+```
+
+#### Slightly advanced: calculating ratios with ddply
+
+Lets look at something similar to what we looked at in the beginning of this exercise: ratio of nurses to doctors per LGA. This is not an important indicator, but ratio of students to teacher is (pupil to teacher ratio). We are looking at nurses to doctors to avoid having to load another dataset. The concept is the same.
+
+First, lets do this at a single LGA. What is the ratio for Katsina?
 ```{r}
-#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
-head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+katsina[,c("num_doctors_fulltime", "num_nurses_fulltime")]
 ```
+Simple, right? 1.
 
-creation of more complex columns(indicators) with __ifelse()__:
--------------------------------------
-
-
-install packages from outside of cran
--------------------------------------
-* in order to install packages on github we need some extra work
-* this tutorial will use the example of formhub.R
-* first step: install and load __devtools__ package from cran
-
-```
-install.packages('devtools') 
-library(devtools)
-```
-* second step: use __install_github("repo_name", "user_name")__ function to install packages on github
-
-```
-install_github("formhub.R", username="SEL-Columbia")
-library(formhub)
-```
-
-map functions: apply()
------------------------
-* instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R
-* Here's the simply example for using apply to loop through every column and see the class of the column
-  * note: __MARGIN = 2__ specifies doing column-wise process
-```{r echo=TRUE, eval=FALSE}
-apply(sample_data, MARGIN=2, FUN=class)
-```
-```{r echo=FALSE, eval=TRUE}
-apply(sample_data, MARGIN=2, FUN=class)[1:10]
-```
-
-* you can also define your own function in apply()
-* the following code returns sum of __NAs__ in each row
-  * note: when you're define your own function in apply use semi-colon as the line marker.
-  * note: __MARGIN = 1__ specifies doing row-wise process
-```{r echo=TRUE, eval=FALSE}
-apply(sample_data, MARGIN=1, function(x) {
-  na_idx <- is.na(x);
-  length(which(na_idx))
-})
-```
-```{r echo=FALSE, eval=TRUE}
-apply(sample_data, MARGIN=1, function(x) {
-  na_idx <- is.na(x);
-  length(which(na_idx))
-  })[1:10]
-```
-
-improvements:
------------------
-* load your own functions into workspace with source()
+Okay, what is the nurses to doctor ratio for Anambra?
 ```{r}
-source("./my_source_functions.R")
-my_sum(1,2)
+anambra[,c("num_doctors_fulltime", "num_nurses_fulltime")]
 ```
 
-* optimize ddply with idata.frame()
- * idata.frame optimizes the computation speed but at the cost of a slight more complicated code
+Remember that in survey data, we treat NA as "missing value". The value could be 0, it could be 1, it could be 100. The ratio of nurses to doctors in anambra, for this small sample, is actually `2 / 3 ==` `r 2 / 3`. Because the number of doctors in the first facility is unknown, we have to drop that entire row from our sample before calculating the ratio.
 
+What do you think of the following calculation?
+```{r}
+x <- ddply(sample_data, "state", summarize,
+      nurse_per_doctor_ratio = sum(num_nurses_fulltime, na.rm=T) / 
+                                sum(num_doctors_fulltime, na.rm=T)
+      )
+```
 
+Okay, now that we know that it is incorrect. How we do implement it?
 
+#### The ratio function
+This kind of calculation has to be done a few times in NMIS. For special cases like this, we have written convenience functions. In fact, it even handles the cases of needing to filter out just some of the facilities:
 
-
+```{r cache=T}
+# returns sum(numerator_col) / sum(denominator_col) after subsetting by
+# filter, which should be a predicate vector (ie, a list of TRUE / FALSE)
+# and also drops NAs in the process
+ratio <- function(numerator_col, denominator_col, filter) {
+    df <- data.frame(cbind(num=numerator_col, den=denominator_col))
+    df <- na.omit(df[filter,])
+    if (nrow(df) == 0 | sum(df$den) == 0){
+        return(NA)
+    }
+    return(sum(df$num) / sum(df$den))
+}
+my_summary <- ddply(isample_data, .(state), function(df) { 
+    data.frame(
+        nurse_per_doctor_ratio = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime),
+        nurse_per_doctor_ratio_public = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime, 
+                                       df$management=="public")
+    )})
+head(my_summary)
+anambra[c("num_doctors_fulltime", "num_nurses_fulltime", "management")]
+```

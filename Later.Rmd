@@ -1,0 +1,160 @@
+
+Data cleaning:
+----
+
+We will be working mostly with our previous __sample_data__ set - so be sure that you have it loaded in your workspace. 
+
+### Type conversion
+Type conversion can be forced by `as.*` functions. Common __\*__ types you'd encounter are: 
+  1. numeric
+  2. integer
+  3. character
+  4. logical  
+* Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding 
+
+```{r cache=T}
+my_numbers <- c("1", "2", "3", "4", "TRUE")
+my_numbers
+as.numeric(my_numbers)
+as.logical(my_numbers)
+```
+
+
+Data Cleaning
+--------------
+### string manipulations
+* although regex suite comes with base R, string_r packages have similar implementations.
+* we're not going to cover regex i.e. regular expression in this tuorial.
+* getting position of matched pattern with grep()
+```{r cache=T}
+my_strings = c("Hello", "World", 'Foo')
+grep(pattern="l", x=my_strings, ignore.case=FALSE)
+#when value argument is set to true, grep() returns the actual strings matchs the patterns
+grep(pattern="l", x=my_strings, ignore.case=FALSE, value=T)
+```
+* find pattern in strings and replace with sub()
+* gsub() means global sub, which replace all the occurance of matching pattern, while sub() only works on the first appearance.
+```{r cache=T}
+my_strings
+sub(pattern="o", replacement="X", x=my_strings)
+gsub(pattern="o", replacement="X", x=my_strings)
+```
+* change to upper/lower case with toupper()/ tolower()
+```{r cache=T}
+my_strings
+toupper(my_strings)
+tolower(my_strings)
+```
+* concatenate strings with paste():
+```{r cache=T}
+paste("hello", "world", "foo", sep=",")
+```
+* if you're trying to concate every element in a vector/ list, use __collapse__ argument in paste()
+```{r cache=T}
+paste(my_strings, sep=',')
+paste(my_strings, collapse=',')
+```
+
+### writing out data
+* R can output multiple different output format, but we're going to cover csv and RDS format
+* writing csv file with write.csv()
+ * if you find output row.names everytime annoying, set row.names argument to FALSE in write.csv()
+```{r cache=T}
+write.csv(sample_data, "./my_output.csv", row.names=FALSE)
+```
+* we recommend output your data as RDS file, if you're only going to reuse it in R.
+* use saveRDS() to save object in workspace to your harddrive
+  * no row.names argument needs to be used, since we're saving the R object into a binary file
+```{r cache=T}
+saveRDS(sample_data, "./my_output.RDS")
+```
+* use readRDS() function to load saved RDS file
+```{r cache=T, echo=TRUE, eval=FALSE}
+readRDS("./my_output.RDS")
+```
+```{r cache=T, echo=FALSE, eval=TRUE}
+readRDS("./my_output.RDS")[1:10, 1:10]
+```
+
+
+Advanced R
+========================================================
+
+creation of more complex columns(indicators) with __rowSums()__:
+-------------------------------------
+* column creation: sum of multiple numerical columns 
+```{r cache=T}
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
+                                            sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+  
+```{r cache=T}
+#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
+head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+```
+
+creation of more complex columns(indicators) with __ifelse()__:
+-------------------------------------
+
+
+install packages from outside of cran
+-------------------------------------
+* in order to install packages on github we need some extra work
+* this tutorial will use the example of formhub.R
+* first step: install and load __devtools__ package from cran
+
+```
+install.packages('devtools') 
+library(devtools)
+```
+* second step: use __install_github("repo_name", "user_name")__ function to install packages on github
+
+```
+install_github("formhub.R", username="SEL-Columbia")
+library(formhub)
+```
+
+map functions: apply()
+-----------------------
+* instead of using for loops, we encourage using map. The apply/sapply is the implementation of map in R
+* Here's the simply example for using apply to loop through every column and see the class of the column
+  * note: __MARGIN = 2__ specifies doing column-wise process
+```{r cache=T, echo=TRUE, eval=FALSE}
+apply(sample_data, MARGIN=2, FUN=class)
+```
+```{r cache=T, echo=FALSE, eval=TRUE}
+apply(sample_data, MARGIN=2, FUN=class)[1:10]
+```
+
+* you can also define your own function in apply()
+* the following code returns sum of __NAs__ in each row
+  * note: when you're define your own function in apply use semi-colon as the line marker.
+  * note: __MARGIN = 1__ specifies doing row-wise process
+```{r cache=T, echo=TRUE, eval=FALSE}
+apply(sample_data, MARGIN=1, function(x) {
+  na_idx <- is.na(x);
+  length(which(na_idx))
+})
+```
+```{r cache=T, echo=FALSE, eval=TRUE}
+apply(sample_data, MARGIN=1, function(x) {
+  na_idx <- is.na(x);
+  length(which(na_idx))
+  })[1:10]
+```
+
+improvements:
+-----------------
+* load your own functions into workspace with source()
+```{r cache=T}
+source("./my_source_functions.R")
+my_sum(1,2)
+```
+
+* optimize ddply with idata.frame()
+ * idata.frame optimizes the computation speed but at the cost of a slight more complicated code
+
+
+
+
+

@@ -831,6 +831,17 @@ rbind(data4, data5)
 ## 6                      1     public                    1 &lt;NA&gt;
 </code></pre>
 
+<h3>Writing out data</h3>
+
+<p>Notice that none of our files have changed so far. If you open <code>sample_health_facilities.csv</code>, it is the same as it was. If after some work, we want to save our work, we have to write out our data.frames to the file. This is like hitting the &ldquo;save&rdquo; button in Excel, but it isn&#39;t done automatically in R; you have to do it expicitly.</p>
+
+<p>Writing csv works like the following:</p>
+
+<pre><code class="r">write.csv(sample_data, &quot;./my_output.csv&quot;, row.names = FALSE)
+</code></pre>
+
+<p>Note the row.names argument. Try to see what the csv looks like if you omit the argument, or change row.names=TRUE. We generally prefer to output csv files without the row.names.</p>
+
 <h1>Assignment:</h1>
 
 <p>Until tomorrow, please do the following activity:</p>
