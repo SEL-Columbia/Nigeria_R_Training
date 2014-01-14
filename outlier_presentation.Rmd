@@ -2,102 +2,91 @@
 
 Outlier Cleaning
 ========================================================
-# revalue ??
-#outlier cleaning
 
-```{r}
+Outliers were thoroughly cleaned from the NMIS data set before running the analysis portion of our R scripts. In this section, we will explore both the outlier __detection__ and __replacement__ processes.  
 
+#### Reading in Our Special Data: RDS files
+Please download the pre-outlier cleaned education data set here 
+[dropbox link for educaiton data](https://www.dropbox.com/s/plojzyei3g3layi/Education_774_normalized.rds).
+
+As you can see, the file you downloaded is in .RDS format. This file type can only be opened using R. The main purpouse for this file format is __speed__. R reads in and writes out .RDS files significantly faster than any other file type, which is important when working with larger data sets such as NMIS.
+
+Let's take this opportunity now to learn two new commands that are nearly identical to __read.csv__ and __write.csv__. 
+```{r, cache=TRUE, eval=FALSE}
+edu_normalized <- readRDS("~/Dropbox/Nigeria/Nigeria 661 Baseline Data Cleaning/in_process_data/Normalized/Education_774_normalized.rds")
 ```
 
-#The Function: outlierreplace()
- 
-```{r}
-library(stringr)
-#functions for outlier removal
-outlierOutputList = list() #for generating a running list of what is being knocked out
-outlierreplace = function(df, c, rowpredicate, replaceVal=NA) {
-  naCount1 <- length(which(is.na(df[,c])))
-  df[,c] <- replace(df[,c], rowpredicate, replaceVal)
-  naCount2 <- length(which(is.na(df[,c])))
-  print(str_c(naCount2-naCount1, " outliers replaced for field: ", c)) #comment-out line if not desired
-  outlierOutputList <<- c(outlierOutputList, 
-                          str_c(naCount2-naCount1, " outliers replaced for field: ", c))
-  df
-}
-
+```{r, eval=FALSE}
+saveRDS(edu_normalized, "~/Desktop/Education_Normalized_unchanged.RDS")
 ```
 
-#Logic Checks 
-```{r}
+#### Outlier Detection Example
+Let's begin be seeing a simple example of outlier removal using logic Checks. Frequently, we run basic logic checks on the data as part of the cleaning process.
+
+```{r, cache=TRUE}
 edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_male', 
                     (edu_normalized$num_tchrs_male > edu_normalized$num_tchrs_total))
 ```
 
-#Outlier Detection/Removal: Using One Variable  
+#### The Function: __outlierreplace()__
 
-## A Logic Example
-```{r}
-edu_normalized <- outlierreplace(edu_normalized, 'num_classrms_total',
-                    (edu_normalized$num_classrms_total == 0))
+Now that you've seen an example of the function, let's step back and break down the `outlierreplace` function line by line. Because our functions are not in an official R package, you cannot access the help manual as you learned in Day 1.   
 
-```
+```{r, cache=TRUE}
+#stringr library is necessary for our function
+library(stringr)
 
-## A Summary Example
+#the function
+outlierreplace = function(df, c, rowpredicate, replaceVal=NA) {
+  naCount1 <- sum(is.na(df[,c]))
+  df[,c] <- replace(df[,c], rowpredicate, replaceVal)
+  naCount2 <- sum(is.na(df[,c]))
+  print(str_c(naCount2-naCount1, " outliers replaced for field: ", c)) 
+  df
+}
 
-```{r}
-################################ 
-####misunderstood questions ##### 
-################################
-#num_exercise_books_per_student_pry
-#Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
-#0.00    83.75   260.00   725.20   700.00 70780.00    52691   
-
-#num_exercise_books_per_student_jss
-#Min.       1stQu.  Median  Mean   3rd Qu.  Max.    NA's 
-#0      60     569    1818    1738   34740   57139
+head(edu_normalized$num_tchrs_male > edu_normalized$num_tchrs_total)
 
 ```
 
-Question: Let's take a look at the __sample_data__ we worked with in previous trainings. Below is the source path to read in the data. Detect and eliminate any outliers for the `num_doctors_available` variable. 
-```{r}
+Questions:
+  * Let's say we no longer wish to print the number of outliers replaced - what would you change in the function?
+  * Can you make the outliers take on 0 as a value instead of NA?
 
-# summary(sample_data$num_doctors_fulltime)
-# table(sample_data$num_doctors_fulltime)
-```
+#### Outlier Removal with a Numerical Threshold 
 
+```{r, cache=TRUE}
+summary(edu_normalized$num_students_female)
+edu_normalized <- outlierreplace(edu_normalized, 'num_students_female', (edu_normalized$num_students_female > 3000))
+summary(edu_normalized$num_students_female)
+```                        
 
-## A Graphical Example
-If there were not egregious by using the summary method above, the final step of outlier detection/removal was to plot the data.
-```{r}
+Notice that multiple columns may be selected for the __outlierreplace()__ function to be applied to, just as there may be multiple variables in the `rowpredicate` conditions. 
 
-```
-
-
-#Outlier Detection/Removal: Using Multiple Variable  
-
-## A Logic Example
-```{r}
-edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_total',
-                    (edu_normalized$num_tchrs_total > edu_normalized$num_tchrs_male + 
-                         edu_normalized$num_tchrs_female))
+```{r, echo=FALSE}
+edu_normalized <- outlierreplace(edu_normalized, c('num_tchrs_total', 'num_students_total'),
+                    (edu_normalized$num_tchrs_total > 20 & 
+                         edu_normalized$num_students_total == 0))
 
 edu_normalized <- outlierreplace(edu_normalized, 'num_js_female',
                                 (edu_normalized$num_js_female > 1250 & 
                                  edu_normalized$num_classrms_total < 25 &
                                  edu_normalized$num_tchrs_total < 10))
 
+```                        
+
+Upon inspection of the summary statistics for certain columns, outliers may become obviously clear. 
+```{r, cache=TRUE}
+summary(edu_normalized$num_exercise_books_per_student_pry)
+summary(edu_normalized$num_exercise_books_per_student_jss)
 ```
 
-## A Graphical Example
-*FILL IN EXAMPLE
-```{r}
+Question: 
+  * Let's take a look at the __sample_data__ we worked with in previous trainings. Detect and eliminate any outliers for the `num_doctors_available` variable. Hint: if you get stuck about how to set the `rowpredicate` conditions, remember the `table()` function. 
+
+#### A Graphical Example
+To find a more precise threshold than the summary/table method, we can plot our data.
+```{r, cache=TRUE}
 
 ```
-
-## A Summary Example
-*FILL IN EXAMPLE
-```{r}
-
-```
-
 
