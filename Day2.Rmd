@@ -15,7 +15,6 @@ Today
 -----
  * Adding and removing columns
  * Creating new data.frames using R: `data.frame`
- * Aggregations in R
  * Some basic visualizations tools and techniques
  * Introduction to ggplot2
 

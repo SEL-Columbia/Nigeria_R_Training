@@ -1,3 +1,15 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+Day 3
+====
+
+Review
+------
+Assignment review: 
+ * Relationship of students to teachers. Zonal differences in pupil to teacher ratio X 2. Just average number of students in primary schools.
+ * Review "quiz": create a column that is 
+
+
 Data cleaning:
 ----
 
