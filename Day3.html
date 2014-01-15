@@ -456,16 +456,20 @@ head(my_summary)
 <pre><code class="r">system.time(replicate(1000, ddply(isample_data, &quot;state&quot;, nrow)))
 </code></pre>
 
-<pre><code>##    user  system elapsed 
-##   5.769   0.011   5.781
+<pre><code>## Error: could not find function &quot;ddply&quot;
+</code></pre>
+
+<pre><code>## Timing stopped at: 0 0 0
 </code></pre>
 
 <pre><code class="r">
 system.time(replicate(1000, ddply(sample_data, &quot;state&quot;, nrow)))
 </code></pre>
 
-<pre><code>##    user  system elapsed 
-##   4.676   0.010   4.688
+<pre><code>## Error: could not find function &quot;ddply&quot;
+</code></pre>
+
+<pre><code>## Timing stopped at: 0 0 0
 </code></pre>
 
 <p>Question: what is the result that we calculate, before replicate it many times and timing it?</p>
@@ -569,6 +573,8 @@ head(my_summary)
 ## 17                    1                   2       &lt;NA&gt;
 ## 27                    1                   0       &lt;NA&gt;
 </code></pre>
+
+<p>For the rest of the presentation, please go to the <a href="http://sel-columbia.github.io/Nigeria_R_Training/outlier_presentation.html">Outlier Presentation</a></p>
 
 </body>
 

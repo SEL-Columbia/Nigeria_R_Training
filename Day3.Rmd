@@ -237,3 +237,5 @@ my_summary <- ddply(isample_data, .(state), function(df) {
 head(my_summary)
 anambra[c("num_doctors_fulltime", "num_nurses_fulltime", "management")]
 ```
+
+For the rest of the presentation, please go to the [Outlier Presentation](http://sel-columbia.github.io/Nigeria_R_Training/outlier_presentation.html)
