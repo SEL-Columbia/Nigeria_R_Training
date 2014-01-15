@@ -6,14 +6,14 @@ Outlier Cleaning
 Outliers were thoroughly cleaned from the NMIS data set before running the analysis portion of our R scripts. In this section, we will explore both the outlier __detection__ and __replacement__ processes.  
 
 #### Reading in Our Special Data: RDS files
-Please download the pre-outlier cleaned education data set here 
-[dropbox link for educaiton data](https://www.dropbox.com/s/plojzyei3g3layi/Education_774_normalized.rds).
+Please download the pre-outlier cleaned education data set here: [edu data](https://www.dropbox.com/s/plojzyei3g3layi/Education_774_normalized.rds).
 
 As you can see, the file you downloaded is in .RDS format. This file type can only be opened using R. The main purpouse for this file format is __speed__. R reads in and writes out .RDS files significantly faster than any other file type, which is important when working with larger data sets such as NMIS.
 
-Let's take this opportunity now to learn two new commands that are nearly identical to __read.csv__ and __write.csv__. 
-```{r, cache=TRUE, eval=FALSE}
+Let's take this opportunity now to learn two new commands that are nearly identical to `read.csv()` and `write.csv()`:  __readRDS()__ and __saveRDS()__. 
+```{r, cache=TRUE}
 edu_normalized <- readRDS("~/Dropbox/Nigeria/Nigeria 661 Baseline Data Cleaning/in_process_data/Normalized/Education_774_normalized.rds")
+
 ```
 
 ```{r, eval=FALSE}
@@ -21,18 +21,22 @@ saveRDS(edu_normalized, "~/Desktop/Education_Normalized_unchanged.RDS")
 ```
 
 #### Outlier Detection Example
-Let's begin be seeing a simple example of outlier removal using logic Checks. Frequently, we run basic logic checks on the data as part of the cleaning process.
+We can start by seeing a simple example of outlier removal using logic Checks. Frequently, we run basic logic checks on the data as part of the cleaning process.
 
-```{r, cache=TRUE}
+```{r, eval=FALSE}
+
 edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_male', 
                     (edu_normalized$num_tchrs_male > edu_normalized$num_tchrs_total))
+
 ```
 
 #### The Function: __outlierreplace()__
 
-Now that you've seen an example of the function, let's step back and break down the `outlierreplace` function line by line. Because our functions are not in an official R package, you cannot access the help manual as you learned in Day 1.   
+Now that you've seen an example of the function, let's step back and break down the `outlierreplace` function line by line. Because our functions are not in an official R package, you cannot access the help manual as you learned in Day 1.
+
 
 ```{r, cache=TRUE}
+
 #stringr library is necessary for our function
 library(stringr)
 
@@ -55,18 +59,21 @@ Questions:
 
 #### Outlier Removal with a Numerical Threshold 
 
+By setting a certain threshold, we can eliminate a range of outliers with one use of the function. 
+
 ```{r, cache=TRUE}
+
 summary(edu_normalized$num_students_female)
 edu_normalized <- outlierreplace(edu_normalized, 'num_students_female', (edu_normalized$num_students_female > 3000))
 summary(edu_normalized$num_students_female)
+
 ```                        
 
-Notice that multiple columns may be selected for the __outlierreplace()__ function to be applied to, just as there may be multiple variables in the `rowpredicate` conditions. 
+The alternative would be to write a function equal to each individual value i.e. `rowpredicate` being edu_normalized$num_students_female == 3000 etc. etc. 
 
-```{r, echo=FALSE}
-edu_normalized <- outlierreplace(edu_normalized, c('num_tchrs_total', 'num_students_total'),
-                    (edu_normalized$num_tchrs_total > 20 & 
-                         edu_normalized$num_students_total == 0))
+Notice that there may be multiple variables in the `rowpredicate` conditions. 
+
+```{r, cache=TRUE}
 
 edu_normalized <- outlierreplace(edu_normalized, 'num_js_female',
                                 (edu_normalized$num_js_female > 1250 & 
@@ -75,18 +82,37 @@ edu_normalized <- outlierreplace(edu_normalized, 'num_js_female',
 
 ```                        
 
-Upon inspection of the summary statistics for certain columns, outliers may become obviously clear. 
+
+Upon inspection of the summary statistics for certain columns, outliers can become obviously clear. 
 ```{r, cache=TRUE}
+
 summary(edu_normalized$num_exercise_books_per_student_pry)
 summary(edu_normalized$num_exercise_books_per_student_jss)
+
 ```
 
-Question: 
+Question: Where should we set a threshold? 
   * Let's take a look at the __sample_data__ we worked with in previous trainings. Detect and eliminate any outliers for the `num_doctors_available` variable. Hint: if you get stuck about how to set the `rowpredicate` conditions, remember the `table()` function. 
 
 #### A Graphical Example
-To find a more precise threshold than the summary/table method, we can plot our data.
-```{r, cache=TRUE}
+To find a more precise threshold than using the summary/table method, we can plot our data.
+```{r, cache=TRUE, warning=FALSE}
+library(ggplot2)
+
+ggplot(edu_normalized, aes(x=zone, y=num_exercise_books_per_student_pry, fill=zone)) + geom_boxplot() + 
+  coord_flip() + ylab('Number of Books per Student') + xlab('Zone') #+ scale_y_continuous(limits=c(0,3000))
 
 ```
+
+The above graph demonstrates the magnitude of the outliers present for the `num_exercise_books_per_student_pry` variable. By adjusting the scale of our graph, we can have a more precise picture of where to establish our threshold:
+
+
+```{r, cache=TRUE, warning=FALSE}
+library(ggplot2)
+
+ggplot(edu_normalized, aes(x=zone, y=num_exercise_books_per_student_pry, fill=zone)) + geom_boxplot() + 
+  coord_flip() + ylab('Number of Books per Student') + xlab('Zone') + scale_y_continuous(limits=c(0,10000))
+
+```
+
 
