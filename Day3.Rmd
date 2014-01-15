@@ -43,9 +43,9 @@ my_summary
 
 What is ddply doing here? It does something quite complicated but useful. Lets try to repeat what `ddply` did above for two states in Nigeria.
 
-__Exercise 1:__ Before you knew `ddply`, and I said that I wnated the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named `anambra` and a dataframe called `katsina`.
+__Exercise 1:__ Before you knew `ddply`, and I said that I wanted the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named `anambra` and a dataframe called `katsina`.
 
-__Exercise 2:__ Now, lets say I want a two-row and two-column data.frame. The column names are `state` and `total_num_nurses`, and each row is the total number of nurses per state. Please do this without using ddply. If you have extra time, you can also do this with `ddply`. Check your work by manually counting the number of doctors in sample_data.
+__Exercise 2:__ Now, lets say I want a two-row and two-column data.frame. The column names are `state` and `total_num_doctors`, and each row is the total number of doctors per state. Please do this without using ddply. If you have extra time, you can also do this with `ddply`. Check your work by manually counting the number of doctors in sample_data.
 
 __Exercise 3:__ On the flipboard, make a block diagram of the process that you went through to make this happen. We will do this as a group.
 
