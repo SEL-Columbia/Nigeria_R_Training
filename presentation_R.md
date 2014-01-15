@@ -760,6 +760,17 @@ head(rbind.fill(data1, data2))
 ```
 
 
+### Writing out data
+Notice that none of our files have changed so far. If you open `sample_health_facilities.csv`, it is the same as it was. If after some work, we want to save our work, we have to write out our data.frames to the file. This is like hitting the "save" button in Excel, but it isn't done automatically in R; you have to do it expicitly.
+
+Writing csv works like the following:
+
+```r
+write.csv(sample_data, "./my_output.csv", row.names = FALSE)
+```
+
+Note the row.names argument. Try to see what the csv looks like if you omit the argument, or change row.names=TRUE. We generally prefer to output csv files without the row.names.
+
 Assignment:
 ==========
 Until tomorrow, please do the following activity:

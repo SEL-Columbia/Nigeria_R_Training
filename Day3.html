@@ -251,9 +251,9 @@ my_summary
 
 <p>What is ddply doing here? It does something quite complicated but useful. Lets try to repeat what <code>ddply</code> did above for two states in Nigeria.</p>
 
-<p><strong>Exercise 1:</strong> Before you knew <code>ddply</code>, and I said that I wnated the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named <code>anambra</code> and a dataframe called <code>katsina</code>.</p>
+<p><strong>Exercise 1:</strong> Before you knew <code>ddply</code>, and I said that I wanted the total number of doctors in Anambra and Katsina state, how would you do it? Hint: make a dataframe named <code>anambra</code> and a dataframe called <code>katsina</code>.</p>
 
-<p><strong>Exercise 2:</strong> Now, lets say I want a two-row and two-column data.frame. The column names are <code>state</code> and <code>total_num_nurses</code>, and each row is the total number of nurses per state. Please do this without using ddply. If you have extra time, you can also do this with <code>ddply</code>. Check your work by manually counting the number of doctors in sample_data.</p>
+<p><strong>Exercise 2:</strong> Now, lets say I want a two-row and two-column data.frame. The column names are <code>state</code> and <code>total_num_doctors</code>, and each row is the total number of doctors per state. Please do this without using ddply. If you have extra time, you can also do this with <code>ddply</code>. Check your work by manually counting the number of doctors in sample_data.</p>
 
 <p><strong>Exercise 3:</strong> On the flipboard, make a block diagram of the process that you went through to make this happen. We will do this as a group.</p>
 
@@ -456,20 +456,16 @@ head(my_summary)
 <pre><code class="r">system.time(replicate(1000, ddply(isample_data, &quot;state&quot;, nrow)))
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;ddply&quot;
-</code></pre>
-
-<pre><code>## Timing stopped at: 0 0 0
+<pre><code>##    user  system elapsed 
+##   5.769   0.011   5.781
 </code></pre>
 
 <pre><code class="r">
 system.time(replicate(1000, ddply(sample_data, &quot;state&quot;, nrow)))
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;ddply&quot;
-</code></pre>
-
-<pre><code>## Timing stopped at: 0.001 0 0
+<pre><code>##    user  system elapsed 
+##   4.676   0.010   4.688
 </code></pre>
 
 <p>Question: what is the result that we calculate, before replicate it many times and timing it?</p>
@@ -499,7 +495,13 @@ system.time(replicate(1000, ddply(sample_data, &quot;state&quot;, nrow)))
 <pre><code class="r">katsina[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;)]
 </code></pre>
 
-<pre><code>## Error: object &#39;katsina&#39; not found
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime
+## 3                     0                   1
+## 18                    0                   0
+## 24                    0                   0
+## 38                    0                   0
+## 39                    0                   0
+## 42                   NA                  NA
 </code></pre>
 
 <p>Simple, right? 1.</p>
@@ -522,9 +524,6 @@ system.time(replicate(1000, ddply(sample_data, &quot;state&quot;, nrow)))
 
 <pre><code class="r">x &lt;- ddply(sample_data, &quot;state&quot;, summarize, nurse_per_doctor_ratio = sum(num_nurses_fulltime, 
     na.rm = T)/sum(num_doctors_fulltime, na.rm = T))
-</code></pre>
-
-<pre><code>## Error: could not find function &quot;ddply&quot;
 </code></pre>
 
 <p>Okay, now that we know that it is incorrect. How we do implement it?</p>
