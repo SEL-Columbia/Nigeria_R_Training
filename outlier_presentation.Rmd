@@ -16,15 +16,18 @@ edu_normalized <- readRDS("~/Dropbox/Nigeria/Nigeria 661 Baseline Data Cleaning/
 
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, cache=TRUE}
 saveRDS(edu_normalized, "~/Desktop/Education_Normalized_unchanged.RDS")
 ```
 
 #### Outlier Detection Example
 We can start by seeing a simple example of outlier removal using logic Checks. Frequently, we run basic logic checks on the data as part of the cleaning process.
 
-```{r, eval=FALSE}
-
+```{r, eval=FALSE, cache=TRUE}
+function(df, c, rowpredicate)
+``` 
+  
+```{r, eval=FALSE, cache=TRUE}
 edu_normalized <- outlierreplace(edu_normalized, 'num_tchrs_male', 
                     (edu_normalized$num_tchrs_male > edu_normalized$num_tchrs_total))
 

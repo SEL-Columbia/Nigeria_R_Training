@@ -202,8 +202,10 @@ hljs.initHighlightingOnLoad();
 
 <p>We can start by seeing a simple example of outlier removal using logic Checks. Frequently, we run basic logic checks on the data as part of the cleaning process.</p>
 
-<pre><code class="r">
-edu_normalized &lt;- outlierreplace(edu_normalized, &quot;num_tchrs_male&quot;, (edu_normalized$num_tchrs_male &gt; 
+<pre><code class="r">function(df, c, rowpredicate, replaceVal=NA)
+</code></pre>
+
+<pre><code class="r">edu_normalized &lt;- outlierreplace(edu_normalized, &quot;num_tchrs_male&quot;, (edu_normalized$num_tchrs_male &gt; 
     edu_normalized$num_tchrs_total))
 
 </code></pre>
