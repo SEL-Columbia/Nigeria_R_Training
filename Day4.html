@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Day 4</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<p><link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link></p>
+
+<h1>Day 4</h1>
+
+<h4>Slightly Advanced Aggregations: calculating ratios with ddply</h4>
+
+<p>Remember to read in and subset our <code>sample_data</code> dataframe to create <code>anambra</code>, <code>katsina</code>, and <code>isample_data</code> dataframes:</p>
+
+<pre><code class="r">library(plyr)
+sample_data &lt;- read.csv(&quot;sample_health_facilities.csv&quot;, stringsAsFactors = F)
+anambra &lt;- subset(sample_data, state == &quot;Anambra&quot;)
+katsina &lt;- subset(sample_data, state == &quot;Katsina&quot;)
+isample_data &lt;- idata.frame(sample_data)
+</code></pre>
+
+<p>Lets look at something similar to what we looked at in Day 3: ratio of nurses to doctors per LGA. This is not an important indicator, but ratio of students to teacher is (pupil to teacher ratio). We are looking at nurses to doctors to avoid having to load another dataset. The concept is the same.</p>
+
+<p>First, lets do this at a single LGA. What is the ratio for Katsina?</p>
+
+<pre><code class="r">katsina[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;)]
+</code></pre>
+
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime
+## 3                     0                   1
+## 18                    0                   0
+## 24                    0                   0
+## 38                    0                   0
+## 39                    0                   0
+## 42                   NA                  NA
+</code></pre>
+
+<p>Simple, right? <code>1/0</code> or Inf.</p>
+
+<p>Okay, what is the nurses to doctor ratio for Anambra?</p>
+
+<pre><code class="r">anambra[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;)]
+</code></pre>
+
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime
+## 2                    NA                   2
+## 6                     1                   0
+## 17                    1                   2
+## 27                    1                   0
+</code></pre>
+
+<p>Remember that in survey data, we treat NA as &ldquo;missing value&rdquo;. The value could be 0, it could be 1, it could be 100. The ratio of nurses to doctors in anambra, for this small sample, is actually <code>2 / 3 ==</code> 0.6667. Because the number of doctors in the first facility is unknown, we have to drop that entire row from our sample before calculating the ratio.</p>
+
+<p>What do you think of the following calculation?</p>
+
+<pre><code class="r">x &lt;- ddply(sample_data, &quot;state&quot;, summarize, nurse_per_doctor_ratio = sum(num_nurses_fulltime, 
+    na.rm = T)/sum(num_doctors_fulltime, na.rm = T))
+</code></pre>
+
+<p>Okay, now we know that the ratio calculation is incorrect because we are not eliminating the entire row of any <code>NA</code> value. How should we implement it correctly?</p>
+
+<h4>The <strong>ratio()</strong> function</h4>
+
+<p>This kind of calculation has to be done a few times in NMIS. For special cases like this, we have written convenience functions. In fact, it even handles the cases of needing to filter out just a subset of the facilities:</p>
+
+<pre><code class="r">ratio &lt;- function(numerator_col, denominator_col, filter) {
+    df &lt;- data.frame(cbind(num = numerator_col, den = denominator_col))
+    df &lt;- na.omit(df[filter, ])
+    if (nrow(df) == 0 | sum(df$den) == 0) {
+        return(NA)
+    }
+    return(sum(df$num)/sum(df$den))
+}
+
+my_summary &lt;- ddply(isample_data, .(state), function(df) {
+    data.frame(nurse_per_doctor_ratio = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime), 
+        nurse_per_doctor_ratio_public = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime, 
+            df$management == &quot;public&quot;))
+})
+
+head(my_summary)
+</code></pre>
+
+<pre><code>##         state nurse_per_doctor_ratio nurse_per_doctor_ratio_public
+## 1        Abia                     NA                            NA
+## 2     Adamawa                 2.0000                             2
+## 3     Anambra                 0.6667                             0
+## 4      Bauchi                     NA                            NA
+## 5       Benue                     NA                            NA
+## 6 Cross River                     NA                            NA
+</code></pre>
+
+<p>The value for <code>nurse_per_doctor_ratio</code> is now the same as we calculated before: <code>2 / 3 ==</code> 0.6667. Let&#39;s take a look at the actual data to make sure that <code>nurse_per_doctor_ratio_public</code> is also correct: </p>
+
+<pre><code class="r">anambra[c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime&quot;, &quot;management&quot;)]
+</code></pre>
+
+<pre><code>##    num_doctors_fulltime num_nurses_fulltime management
+## 2                    NA                   2     public
+## 6                     1                   0     public
+## 17                    1                   2       &lt;NA&gt;
+## 27                    1                   0       &lt;NA&gt;
+</code></pre>
+
+<h4>The <strong>bool_proportion()</strong> function</h4>
+
+<p>Great. As you may have guessed, we have to get around the same <code>NA</code> problem with logical indicators. Let&#39;s look at the proportion of facilities that have c-sections as an example i.e. <code>c_section_yn</code> </p>
+
+<pre><code class="r"># necessary for bool_proportion function
+icount &lt;- function(predicate) {
+    counts &lt;- table(predicate)
+    if (&quot;TRUE&quot; %in% names(counts)) {
+        counts[&quot;TRUE&quot;]
+    } else {
+        0
+    }
+}
+
+bool_proportion &lt;- function(numerator_TF, denominator_TF) {
+    if (is.null(numerator_TF) | is.null(denominator_TF)) {
+        print(&quot;bool_proportion called on empty column&quot;)
+        NA
+    } else {
+        if (class(numerator_TF) == &quot;character&quot;) {
+            if (length(c(which(str_detect(numerator_TF, ignore.case(&quot;yes|no|true|false&quot;))), 
+                which(is.na(numerator_TF))))/length(numerator_TF) &gt; 0.4) {
+                numerator_TF &lt;- as.logical(recodeVar(tolower(numerator_TF), 
+                  src = list(c(&quot;yes&quot;, &quot;true&quot;), c(&quot;no&quot;, &quot;false&quot;)), tgt = list(TRUE, 
+                    FALSE), default = NA, keep.na = T))
+            } else {
+                warning(&quot;Cannot recode Boolean value, check the data first!&quot;)
+            }
+        } else if (class(denominator_TF) == &quot;character&quot;) {
+            if (length(c(which(str_detect(denominator_TF, ignore.case(&quot;yes|no|true|false&quot;))), 
+                which(is.na(denominator_TF))))/length(denominator_TF) &gt; 0.4) {
+                denominator_TF &lt;- as.logical(recodeVar(tolower(denominator_TF), 
+                  src = list(c(&quot;yes&quot;, &quot;true&quot;), c(&quot;no&quot;, &quot;false&quot;)), tgt = list(TRUE, 
+                    FALSE), default = NA, keep.na = T))
+            } else {
+                warning(&quot;Cannot recode Boolean value, check the data first!&quot;)
+            }
+        }
+        df &lt;- data.frame(cbind(num = numerator_TF, den = denominator_TF))
+        df &lt;- na.omit(df)
+        icount(df$num &amp; df$den)/icount(df$den)
+    }
+}
+
+my_summary2 &lt;- ddply(isample_data, .(state), function(df) {
+    data.frame(facilities_with_csection = bool_proportion(df$c_section_yn, TRUE))
+})
+
+head(my_summary2)
+</code></pre>
+
+<pre><code>##         state facilities_with_csection
+## 1        Abia                      1.0
+## 2     Adamawa                      0.0
+## 3     Anambra                      0.5
+## 4      Bauchi                      0.0
+## 5       Benue                      0.0
+## 6 Cross River                      0.0
+</code></pre>
+
+<p>The proportion of facilities with c-sections for Anambra was calculated as .50. This is confirmed when we look at the actual data: </p>
+
+<pre><code class="r">anambra[c(&quot;c_section_yn&quot;)]
+</code></pre>
+
+<pre><code>##    c_section_yn
+## 2         FALSE
+## 6         FALSE
+## 17         TRUE
+## 27         TRUE
+</code></pre>
+
+<h2>Data Cleaning:</h2>
+
+<h4>Type Conversion</h4>
+
+<p>Type conversion can be forced by <code>as.*</code> functions. Common <strong>*</strong> types you&#39;d encounter are: </p>
+
+<ol>
+<li>numeric</li>
+<li>integer</li>
+<li>character</li>
+<li>logical<br/>
+Sometimes you&#39;ll encounter <strong>factor</strong> variables, we recommend using <strong>as.character()</strong> function to convert it into character type before proceeding. </li>
+</ol>
+
+<pre><code class="r">my_numbers &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;TRUE&quot;)
+my_numbers
+</code></pre>
+
+<pre><code>## [1] &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    &quot;4&quot;    &quot;TRUE&quot;
+</code></pre>
+
+<pre><code class="r">as.numeric(my_numbers)
+</code></pre>
+
+<pre><code>## Warning: NAs introduced by coercion
+</code></pre>
+
+<pre><code>## [1]  1  2  3  4 NA
+</code></pre>
+
+<pre><code class="r">as.logical(my_numbers)
+</code></pre>
+
+<pre><code>## [1]   NA   NA   NA   NA TRUE
+</code></pre>
+
+<h4>String Searching</h4>
+
+<p><code>grep()</code> is a useful fucntion used to efficiently <strong>browse</strong> data. This can be done by the index, or actual strings of the pattern you are searching for:</p>
+
+<pre><code class="r">my_strings = c(&quot;Hello&quot;, &quot;World&quot;, &quot;Foo&quot;)
+grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE)
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<pre><code class="r">
+# when value argument is set to true, grep() returns the actual strings
+# matchs the patterns
+grep(pattern = &quot;l&quot;, x = my_strings, ignore.case = FALSE, value = TRUE)
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot;
+</code></pre>
+
+<pre><code class="r">
+# once comfortable with the syntax of grep(), you may write in the arguments
+# directly:
+grep(&quot;l&quot;, my_strings, value = T)
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot;
+</code></pre>
+
+<p>Quite often, <code>grep()</code> is used on the column/variable names of a dataset. Be sure to include the <code>names()</code> function in your <code>grep()</code> search if you wish to do so:  </p>
+
+<pre><code class="r">grep(&quot;num&quot;, names(sample_data), value = T)
+</code></pre>
+
+<pre><code>## [1] &quot;num_nurses_fulltime&quot;    &quot;num_lab_techs_fulltime&quot;
+## [3] &quot;num_doctors_fulltime&quot;
+</code></pre>
+
+<p>Similar to <code>grep()</code>, the function <strong>str_detect()</strong> is useful for browsing data. The main difference, apart from the argument syntax, is that <strong>str_detect()</strong> returns logical values for all elements of the string:</p>
+
+<pre><code class="r"># str_detect() is part of the stringr library
+library(stringr)
+
+my_strings
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">str_detect(my_strings, &quot;l&quot;)
+</code></pre>
+
+<pre><code>## [1]  TRUE  TRUE FALSE
+</code></pre>
+
+<h4>String Manipulation</h4>
+
+<p>To find and replace a pattern in a list, we use two functions. The first is <strong>gsub()</strong>, short for global sub, which replaces all the occurance of a matching pattern. The other is <strong>sub()</strong>, which only replaces the first appearance of the pattern.</p>
+
+<pre><code class="r">
+my_strings
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">sub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXo&quot;
+</code></pre>
+
+<pre><code class="r">gsub(pattern = &quot;o&quot;, replacement = &quot;X&quot;, x = my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HellX&quot; &quot;WXrld&quot; &quot;FXX&quot;
+</code></pre>
+
+<p>There are times when you do not wish to find and <strong>replace</strong>; only replace. A useful function for this is <strong>revalue()</strong>:</p>
+
+<pre><code class="r">revalue(my_strings, c(Hello = &quot;How Now?&quot;, Foo = &quot;No Wahala&quot;))
+</code></pre>
+
+<pre><code>## [1] &quot;How Now?&quot;  &quot;World&quot;     &quot;No Wahala&quot;
+</code></pre>
+
+<p>Altering the case of strings can be done by using either <strong>toupper()</strong> or <strong>tolower()</strong>:</p>
+
+<pre><code class="r">my_strings
+</code></pre>
+
+<pre><code>## [1] &quot;Hello&quot; &quot;World&quot; &quot;Foo&quot;
+</code></pre>
+
+<pre><code class="r">toupper(my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;HELLO&quot; &quot;WORLD&quot; &quot;FOO&quot;
+</code></pre>
+
+<pre><code class="r">tolower(my_strings)
+</code></pre>
+
+<pre><code>## [1] &quot;hello&quot; &quot;world&quot; &quot;foo&quot;
+</code></pre>
+
+<p>Creating strings that require concatination of several parts can be done using paste():</p>
+
+<pre><code class="r">paste(&quot;hello&quot;, &quot;world&quot;, &quot;foo&quot;, sep = &quot;,&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;hello,world,foo&quot;
+</code></pre>
+
+<h4>Writing out data</h4>
+
+<p>On Day 3, we learned that there are multiple ways to read data into R; depending on format. One quick follow up to that is the <code>nrows</code> argument with <strong>read.csv()</strong> that can be used to specify the number of rows from the file you are reading in:</p>
+
+<pre><code class="r">read.csv(&quot;Health_661_Merged.csv&quot;, stringsAsFactors = F, nrows = 200)
+</code></pre>
+
+<p>Similarly for writing out data, there are different functions depending on the format. </p>
+
+<p>If the desired output is csv format, use the <strong>write.csv()</strong> format. It may be helpful to know a common argument that is used to avoid writing out the extra <code>rownames</code> column: <strong>row.names=F</strong>. </p>
+
+<pre><code class="r"># write.csv(your data, &#39;the location you wish to write your data&#39;)
+write.csv(sample_data, &quot;./my_output.csv&quot;, row.names = F)
+</code></pre>
+
+<p>If you are using R exclusively, we recommend using the RDS format for speed purposes (since it is stored as a binary file). Write RDS files using the <strong>saveRDS()</strong> function. Because it is a binary file, there is no need to use the <code>row.names=F</code> argument. </p>
+
+<pre><code class="r">saveRDS(sample_data, &quot;./my_output.RDS&quot;)
+</code></pre>
+
+</body>
+
+</html>
+

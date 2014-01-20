@@ -1,0 +1,35 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+Day 5
+====
+
+#### Review of Assignment from Day 4
+
+Let's also revisit Day 4 to learn:
+
+revalue()
+
+writing out data
+
+&, | 
+
+%in%
+
+#### NMIS Pipeline
+
+Merging Data
+We first began in Day 4 with reading in the data from formhub, and merging the relevant datasets together. The main script for this section is `MergeDatasets.R`. The additional scripts we sourced are included below, which we will look at more in depth later: 
+
+- `MergeDatasets.R`
+  - `InstallFormhub.R`
+  - `NMIS_Utils.R`
+
+Normalizing Data
+Next, it is necessary to harmonize the data from the three distinct surveying efforts into one normalized dataset. The main scripts for this section are the `normalize_*.R` scripts for the Education, Health and Water sectors. We will also explore one of the supporting scripts: `Normailize_Functions.R`
+
+- `normalize_education.R`, 
+- `normalize_health.R`,
+- `normalize_water.R` 
+  - `Normailize_Functions.R`
+  - `NMIS_Functions.R`
+

@@ -1,0 +1,43 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+Day 6
+====
+
+
+#### Creation of More Complex Columns(indicators) with __rowSums()__:
+column creation: sum of multiple numerical columns 
+```{r cache=T}
+sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
+                                            sample_data$num_lab_techs_fulltime, na.rm = T))
+```
+  
+```{r cache=T}
+#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
+head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+```
+
+#### Creation of more complex columns(indicators) with __ifelse()__:
+
+
+
+
+#### Data Pipeline
+`outlier_normalized_health.R`, 
+`outlier_normalized_education.R`
+  - `outlier_functions.R`
+
+
+`nmis_indicators_health_lga_level_normalized.R`, 
+`nmis_indicators_education_lga_level_normalized.R`, 
+`nmis_indicators_water_lga_level_normalized.R`
+
+`nmis_indicators_health_facility_level_normalized.R`, 
+`nmis_indicators_education_facility_level_normalized.R`,
+`nmis_indicators_water_facility_level_normalized.R`
+
+`nmis_indicators_COMBINING_normalized.R`
+
+`nmis_post_processing`
+  - `post_processing_functions.R`
+
+

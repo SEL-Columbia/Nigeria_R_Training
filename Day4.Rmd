@@ -1,0 +1,217 @@
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+Day 4
+====
+
+#### Slightly Advanced Aggregations: calculating ratios with ddply
+
+Remember to read in and subset our `sample_data` dataframe to create `anambra`, `katsina`, and `isample_data` dataframes:
+```{r, cache=TRUE}
+library(plyr)
+sample_data <- read.csv("sample_health_facilities.csv", stringsAsFactors=F)
+anambra <- subset(sample_data, state == "Anambra")
+katsina <- subset(sample_data, state == "Katsina")
+isample_data <- idata.frame(sample_data) 
+```
+
+Lets look at something similar to what we looked at in Day 3: ratio of nurses to doctors per LGA. This is not an important indicator, but ratio of students to teacher is (pupil to teacher ratio). We are looking at nurses to doctors to avoid having to load another dataset. The concept is the same.
+
+First, lets do this at a single LGA. What is the ratio for Katsina?
+```{r}
+katsina[,c("num_doctors_fulltime", "num_nurses_fulltime")]
+```
+Simple, right? `1/0` or Inf.
+
+Okay, what is the nurses to doctor ratio for Anambra?
+```{r}
+anambra[,c("num_doctors_fulltime", "num_nurses_fulltime")]
+```
+
+Remember that in survey data, we treat NA as "missing value". The value could be 0, it could be 1, it could be 100. The ratio of nurses to doctors in anambra, for this small sample, is actually `2 / 3 ==` `r 2 / 3`. Because the number of doctors in the first facility is unknown, we have to drop that entire row from our sample before calculating the ratio.
+
+What do you think of the following calculation?
+```{r, cache=TRUE}
+x <- ddply(sample_data, "state", summarize,
+      nurse_per_doctor_ratio = sum(num_nurses_fulltime, na.rm=T) / 
+                                sum(num_doctors_fulltime, na.rm=T)
+      )
+
+```
+
+Okay, now we know that the ratio calculation is incorrect because we are not eliminating the entire row of any `NA` value. How should we implement it correctly?
+
+#### The __ratio()__ function
+This kind of calculation has to be done a few times in NMIS. For special cases like this, we have written convenience functions. In fact, it even handles the cases of needing to filter out just a subset of the facilities:
+
+```{r cache=T}
+ratio <- function(numerator_col, denominator_col, filter) {
+    df <- data.frame(cbind(num=numerator_col, den=denominator_col))
+    df <- na.omit(df[filter,])
+    if (nrow(df) == 0 | sum(df$den) == 0){
+        return(NA)
+    }
+    return(sum(df$num) / sum(df$den))
+}
+
+my_summary <- ddply(isample_data, .(state), function(df) { 
+    data.frame(
+        nurse_per_doctor_ratio = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime),
+        nurse_per_doctor_ratio_public = ratio(df$num_nurses_fulltime, df$num_doctors_fulltime, 
+                                       df$management=="public")
+    )})
+
+head(my_summary)
+```
+The value for `nurse_per_doctor_ratio` is now the same as we calculated before: `2 / 3 ==` `r 2 / 3`. Let's take a look at the actual data to make sure that `nurse_per_doctor_ratio_public` is also correct: 
+```{r, cache=TRUE}
+anambra[c("num_doctors_fulltime", "num_nurses_fulltime", "management")]
+```
+
+#### The __bool_proportion()__ function
+
+Great. As you may have guessed, we have to get around the same `NA` problem with logical indicators. Let's look at the proportion of facilities that have c-sections as an example i.e. `c_section_yn` 
+```{r, cache=TRUE}
+#necessary for bool_proportion function
+icount <- function(predicate) { 
+    counts <- table(predicate)
+    if('TRUE' %in% names(counts)) { counts['TRUE'] }
+    else { 0 }
+}
+
+bool_proportion <- function(numerator_TF, denominator_TF) {
+    if(is.null(numerator_TF) | is.null(denominator_TF)) {
+      print("bool_proportion called on empty column")
+      NA
+    } else {
+      if (class(numerator_TF) == 'character') {
+        if (length(c(which(str_detect(numerator_TF, ignore.case("yes|no|true|false"))), 
+                     which(is.na(numerator_TF)))) / length(numerator_TF) > 0.4) {
+            numerator_TF <- as.logical(recodeVar(tolower(numerator_TF), src=list(c("yes", "true"), c("no", "false")), 
+                      tgt=list(TRUE, FALSE), default=NA, keep.na=T))
+        }
+        else {
+            warning("Cannot recode Boolean value, check the data first!")
+        }
+      } else if (class(denominator_TF) == 'character') {
+        if (length(c(which(str_detect(denominator_TF, ignore.case("yes|no|true|false"))), 
+                     which(is.na(denominator_TF)))) / length(denominator_TF) > 0.4) {
+            denominator_TF <- as.logical(recodeVar(tolower(denominator_TF), src=list(c("yes", "true"), c("no", "false")), 
+                                                 tgt=list(TRUE, FALSE), default=NA, keep.na=T))
+        } else {
+            warning("Cannot recode Boolean value, check the data first!")
+        }
+      }
+      df <- data.frame(cbind(num=numerator_TF, den=denominator_TF))
+      df <- na.omit(df)
+      icount(df$num & df$den) / icount(df$den)
+    }
+}
+
+my_summary2 <- ddply(isample_data, .(state), function(df) { 
+    data.frame(
+        facilities_with_csection = bool_proportion(df$c_section_yn, TRUE)
+    )})
+
+head(my_summary2)
+```
+The proportion of facilities with c-sections for Anambra was calculated as .50. This is confirmed when we look at the actual data: 
+```{r, cache=TRUE}
+anambra[c("c_section_yn")]
+```
+
+
+Data Cleaning:
+----
+
+#### Type Conversion
+Type conversion can be forced by `as.*` functions. Common __\*__ types you'd encounter are: 
+  1. numeric
+  2. integer
+  3. character
+  4. logical  
+Sometimes you'll encounter __factor__ variables, we recommend using __as.character()__ function to convert it into character type before proceeding. 
+
+```{r cache=T}
+my_numbers <- c("1", "2", "3", "4", "TRUE")
+my_numbers
+as.numeric(my_numbers)
+as.logical(my_numbers)
+```
+
+#### String Searching
+
+`grep()` is a useful fucntion used to efficiently __browse__ data. This can be done by the index, or actual strings of the pattern you are searching for:
+```{r cache=T}
+my_strings = c("Hello", "World", 'Foo')
+grep(pattern="l", x=my_strings, ignore.case=FALSE)
+
+#when value argument is set to true, grep() returns the actual strings matchs the patterns
+grep(pattern="l", x=my_strings, ignore.case=FALSE, value=TRUE)
+
+#once comfortable with the syntax of grep(), you may write in the arguments directly:
+grep("l", my_strings, value=T)
+```
+
+Quite often, `grep()` is used on the column/variable names of a dataset. Be sure to include the `names()` function in your `grep()` search if you wish to do so:  
+```{r, cache=TRUE}
+grep("num", names(sample_data), value=T)
+```
+
+Similar to `grep()`, the function __str_detect()__ is useful for browsing data. The main difference, apart from the argument syntax, is that __str_detect()__ returns logical values for all elements of the string:
+```{r, cache=TRUE}
+#str_detect() is part of the stringr library
+library(stringr)
+
+my_strings
+str_detect(my_strings, "l")
+
+```
+
+#### String Manipulation
+
+To find and replace a pattern in a list, we use two functions. The first is __gsub()__, short for global sub, which replaces all the occurance of a matching pattern. The other is __sub()__, which only replaces the first appearance of the pattern.
+```{r cache=T}
+
+my_strings
+sub(pattern="o", replacement="X", x=my_strings)
+gsub(pattern="o", replacement="X", x=my_strings)
+```
+
+There are times when you do not wish to find and __replace__; only replace. A useful function for this is __revalue()__:
+```{r, cache=TRUE}
+revalue(my_strings, c("Hello" = "How Now?", "Foo" = "No Wahala"))
+```
+
+Altering the case of strings can be done by using either __toupper()__ or __tolower()__:
+```{r cache=T}
+my_strings
+toupper(my_strings)
+tolower(my_strings)
+```
+
+Creating strings that require concatination of several parts can be done using paste():
+```{r cache=T}
+paste("hello", "world", "foo", sep=",")
+```
+
+#### Writing out data
+On Day 3, we learned that there are multiple ways to read data into R; depending on format. One quick follow up to that is the `nrows` argument with __read.csv()__ that can be used to specify the number of rows from the file you are reading in:
+
+```{r, eval=FALSE}
+read.csv("Health_661_Merged.csv", stringsAsFactors=F, nrows=200)
+```
+
+Similarly for writing out data, there are different functions depending on the format. 
+
+If the desired output is csv format, use the __write.csv()__ format. It may be helpful to know a common argument that is used to avoid writing out the extra `rownames` column: __row.names=F__. 
+```{r cache=T}
+#write.csv(your data, "the location you wish to write your data")
+write.csv(sample_data, "./my_output.csv", row.names=F)
+```
+
+If you are using R exclusively, we recommend using the RDS format for speed purposes (since it is stored as a binary file). Write RDS files using the __saveRDS()__ function. Because it is a binary file, there is no need to use the `row.names=F` argument. 
+```{r cache=T}
+saveRDS(sample_data, "./my_output.RDS")
+```
+
+
