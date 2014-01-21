@@ -76,13 +76,14 @@ summary(sample_data$is_public_facility_withdoctor_wrong)
 ```
 
 Exercise: 
- * Lets pretend, for the sake of exercise, that there is a new regularion in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
+ * Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
 ```{r echo=FALSE}
 summary(ifelse(is.na(sample_data$management),
                TRUE, # private facilities, anything goes.
                sample_data$num_doctors_fulltime > 0 & sample_data$c_section_yn) #public facilities
         )
 ```
+ * Question: why don't we have any NAs in the output, even though num_doctors_fulltime is sometimes NA?
  * Lets assume, again, that "skilled worker" is defined as: "nurses + doctors" if the facility offers c-section, and just "doctors" if the facility doesn't offer c-section. Using `ifelse`, define this (mock) indicator. The summary should match the following:
 ```{r echo=FALSE}
 sample_data$skilled_worker <- ifelse(sample_data$c_section_yn,
