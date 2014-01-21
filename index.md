@@ -6,3 +6,9 @@
 
 [Day 3](http://sel-columbia.github.io/Nigeria_R_Training/Day3.html)
 
+[Day 4](http://sel-columbia.github.io/Nigeria_R_Training/Day4.html)
+
+[Day 5](http://sel-columbia.github.io/Nigeria_R_Training/Day5.html)
+
+[Day 6](http://sel-columbia.github.io/Nigeria_R_Training/Day6.html)
+
