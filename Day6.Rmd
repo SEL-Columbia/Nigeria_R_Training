@@ -76,7 +76,7 @@ summary(sample_data$is_public_facility_withdoctor_wrong)
 ```
 
 Exercise: 
- * Lets pretend, for the sake of exercise, that there is a new regularion in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
+ * Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has two doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
 ```{r echo=FALSE}
 summary(ifelse(is.na(sample_data$management),
                TRUE, # private facilities, anything goes.
