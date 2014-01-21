@@ -3,23 +3,98 @@
 Day 6
 ====
 
+```{r echo=F, cache=T}
+sample_data <- read.csv("sample_health_facilities.csv", stringsAsFactors=F)
+```
+
 
 #### Creation of More Complex Columns(indicators) with __rowSums()__:
-column creation: sum of multiple numerical columns 
-```{r cache=T}
-sample_data$num_nurselabtechs_fulltime <- rowSums(cbind(sample_data$num_nurses_fulltime,
-                                            sample_data$num_lab_techs_fulltime, na.rm = T))
-```
-  
-```{r cache=T}
-#now we can view all three variables: the new num_nurselabtechs_fulltime variable, and the two used to create it
-head(subset(sample_data, select=c("num_nurses_fulltime", "num_lab_techs_fulltime", "num_nurselabtechs_fulltime")), 5)
+
+Review: Do you remember from our exercise a few days ago, how you would create a new column called `skilled_birth_attendants` that is the sum of number of doctors and number of doctors in a health facility?
+
+```{r echo=F, cache=T}
+sample_data$skilled_birth_attendants <- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
 ```
 
-#### Creation of more complex columns(indicators) with __ifelse()__:
+Do you remember what the issue was with doing things this way?
 
+Today, we'll see a different method of doing this. We will use the `rowSums` function, which has the `na.rm` parameter we have seen so many times before. There are two ways to use rowSums that we use commonly, as shown below:
 
+```{r cache=T}
+sample_data$skilled_birth_attendants <- 
+    rowSums(sample_data[,c("num_nurses_fulltime","num_doctors_fulltime")], na.rm=T)
+head(sample_data[,c("num_doctors_fulltime", "num_nurses_fulltime", "skilled_birth_attendants")])
 
+sample_data$skilled_birth_attendants <- 
+    rowSums(cbind(sample_data$num_nurses_fulltime, sample_data$num_doctors_fulltime), na.rm=T)
+head(sample_data[,c("num_doctors_fulltime", "num_nurses_fulltime", "skilled_birth_attendants")])
+```
+
+#### The __is.na()__ function:
+
+Review: do you remember how to create column-based indicators? Can you calculate the `is_public` column again, which is `TRUE` if that facility has `public` in its management column, and `FALSE` if not? How about a column called `is_public_facility_without_doctor`, which is `TRUE` only when the management is `public` and the `num_doctors_fulltime` is bigger than 0?
+
+```{r echo=F, cache=TRUE}
+sample_data$is_public <- sample_data$management == 'public'
+sample_data$is_public_facility_withdoctor <- sample_data$is_public & 
+    (sample_data$num_doctors_fulltime > 0)
+```
+
+You could check your answer to match the following output:
+```{r}
+summary(sample_data$is_public)
+summary(sample_data$is_public_facility_withdoctor)
+```
+
+Okay, notice that in our sample dataset, we have lots of facilities that are unknown as to whether they are public facilities or not (they are NA). Lets say that for this exercise, we want to treat these facilities as private facilities. In our calculation above, `is_public_facility_with_doctor` is NA if public facilities is NA and the place has a doctor. In this exercise, because we are treating `management == NA` as a private facility, we can use the `is.na` function to check if something is public:
+```{r}
+sample_data$is_public <- ! is.na(sample_data$management)
+sample_data$is_public_facility_withdoctor <- sample_data$is_public & 
+    (sample_data$num_doctors_fulltime > 0)
+summary(sample_data$is_public)
+summary(sample_data$is_public_facility_withdoctor)
+```
+
+Finally, lets deal with a more complex indicator. We don't generally do this, but what if you _wanted_ to say that `num_doctors_fulltime == NA` implies that there is no doctor? How would you write this equation? While possible with just & and |, this column modification is easier to write with `ifelse`, which is again, a vectorized function:
+```{r}
+sample_data$is_public_facility_withdoctor <- 
+    ifelse(is.na(sample_data$num_doctors_fulltime), # condition
+       FALSE,  # value if true, in this case, doctor = NA is assumed to be doctor = 0, and therefore we should get out FALSE
+       sample_data$is_public & sample_data$num_doctors_fulltime > 0)
+summary(sample_data$is_public_facility_withdoctor)
+```
+
+In contrast, `if` in R is not vectorized. What is the difference in the above and the below?
+```{r}
+if(is.na(sample_data$num_doctors_fulltime)) {
+    sample_data$is_public_facility_withdoctor_wrong <- FALSE
+} else {
+    sample_data$is_public_facility_withdoctor_wrong <- sample_data$is_public & (sample_data$num_doctors_fulltime > 0)
+}
+summary(sample_data$is_public_facility_withdoctor_wrong)
+
+```
+
+Exercise: 
+ * Lets pretend, for the sake of exercise, that there is a new regularion in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
+```{r echo=FALSE}
+summary(ifelse(is.na(sample_data$management),
+               TRUE, # private facilities, anything goes.
+               sample_data$num_doctors_fulltime > 0 & sample_data$c_section_yn) #public facilities
+        )
+```
+ * Lets assume, again, that "skilled worker" is defined as: "nurses + doctors" if the facility offers c-section, and just "doctors" if the facility doesn't offer c-section. Using `ifelse`, define this (mock) indicator. The summary should match the following:
+```{r echo=FALSE}
+sample_data$skilled_worker <- ifelse(sample_data$c_section_yn,
+               rowSums(sample_data[,c("num_nurses_fulltime", "num_doctors_fulltime")],
+                       na.rm=T),
+               sample_data$num_nurses_fulltime
+        )
+```
+```{r}
+head(sample_data[,c("num_nurses_fulltime", "num_doctors_fulltime", "c_section_yn", "skilled_worker")], 20)
+summary(sample_data$skilled_worker)
+```
 
 #### Data Pipeline
 `outlier_normalized_health.R`, 
