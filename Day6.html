@@ -186,7 +186,10 @@ hr {
 
 <h4>Creation of More Complex Columns(indicators) with <strong>rowSums()</strong>:</h4>
 
-<p>Review: Do you remember from our exercise a few days ago, how you would create a new column called <code>skilled_birth_attendants</code> that is the sum of number of doctors and number of doctors in a health facility?</p>
+<p>Review: Do you remember from our exercise a few days ago, how you would create a new column called <code>skilled_birth_attendants</code> that is the sum of number of doctors and number of nurses in a health facility?</p>
+
+<pre><code class="r">sample_data$skilled_birth_attendants &lt;- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
+</code></pre>
 
 <p>Do you remember what the issue was with doing things this way?</p>
 
@@ -223,7 +226,7 @@ head(sample_data[, c(&quot;num_doctors_fulltime&quot;, &quot;num_nurses_fulltime
 
 <h4>The <strong>is.na()</strong> function:</h4>
 
-<p>Review: do you remember how to create column-based indicators? Can you calculate the <code>is_public</code> column again, which is <code>TRUE</code> if that facility has <code>public</code> in its management column, and <code>FALSE</code> if not? How about a column called <code>is_public_facility_without_doctor</code>, which is <code>TRUE</code> only when the management is <code>public</code> and the <code>num_doctors_fulltime</code> is bigger than 0?</p>
+<p>Review: do you remember how to create column-based indicators? Can you calculate the <code>is_public</code> column again, which is <code>TRUE</code> if that facility has <code>public</code> in its management column, and <code>FALSE</code> if not? How about a column called <code>is_public_facility_with_doctor</code>, which is <code>TRUE</code> only when the management is <code>public</code> and the <code>num_doctors_fulltime</code> is bigger than 0?</p>
 
 <p>You could check your answer to match the following output:</p>
 
@@ -305,7 +308,7 @@ summary(sample_data$is_public_facility_withdoctor)
 </code></pre>
 
 <ul>
-<li>Lets assume, again, that &ldquo;skilled worker&rdquo; is defined as: &ldquo;nurses + doctors&rdquo; if the facility offers c-section, and just &ldquo;doctors&rdquo; if the facility doesn&#39;t offer c-section. Using <code>ifelse</code>, define this (mock) indicator. The summary should match the following:</li>
+<li>Lets assume, again, that &ldquo;skilled worker&rdquo; is defined as: &ldquo;nurses + doctors&rdquo; if the facility offers c-section, and just &ldquo;nurses&rdquo; if the facility doesn&#39;t offer c-section. Using <code>ifelse</code>, define this (mock) indicator. The summary should match the following:</li>
 </ul>
 
 <pre><code class="r">head(sample_data[, c(&quot;num_nurses_fulltime&quot;, &quot;num_doctors_fulltime&quot;, &quot;c_section_yn&quot;, 
@@ -370,3 +373,4 @@ summary(sample_data$is_public_facility_withdoctor)
 </body>
 
 </html>
+
