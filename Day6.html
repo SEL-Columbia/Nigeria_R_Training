@@ -300,7 +300,11 @@ summary(sample_data$is_public_facility_withdoctor)
 <p>Exercise: </p>
 
 <ul>
+<<<<<<< HEAD
 <li>Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has two doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that <code>management==NA</code> means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:</li>
+=======
+<li>Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that <code>management==NA</code> means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:</li>
+>>>>>>> cc4168fc6df8009b2e8e9f2739fead1964aa995e
 </ul>
 
 <pre><code>##    Mode   FALSE    TRUE    NA&#39;s 
@@ -308,7 +312,12 @@ summary(sample_data$is_public_facility_withdoctor)
 </code></pre>
 
 <ul>
+<<<<<<< HEAD
 <li>Lets assume, again, that &ldquo;skilled worker&rdquo; is defined as: &ldquo;nurses + doctors&rdquo; if the facility offers c-section, and just &ldquo;nurses&rdquo; if the facility doesn&#39;t offer c-section. Using <code>ifelse</code>, define this (mock) indicator. The summary should match the following:</li>
+=======
+<li>Question: why don&#39;t we have any NAs in the output, even though num_doctors_fulltime is sometimes NA?</li>
+<li>Lets assume, again, that &ldquo;skilled worker&rdquo; is defined as: &ldquo;nurses + doctors&rdquo; if the facility offers c-section, and just &ldquo;doctors&rdquo; if the facility doesn&#39;t offer c-section. Using <code>ifelse</code>, define this (mock) indicator. The summary should match the following:</li>
+>>>>>>> cc4168fc6df8009b2e8e9f2739fead1964aa995e
 </ul>
 
 <pre><code class="r">head(sample_data[, c(&quot;num_nurses_fulltime&quot;, &quot;num_doctors_fulltime&quot;, &quot;c_section_yn&quot;, 
