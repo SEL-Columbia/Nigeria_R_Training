@@ -4,15 +4,15 @@ Day 6
 ====
 
 ```{r echo=F, cache=T}
-sample_data <- read.csv("sample_health_facilities.csv", stringsAsFactors=F)
+sample_data <- read.csv("sample_health_facilities.csv", stringsAsFactors=FALSE)
 ```
 
 
 #### Creation of More Complex Columns(indicators) with __rowSums()__:
 
-Review: Do you remember from our exercise a few days ago, how you would create a new column called `skilled_birth_attendants` that is the sum of number of doctors and number of doctors in a health facility?
+Review: Do you remember from our exercise a few days ago, how you would create a new column called `skilled_birth_attendants` that is the sum of number of doctors and number of nurses in a health facility?
 
-```{r echo=F, cache=T}
+```{r eval=F, cache=T}
 sample_data$skilled_birth_attendants <- sample_data$num_nurses_fulltime + sample_data$num_doctors_fulltime
 ```
 
@@ -32,7 +32,7 @@ head(sample_data[,c("num_doctors_fulltime", "num_nurses_fulltime", "skilled_birt
 
 #### The __is.na()__ function:
 
-Review: do you remember how to create column-based indicators? Can you calculate the `is_public` column again, which is `TRUE` if that facility has `public` in its management column, and `FALSE` if not? How about a column called `is_public_facility_without_doctor`, which is `TRUE` only when the management is `public` and the `num_doctors_fulltime` is bigger than 0?
+Review: do you remember how to create column-based indicators? Can you calculate the `is_public` column again, which is `TRUE` if that facility has `public` in its management column, and `FALSE` if not? How about a column called `is_public_facility_with_doctor`, which is `TRUE` only when the management is `public` and the `num_doctors_fulltime` is bigger than 0?
 
 ```{r echo=F, cache=TRUE}
 sample_data$is_public <- sample_data$management == 'public'
@@ -76,15 +76,23 @@ summary(sample_data$is_public_facility_withdoctor_wrong)
 ```
 
 Exercise: 
+<<<<<<< HEAD
+ * Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has two doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
+=======
  * Lets pretend, for the sake of exercise, that there is a new regulation in Nigeria: every public facility in Nigeria that has to doctor HAS to offer c-sections. Non-public facilities are off the hook, however. Assuming that `management==NA` means private facilities, which facilities in sample_data meet this new regulation? The summary of this column should be as follows:
+>>>>>>> cc4168fc6df8009b2e8e9f2739fead1964aa995e
 ```{r echo=FALSE}
 summary(ifelse(is.na(sample_data$management),
                TRUE, # private facilities, anything goes.
-               sample_data$num_doctors_fulltime > 0 & sample_data$c_section_yn) #public facilities
+               sample_data$num_doctors_fulltime > 2 & sample_data$c_section_yn) #public facilities
         )
 ```
+<<<<<<< HEAD
+ * Lets assume, again, that "skilled worker" is defined as: "nurses + doctors" if the facility offers c-section, and just "nurses" if the facility doesn't offer c-section. Using `ifelse`, define this (mock) indicator. The summary should match the following:
+=======
  * Question: why don't we have any NAs in the output, even though num_doctors_fulltime is sometimes NA?
  * Lets assume, again, that "skilled worker" is defined as: "nurses + doctors" if the facility offers c-section, and just "doctors" if the facility doesn't offer c-section. Using `ifelse`, define this (mock) indicator. The summary should match the following:
+>>>>>>> cc4168fc6df8009b2e8e9f2739fead1964aa995e
 ```{r echo=FALSE}
 sample_data$skilled_worker <- ifelse(sample_data$c_section_yn,
                rowSums(sample_data[,c("num_nurses_fulltime", "num_doctors_fulltime")],
