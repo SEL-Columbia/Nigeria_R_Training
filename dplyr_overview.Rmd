@@ -1,0 +1,224 @@
+
+<link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+```
+
+## Outline
+  1. dplyr: What? Why? 
+  2. Table dataframes
+  3. Functions
+  4. Exercises
+
+=======
+-------
+
+## Why dplyr?
+
+dplyr is a new package which provides a set of tools for efficiently manipulating datasets in R. dplyr is the next iteration of plyr, focussing on only data frames. The main advantages include:
+
+1. **Speed.** Compared to plyr library (home of the familiar `ddply` function), dplyr is anywhere between 20X - 100X faster in its calculations.
+
+2. **Cleaner Code.** the syntax allows for function chaining, preventing any potential cluttering in the code, which in turn makes for easier code writing/reading.
+
+3. **Simpler Code.** dplyr has a limited number of functions (5) that are focused on the most common requirements of data manipulation. the syntax is both simple and effecient. 
+
+=======
+-------
+
+## Before Data Manipulation: `tbl_df()`
+
+Just as with plyr library, dplyr works best with dataframes. Please note that there is a type particular to dplyr, table dataframes, which make it worthwhile to convert all of our data to. The first advantage is that table dataframes are "smarter". Let's observe the difference via an example using aviation data from Houston, Texas.  
+```{r}
+library(hflights)
+hflights <- hflights
+```
+After reading in the data, try doing a `head()` of hflights. 
+```{r echo=FALSE}
+head(hflights)
+```
+
+Not very friendly to the Rstudio console or the human eye. Now, let's convert into a table dataframe and see the difference.
+```{r}
+hflights_df <- tbl_df(hflights)
+hflights_df
+```
+
+=======
+-------
+ 
+## Functions
+
+dplyr has a group of functions/verbs used for data manipulation:
+
+* `select()`: focus on a subset of columns
+* `filter()`: focus on a subset of rows
+* `arrange()`: re-order the rows
+* `mutate()`: add new columns
+* `summarise()`: produce summary statistics (aggregate)
+
+
+=======
+-------
+
+### Selecting columns with `select()`
+
+We are very familiar with two methods of selecting a set of columns from a larger data frame. The first is the `subset()` function, and the other is the rows, columns slicing syntax `[,]`. 
+
+The `select()` function is even more straightforward and powerful. Let's explore through some examples:
+
+```{r}
+#select three columns by name (no quotations)
+head(dplyr::select(hflights_df, Year, Month, AirTime), 2)
+```
+
+```{r}
+#all but three columns
+head(dplyr::select(hflights_df, -Year, -Month, -AirTime), 2)
+```
+
+```{r}
+#sequence of columns by name instead of index
+head(dplyr::select(hflights_df, Year:AirTime), 2)
+```
+
+=======
+-------
+
+### Filter data with `filter()`
+
+Similair to `subset()` or `[,]`, we can filter our data by rows evaluated by a certain criteria. 
+
+To select all flights on New Years Day, we can say:
+
+```{r}
+filter(hflights_df, Month == 1, DayofMonth == 1)
+```
+
+```{r eval=FALSE}
+#using filter takes the place of the more cumbersome (and much more messily printed):
+hflights[hflights$Month == 1 & hflights$DayofMonth == 1, ]
+```
+
+=======
+-------
+
+### Order data with `arrange()`
+
+This function works the same as `filter()`, except that instead of selecting rows, it reorders them. The first argument is a dataframe, follwed by a set of column names to order by. 
+
+Also note the `desc()` option which orders in descending (alphabetical or numerical) order. To arrange by reverse choronology i.e. which flights happened closest to present day:
+
+```{r}
+arrange(hflights_df, desc(Month), desc(DayofMonth))
+```
+
+=======
+-------
+
+### Create new columns with `mutate()`
+
+This function requires a table dataframe as a first argument, and any desired columns to follow. It requires column creation to be more neatly written in the code, and the payoff in speed is also a significant benefit!
+
+```{r eval=FALSE}
+  mutate(hflights_df,
+         
+         Distance_km = Distance*1.60934,
+         
+         flightCode = paste(FlightNum, UniqueCarrier, sep="_"))
+```
+
+One cool feature of `dplyr::mutate()` is the ability to refer to columns that you just created. What is the following code producing for us in terms of data?
+
+```{r}
+  hflights_df %.% 
+    mutate(Distance_km = round(Distance*1.6),
+         
+         AirPoints = Distance_km*2) %.%
+    
+    select(Distance_km, AirPoints) %.%
+  
+    arrange(desc(AirPoints)) %.%
+  
+  tail(5)  
+```
+
+=======
+-------
+
+### Aggregate data with `summarise()`
+
+**Testing our understanding**: Using plyr library, create a dataframe that contains the number of flights per month out of Houston. 
+
+Now, let's compare and contrast the process of aggregation in plyr vs. dplyr. 
+
+```{r}
+  hflights_df  %.%
+    group_by(Month) %.%
+    summarise(num_flights_month = n()) %.%
+    arrange(desc(num_flights_month))
+```
+
+
+=======
+-------
+
+## Exercises
+
+You should finish with two dataframes, one called **cars** the other **newcars**. Using the `datasets` library (specifically the `cars` dataframe) and **dplyr** please:
+
+  1. create a variable `time` that divdes distance by speed
+  
+  2. create two new variables that correspond to km instead of miles (e.g. `speed_km`, `dist_km`)
+  
+  3. create a `time2` variable (that should be equal to `time`) with the same formula using the variables from step 2) 
+  
+  4. create a `car_build` variable that is either (fast, average, slow) depending on whether its `speed` is (0-10, 11-20, 21+)
+  
+  4. remove any distance that is less than or equal to 5 km
+  
+  5. order the data in descending order by distance, then by increasing order by speed
+  
+  6. keep all columns except for `time` 
+  
+  7. create a new dataframe (**newcars**) that aggregates total distance covered by `car_build`
+
+```{r echo=FALSE}
+library(datasets)
+cars <- cars
+cars <- cars %.%
+         mutate(time = dist/speed,
+                speed_km = speed*1.7, 
+                dist_km = dist*1.7,
+                time2 = dist_km/speed_km,
+                car_build = ifelse(speed <= 10, "slow", 
+                             ifelse(speed > 10 & speed <= 20, "average",
+                              ifelse(speed > 20, "fast", NA)))) %.%
+          filter(dist_km <= 5) %.%
+          arrange(desc(dist), speed) %.%
+          select(-time)
+
+newcars <- cars %.%
+            group_by()
+```
+
+=======
+-------
+=======
+
+Resources
+
+* For help on the base functions of dplyr, run this in the R console: `?manip`
+
+* Hadley Wickham's [dplyr github page](https://github.com/hadley/dplyr). The readme is quite helpful. 
+
+* An [introduction to dplyr](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) from the folks at Rstudio that this tutorial is based heavily on. You can also just run this line of code in R:
+`vignette("introduction", package = "dplyr")`
+
+* [Advantages of dplyr package](http://zevross.com/blog/2014/03/26/four-reasons-why-you-should-check-out-the-r-package-dplyr-3/) explored
+
+
+
+
+

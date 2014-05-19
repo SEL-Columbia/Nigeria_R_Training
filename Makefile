@@ -1,6 +1,8 @@
 all: *.html
 outlier_presentation.html: outlier_presentation.Rmd
 	echo "require(knitr); knit2html('outlier_presentation.Rmd')" | R --no-save
+dplyr_overview.html: dplyr_overview.Rmd
+	echo "require(knitr); knit2html('dplyr_overview.Rmd')" | R --no-save
 Day6.html: Day6.Rmd
 	echo "require(knitr); knit2html('Day6.Rmd')" | R --no-save
 Day5.html: Day5.Rmd

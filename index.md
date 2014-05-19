@@ -12,3 +12,5 @@
 
 [Day 6](http://sel-columbia.github.io/Nigeria_R_Training/Day6.html)
 
+[Dplyr Overview](http://sel-columbia.github.io/Nigeria_R_Training/dplyr_overview.html)
+
