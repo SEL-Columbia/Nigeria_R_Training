@@ -13,55 +13,63 @@
 body, td {
    font-family: sans-serif;
    background-color: white;
-   font-size: 12px;
-   margin: 8px;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
 }
 
 tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
-h1 { 
-   font-size:2.2em; 
+h1 {
+   font-size:2.2em;
 }
 
-h2 { 
-   font-size:1.8em; 
+h2 {
+   font-size:1.8em;
 }
 
-h3 { 
-   font-size:1.4em; 
+h3 {
+   font-size:1.4em;
 }
 
-h4 { 
-   font-size:1.0em; 
+h4 {
+   font-size:1.0em;
 }
 
-h5 { 
-   font-size:0.9em; 
+h5 {
+   font-size:0.9em;
 }
 
-h6 { 
-   font-size:0.8em; 
+h6 {
+   font-size:0.8em;
 }
 
 a:visited {
    color: rgb(50%, 0%, 50%);
 }
 
-pre {	
-   margin-top: 0;
-   max-width: 95%;
-   border: 1px solid #ccc;
-   white-space: pre-wrap;
+pre, img {
+  max-width: 100%;
 }
 
 pre code {
    display: block; padding: 0.5em;
 }
 
-code.r, code.cpp {
-   background-color: #F8F8F8;
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
 }
 
 table, td, th {
@@ -84,54 +92,54 @@ hr {
 }
 
 @media print {
-   * { 
-      background: transparent !important; 
-      color: black !important; 
-      filter:none !important; 
-      -ms-filter: none !important; 
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
    }
 
-   body { 
-      font-size:12pt; 
-      max-width:100%; 
-   }
-       
-   a, a:visited { 
-      text-decoration: underline; 
+   body {
+      font-size:12pt;
+      max-width:100%;
    }
 
-   hr { 
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
       visibility: hidden;
       page-break-before: always;
    }
 
-   pre, blockquote { 
-      padding-right: 1em; 
-      page-break-inside: avoid; 
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
    }
 
-   tr, img { 
-      page-break-inside: avoid; 
+   tr, img {
+      page-break-inside: avoid;
    }
 
-   img { 
-      max-width: 100% !important; 
+   img {
+      max-width: 100% !important;
    }
 
-   @page :left { 
-      margin: 15mm 20mm 15mm 10mm; 
-   }
-     
-   @page :right { 
-      margin: 15mm 10mm 15mm 20mm; 
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
    }
 
-   p, h2, h3 { 
-      orphans: 3; widows: 3; 
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
    }
 
-   h2, h3 { 
-      page-break-after: avoid; 
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
    }
 }
 </style>
@@ -143,19 +151,60 @@ hr {
 <body>
 <p><link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link></p>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day1.html">Day 1</a></p>
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day1.html">Day 1: Basics of R</a></p>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day2.html">Day 2</a></p>
+<p>Topics included: data.frame, reading and writing data.frames, data types, accessing data by row and columns, summary statistics (sums, means, and standard deviations), creating new datasets (subset and join).</p>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day3.html">Day 3</a></p>
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day2.html">Day 2: </a>
+Topics:</p>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day4.html">Day 4</a></p>
+<ul>
+<li>Adding and removing columns in a data.frame</li>
+<li>Creating new data.frames in R</li>
+<li>Data visualization in R: ggplot2</li>
+</ul>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day5.html">Day 5</a></p>
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day3.html">Day 3</a>
+Topics:</p>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day6.html">Day 6</a></p>
+<ul>
+<li>Aggregations in R using the <code>plyr</code> package</li>
+<li>Outlier Cleaning</li>
+</ul>
 
-<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/dplyr_overview.html">Dplyr Overview</a></p>
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day4.html">Day 4</a>
+Topics:</p>
+
+<ul>
+<li>Review of Aggregations in R</li>
+<li>Custom NMIS Aggregation functions</li>
+<li>Data conversion (type conversion, string searching, string manipulation)</li>
+<li>Writing out data</li>
+</ul>
+
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day5.html">Day 5</a>
+Topics:</p>
+
+<ul>
+<li>NMIS Pipeline</li>
+</ul>
+
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/Day6.html">Day 6</a>
+Topics:</p>
+
+<ul>
+<li>Complex Calculations (<code>rowSums</code>)</li>
+<li>NA handling (<code>is.na</code>)</li>
+<li>Data Pipeline</li>
+</ul>
+
+<p><a href="http://sel-columbia.github.io/Nigeria_R_Training/dplyr_overview.html">Dplyr Overview</a>
+Topics:</p>
+
+<ul>
+<li>Aggregations using the dplyr package</li>
+<li>Why <code>dplyr</code>, <code>tbl_df</code>, <code>select</code>, <code>mutate</code> and <code>group_by</code> / <code>summarize</code>.</li>
+</ul>
 
 </body>
 
