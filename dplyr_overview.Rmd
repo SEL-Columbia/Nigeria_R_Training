@@ -29,7 +29,7 @@ dplyr is a new package which provides a set of tools for efficiently manipulatin
 
 ## Before Data Manipulation: `tbl_df()`
 
-Just as with plyr library, dplyr works best with dataframes. Please note that there is a type particular to dplyr, table dataframes, which make it worthwhile to convert all of our data to. The first advantage is that table dataframes are "smarter". Let's observe the difference via an example using aviation data from Houston, Texas.  
+Just as with plyr library, dplyr works best with dataframes. Please note that there is a type particular to dplyr, table dataframes, which make it worthwhile to convert all of our data to. The main advantage is that table dataframes are "smarter". Let's observe the difference via an example using aviation data from Houston, Texas.  
 ```{r}
 library(hflights)
 hflights <- hflights
@@ -82,6 +82,28 @@ head(dplyr::select(hflights_df, -Year, -Month, -AirTime), 2)
 #sequence of columns by name instead of index
 head(dplyr::select(hflights_df, Year:AirTime), 2)
 ```
+
+One final note about `select()` is the ability to do renaming of columns with a very straightforward syntax: `new_col_name = old_name`. Let's select the first three columns we began with and rename them in Spanish. 
+
+```{r}
+#select and rename three columns 
+head(dplyr::select(hflights_df, 
+                   Año = Year, 
+                   Mes = Month, 
+                   TiempoDelVuelo = AirTime), 2)
+```
+
+Notice how the new dataframe only contains the three columns we've just created. To keep the remaining columns, there is a subfunction called `matches()` that does the trick. 
+
+```{r}
+#rename three columns and select all
+head(dplyr::select(hflights_df, 
+                   Año = Year, 
+                   Mes = Month, 
+                   TiempoDelVuelo = AirTime, 
+                   matches('.')), 2)
+```
+
 
 =======
 -------
@@ -176,18 +198,19 @@ You should finish with two dataframes, one called **cars** the other **newcars**
   
   4. create a `car_build` variable that is either (fast, average, slow) depending on whether its `speed` is (0-10, 11-20, 21+)
   
-  4. remove any distance that is less than or equal to 5 km
+  4. remove any distance that is less than or equal to 4 **miles**
   
   5. order the data in descending order by distance, then by increasing order by speed
   
-  6. keep all columns except for `time` 
+  6. keep all columns and rename `speed` and `dist` to contain the `_miles` suffix.
   
-  7. create a new dataframe (**newcars**) that aggregates total distance covered by `car_build`
+  7. create a new dataframe (**newcars**) that aggregates total distance covered in both miles and km by `car_build`.
 
 ```{r echo=FALSE}
 library(datasets)
 cars <- cars
-cars <- cars %.%
+cars <- tbl_df(cars)
+yo <- cars %.%
          mutate(time = dist/speed,
                 speed_km = speed*1.7, 
                 dist_km = dist*1.7,
@@ -195,12 +218,17 @@ cars <- cars %.%
                 car_build = ifelse(speed <= 10, "slow", 
                              ifelse(speed > 10 & speed <= 20, "average",
                               ifelse(speed > 20, "fast", NA)))) %.%
-          filter(dist_km <= 5) %.%
+          filter(dist > 4) %.%
           arrange(desc(dist), speed) %.%
-          select(-time)
-
-newcars <- cars %.%
-            group_by()
+          select(speed_miles = speed,
+                 dist_miles = dist,
+                  matches('.'))
+  
+newcars <- yo %.%
+            group_by(car_build) %.%
+            summarise(total_dist_miles = sum(dist_miles, na.rm=T),
+                      total_dist_km = sum(dist_km, na.rm=T))
+            
 ```
 
 =======

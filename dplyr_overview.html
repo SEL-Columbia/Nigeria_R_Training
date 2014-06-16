@@ -211,7 +211,7 @@ hr {
 
 <h2>Before Data Manipulation: <code>tbl_df()</code></h2>
 
-<p>Just as with plyr library, dplyr works best with dataframes. Please note that there is a type particular to dplyr, table dataframes, which make it worthwhile to convert all of our data to. The first advantage is that table dataframes are &ldquo;smarter&rdquo;. Let&#39;s observe the difference via an example using aviation data from Houston, Texas.  </p>
+<p>Just as with plyr library, dplyr works best with dataframes. Please note that there is a type particular to dplyr, table dataframes, which make it worthwhile to convert all of our data to. The main advantage is that table dataframes are &ldquo;smarter&rdquo;. Let&#39;s observe the difference via an example using aviation data from Houston, Texas.  </p>
 
 <pre><code class="r">library(hflights)
 hflights &lt;- hflights
@@ -330,6 +330,38 @@ head(dplyr::select(hflights_df, Year:AirTime), 2)
 ## 5425 2011     1          2         7    1401    1501            AA
 ## Variables not shown: FlightNum (int), TailNum (chr), ActualElapsedTime
 ##   (int), AirTime (int)
+</code></pre>
+
+<p>One final note about <code>select()</code> is the ability to do renaming of columns with a very straightforward syntax: <code>new_col_name = old_name</code>. Let&#39;s select the first three columns we began with and rename them in Spanish. </p>
+
+<pre><code class="r"># select and rename three columns
+head(dplyr::select(hflights_df, Año = Year, Mes = Month, TiempoDelVuelo = AirTime), 
+    2)
+</code></pre>
+
+<pre><code>## Source: local data frame [2 x 3]
+## 
+##       Año Mes TiempoDelVuelo
+## 5424 2011   1             40
+## 5425 2011   1             45
+</code></pre>
+
+<p>Notice how the new dataframe only contains the three columns we&#39;ve just created. To keep the remaining columns, there is a subfunction called <code>matches()</code> that does the trick. </p>
+
+<pre><code class="r"># rename three columns and select all
+head(dplyr::select(hflights_df, Año = Year, Mes = Month, TiempoDelVuelo = AirTime, 
+    matches(&quot;.&quot;)), 2)
+</code></pre>
+
+<pre><code>## Source: local data frame [2 x 21]
+## 
+##       Año Mes TiempoDelVuelo DayofMonth DayOfWeek DepTime ArrTime
+## 5424 2011   1             40          1         6    1400    1500
+## 5425 2011   1             45          2         7    1401    1501
+## Variables not shown: UniqueCarrier (chr), FlightNum (int), TailNum (chr),
+##   ActualElapsedTime (int), ArrDelay (int), DepDelay (int), Origin (chr),
+##   Dest (chr), Distance (int), TaxiIn (int), TaxiOut (int), Cancelled
+##   (int), CancellationCode (chr), Diverted (int)
 </code></pre>
 
 <h1></h1>
@@ -485,10 +517,10 @@ hflights[hflights$Month == 1 &amp; hflights$DayofMonth == 1, ]
 <li><p>create two new variables that correspond to km instead of miles (e.g. <code>speed_km</code>, <code>dist_km</code>)</p></li>
 <li><p>create a <code>time2</code> variable (that should be equal to <code>time</code>) with the same formula using the variables from step 2) </p></li>
 <li><p>create a <code>car_build</code> variable that is either (fast, average, slow) depending on whether its <code>speed</code> is (0-10, 11-20, 21+)</p></li>
-<li><p>remove any distance that is less than or equal to 5 km</p></li>
+<li><p>remove any distance that is less than or equal to 4 <strong>miles</strong></p></li>
 <li><p>order the data in descending order by distance, then by increasing order by speed</p></li>
-<li><p>keep all columns except for <code>time</code> </p></li>
-<li><p>create a new dataframe (<strong>newcars</strong>) that aggregates total distance covered by <code>car_build</code></p></li>
+<li><p>keep all columns and rename <code>speed</code> and <code>dist</code> to contain the <code>_miles</code> suffix.</p></li>
+<li><p>create a new dataframe (<strong>newcars</strong>) that aggregates total distance covered in both miles and km by <code>car_build</code>.</p></li>
 </ol>
 
 <h1></h1>
